@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module 1: Business Model | AIA Workshop</title>
+  <link rel="stylesheet" href="../../shared/css/base.css">
+  <link rel="stylesheet" href="../../shared/css/slides.css">
+  <link rel="stylesheet" href="../../shared/css/animations.css">
+  <link rel="stylesheet" href="../../shared/css/components.css">
+  <style>
+    /* Module-specific styles */
+    .three-things-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-6);
+      flex-wrap: wrap;
+    }
+
+    .thing-box {
+      width: 260px;
+      padding: var(--space-6);
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-2xl);
+      text-align: center;
+      transition: all 0.4s var(--ease-out-expo);
+    }
+
+    .thing-box:hover {
+      border-color: var(--color-primary);
+      transform: translateY(-4px);
+    }
+
+    .thing-number {
+      width: 40px;
+      height: 40px;
+      margin: 0 auto var(--space-3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-primary);
+      border-radius: 50%;
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: 800;
+      color: var(--color-bg);
+    }
+
+    .thing-title {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+    }
+
+    .thing-question {
+      font-size: var(--text-sm);
+      color: var(--color-primary);
+      font-weight: 500;
+    }
+
+    .connector-arrow {
+      font-size: var(--text-2xl);
+      color: var(--color-primary);
+    }
+
+    .example-table {
+      width: 100%;
+      max-width: 800px;
+      border-collapse: collapse;
+    }
+
+    .example-table th,
+    .example-table td {
+      padding: var(--space-4);
+      text-align: left;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .example-table th {
+      font-family: var(--font-display);
+      font-weight: 600;
+      color: var(--color-primary);
+      background: var(--color-bg-card);
+    }
+
+    .example-table td {
+      color: var(--color-text-secondary);
+      font-size: var(--text-sm);
+    }
+
+    .industry-card {
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      transition: all 0.3s ease;
+    }
+
+    .industry-card:hover {
+      border-color: var(--color-primary);
+    }
+
+    .industry-card.offline { --industry-color: var(--color-success); }
+    .industry-card.online { --industry-color: var(--color-info); }
+    .industry-card.coaching { --industry-color: var(--color-primary); }
+
+    .industry-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+
+    .industry-icon {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: color-mix(in srgb, var(--industry-color) 15%, transparent);
+      border-radius: var(--radius-lg);
+      font-size: var(--text-xl);
+    }
+
+    .industry-title {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--industry-color);
+    }
+
+    .industry-funnel {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-3);
+    }
+
+    .industry-examples {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+
+    .industry-example {
+      font-size: var(--text-xs);
+      padding: var(--space-1) var(--space-2);
+      background: var(--color-bg-elevated);
+      border-radius: var(--radius-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .industry-ticket {
+      margin-top: var(--space-3);
+      font-size: var(--text-sm);
+      color: var(--color-text);
+      font-weight: 500;
+    }
+
+    .flow-diagram {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+    }
+
+    .flow-node {
+      padding: var(--space-4) var(--space-6);
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .flow-node:hover {
+      border-color: var(--color-primary);
+    }
+
+    .flow-node .icon {
+      font-size: var(--text-2xl);
+      margin-bottom: var(--space-2);
+    }
+
+    .flow-node .label {
+      font-family: var(--font-display);
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .flow-arrow {
+      font-size: var(--text-xl);
+      color: var(--color-primary);
+    }
+
+    .diagnostic-table {
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .diagnostic-table th,
+    .diagnostic-table td {
+      padding: var(--space-4);
+      text-align: left;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .diagnostic-table th {
+      background: var(--color-bg-card);
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .diagnostic-table td:first-child {
+      color: var(--color-text);
+    }
+
+    .diagnostic-table td:nth-child(2) {
+      color: var(--color-primary);
+      font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+      .three-things-container {
+        flex-direction: column;
+      }
+
+      .connector-arrow {
+        transform: rotate(90deg);
+      }
+
+      .flow-diagram {
+        flex-direction: column;
+      }
+
+      .flow-arrow {
+        transform: rotate(90deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="slides-container">
+
+    <!-- ==================== OPENING ==================== -->
+
+    <!-- Slide 1: Module Title -->
+    <section class="slide title-slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Day 1 | Module 1 | 10:00 - 12:00</span>
+        <h1 class="slide-title reveal stagger-1"><span class="highlight">Business</span> Model</h1>
+        <p class="slide-subtitle reveal stagger-2">How does a business actually make money?</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: The Big Question -->
+    <section class="slide">
+      <div class="slide-content">
+        <h1 class="slide-title size-xl reveal">"How does a business <span class="highlight">actually</span> make money?"</h1>
+      </div>
+    </section>
+
+    <!-- Slide 3: Why This Matters -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Why This Matters</span>
+        <h2 class="slide-title size-lg reveal stagger-1">Most people think marketing is<br>"<span class="highlight">posting on social media</span>"</h2>
+        <p class="slide-subtitle reveal stagger-2">That's like saying cooking is "turning on the stove."</p>
+        <p class="slide-subtitle reveal stagger-3">Before we teach any skill, you need to see the <strong style="color: var(--color-text);">full picture</strong>.</p>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION A: THE 3 THINGS ==================== -->
+
+    <!-- Slide 4: Section Header -->
+    <section class="slide section-divider">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Section A</span>
+        <h1 class="slide-title reveal stagger-1">The <span class="highlight">3 Things</span></h1>
+        <p class="slide-subtitle reveal stagger-2">Every business needs exactly these 3 things to make money.</p>
+      </div>
+    </section>
+
+    <!-- Slide 5: The 3 Things Framework -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="three-things-container">
+          <div class="thing-box framework-box">
+            <div class="thing-number">1</div>
+            <div class="thing-title">OFFER</div>
+            <div class="thing-question">"What are you selling?"</div>
+          </div>
+          <span class="connector-arrow reveal stagger-1">→</span>
+          <div class="thing-box framework-box">
+            <div class="thing-number">2</div>
+            <div class="thing-title">LEADS</div>
+            <div class="thing-question">"Where do you get attention?"</div>
+          </div>
+          <span class="connector-arrow reveal stagger-2">→</span>
+          <div class="thing-box framework-box">
+            <div class="thing-number">3</div>
+            <div class="thing-title">FUNNEL</div>
+            <div class="thing-question">"How do you convert?"</div>
+          </div>
+        </div>
+        <div class="reveal stagger-3" style="margin-top: var(--space-8); padding: var(--space-4) var(--space-8); background: rgba(255, 71, 87, 0.1); border: 1px solid rgba(255, 71, 87, 0.3); border-radius: var(--radius-lg); color: var(--color-danger); font-weight: 600;">
+          ⚠️ Missing any ONE = No money
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 6: Key Insight - Closing -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Closing happens <span class="highlight">inside</span> the funnel</h2>
+        <p class="slide-subtitle reveal stagger-1">It's not a separate 4th thing. Different businesses close differently:</p>
+
+        <div style="max-width: 600px; margin-top: var(--space-6);">
+          <div class="step-card reveal stagger-2" style="margin-bottom: var(--space-3);">
+            <div class="step-number">🦷</div>
+            <div class="step-content">
+              <div class="step-title">Dentist</div>
+              <div class="step-description">Book appointment → Show up → Receptionist handles payment</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-3" style="margin-bottom: var(--space-3);">
+            <div class="step-number">💪</div>
+            <div class="step-content">
+              <div class="step-title">Coach</div>
+              <div class="step-description">Discovery call → Pitch on call → Close on call</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-4">
+            <div class="step-number">🎥</div>
+            <div class="step-content">
+              <div class="step-title">Webinar</div>
+              <div class="step-description">Register → Watch → Offer at end → Buy now</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 7: Example - Coach Danny -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Example</span>
+        <h2 class="slide-title size-lg reveal stagger-1">Coach Danny</h2>
+        <p class="slide-subtitle reveal stagger-2">Online fitness coach | $997 transformation program</p>
+
+        <table class="example-table reveal stagger-3" style="margin-top: var(--space-6);">
+          <tr>
+            <th style="width: 120px;">The 3 Things</th>
+            <th>Coach Danny's Version</th>
+          </tr>
+          <tr>
+            <td><strong style="color: var(--color-text);">OFFER</strong></td>
+            <td>12-week fitness transformation program ($997). Includes workout plans, meal guides, weekly check-in calls.</td>
+          </tr>
+          <tr>
+            <td><strong style="color: var(--color-text);">LEADS</strong></td>
+            <td>Instagram followers, YouTube viewers, free "5-Day Challenge" sign-ups, referrals from past clients.</td>
+          </tr>
+          <tr>
+            <td><strong style="color: var(--color-text);">FUNNEL</strong></td>
+            <td>Free challenge → books a call → Coach Danny walks through program → they pay $997.</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- Slide 8: Coach Danny Point -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Coach Danny can have the <span class="highlight">best program</span> in the world...</h2>
+        <p class="slide-subtitle reveal stagger-1" style="max-width: 700px;">
+          But if nobody knows about it (<strong style="color: var(--color-text);">no leads</strong>), he earns $0.
+        </p>
+        <p class="slide-subtitle reveal stagger-2" style="max-width: 700px;">
+          If people know about it but there's no way to turn them into buyers (<strong style="color: var(--color-text);">no funnel</strong>), he still earns $0.
+        </p>
+        <div class="reveal stagger-3" style="margin-top: var(--space-6); padding: var(--space-4) var(--space-6); background: var(--color-primary-soft); border-radius: var(--radius-lg); color: var(--color-primary); font-weight: 600;">
+          He needs all 3 Things.
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 9: Example - Dr. Lim -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Example</span>
+        <h2 class="slide-title size-lg reveal stagger-1">Dr. Lim's Dental Clinic</h2>
+        <p class="slide-subtitle reveal stagger-2">Neighborhood dentist | Wants 20 more patients/month</p>
+
+        <table class="example-table reveal stagger-3" style="margin-top: var(--space-6);">
+          <tr>
+            <th style="width: 120px;">The 3 Things</th>
+            <th>Dr. Lim's Version</th>
+          </tr>
+          <tr>
+            <td><strong style="color: var(--color-text);">OFFER</strong></td>
+            <td>Teeth cleaning ($80), whitening ($350), braces consultation (free).</td>
+          </tr>
+          <tr>
+            <td><strong style="color: var(--color-text);">LEADS</strong></td>
+            <td>Google search "dentist near me," reviews, walk-by traffic, patient referrals.</td>
+          </tr>
+          <tr>
+            <td><strong style="color: var(--color-text);">FUNNEL</strong></td>
+            <td>Google search → sees 4.8-star reviews → clicks "Book Appointment" → shows up → pays.</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- Slide 10: Same Framework, Different Tactics -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Same <span class="highlight">framework</span>, different tactics</h2>
+
+        <div class="grid-2" style="margin-top: var(--space-8); max-width: 800px; gap: var(--space-6);">
+          <div class="card reveal stagger-1" style="padding: var(--space-6);">
+            <div style="font-size: var(--text-2xl); margin-bottom: var(--space-3);">💪</div>
+            <div style="font-weight: 600; color: var(--color-text); margin-bottom: var(--space-2);">Coach Danny</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-secondary);">Social media + Calls</div>
+          </div>
+          <div class="card reveal stagger-2" style="padding: var(--space-6);">
+            <div style="font-size: var(--text-2xl); margin-bottom: var(--space-3);">🦷</div>
+            <div style="font-weight: 600; color: var(--color-text); margin-bottom: var(--space-2);">Dr. Lim</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-secondary);">Google + Booking page</div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-6);">
+          <strong style="color: var(--color-primary);">The 3 Things is universal.</strong><br>How you do it depends on the business.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 11: Exercise 1 -->
+    <section class="slide exercise-slide">
+      <div class="slide-content">
+        <div class="exercise-card" style="max-width: 700px;">
+          <div class="exercise-header">
+            <div class="exercise-icon">✏️</div>
+            <div class="exercise-label">Exercise</div>
+          </div>
+          <div class="exercise-title">Map The 3 Things</div>
+          <div class="exercise-time">⏱️ 15 minutes</div>
+
+          <div class="numbered-list" style="text-align: left;">
+            <div class="numbered-item">Pick any business you know personally</div>
+            <div class="numbered-item">Write down their version of The 3 Things:<br>
+              <span style="color: var(--color-text-secondary); font-size: var(--text-sm);">• What's their offer?<br>• Where do leads come from?<br>• How do leads become customers?</span>
+            </div>
+            <div class="numbered-item">Share with a partner — do they agree?</div>
+            <div class="numbered-item">2-3 volunteers share with the room</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION B: THE MONEY FLOW ==================== -->
+
+    <!-- Slide 12: Section Header -->
+    <section class="slide section-divider">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Section B</span>
+        <h1 class="slide-title reveal stagger-1">The <span class="highlight">Money Flow</span></h1>
+        <p class="slide-subtitle reveal stagger-2">How money actually moves through a business.</p>
+      </div>
+    </section>
+
+    <!-- Slide 13: Money Flow Diagram -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="flow-diagram">
+          <div class="flow-node framework-box">
+            <div class="icon">👤</div>
+            <div class="label">Strangers</div>
+          </div>
+          <span class="flow-arrow reveal stagger-1">→</span>
+          <div class="flow-node framework-box">
+            <div class="icon">👋</div>
+            <div class="label">Leads</div>
+          </div>
+          <span class="flow-arrow reveal stagger-2">→</span>
+          <div class="flow-node framework-box">
+            <div class="icon">💰</div>
+            <div class="label">Customers</div>
+          </div>
+          <span class="flow-arrow reveal stagger-3">→</span>
+          <div class="flow-node framework-box" style="border-color: var(--color-success);">
+            <div class="icon">🔄</div>
+            <div class="label">Repeat / Referrals</div>
+          </div>
+        </div>
+
+        <div class="reveal stagger-4" style="margin-top: var(--space-8); text-align: center;">
+          <p style="color: var(--color-text-secondary);">Marketing makes steps 1 and 2 happen.<br><strong style="color: var(--color-primary);">That's your job. That's what you get paid for.</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 14: The Flywheel -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">The <span class="highlight">Flywheel</span></h2>
+        <p class="slide-subtitle reveal stagger-1">It's not a line — it's a loop that spins faster over time.</p>
+
+        <div style="max-width: 600px; margin-top: var(--space-6);">
+          <div class="step-card reveal stagger-2" style="margin-bottom: var(--space-3);">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <div class="step-title">Good results</div>
+              <div class="step-description">Customer gets great value</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-3" style="margin-bottom: var(--space-3);">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <div class="step-title">Referrals</div>
+              <div class="step-description">They tell friends (free leads!)</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-4" style="margin-bottom: var(--space-3);">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <div class="step-title">More customers</div>
+              <div class="step-description">Referred leads convert faster</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-5">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <div class="step-title">Repeat</div>
+              <div class="step-description">The flywheel spins faster</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 15: Exercise 2 -->
+    <section class="slide exercise-slide">
+      <div class="slide-content">
+        <div class="exercise-card" style="max-width: 700px;">
+          <div class="exercise-header">
+            <div class="exercise-icon">✏️</div>
+            <div class="exercise-label">Exercise</div>
+          </div>
+          <div class="exercise-title">Draw The Money Flow</div>
+          <div class="exercise-time">⏱️ 10 minutes</div>
+
+          <div class="numbered-list" style="text-align: left;">
+            <div class="numbered-item">Using the same business from Exercise 1</div>
+            <div class="numbered-item">Draw the Money Flow on paper:<br>
+              <span style="color: var(--color-text-secondary); font-size: var(--text-sm);">Stranger → Lead → Customer → Repeat/Referral</span>
+            </div>
+            <div class="numbered-item">Circle the step where marketing is MOST needed</div>
+            <div class="numbered-item">That's the bottleneck — where's the biggest gap?</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION C: THE 3 INDUSTRIES ==================== -->
+
+    <!-- Slide 16: Section Header -->
+    <section class="slide section-divider">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Section C</span>
+        <h1 class="slide-title reveal stagger-1">The <span class="highlight">3 Industries</span></h1>
+        <p class="slide-subtitle reveal stagger-2">Your playing field — the best businesses to work with.</p>
+      </div>
+    </section>
+
+    <!-- Slide 17: 3 Industries Overview -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="grid-3" style="max-width: 1000px; gap: var(--space-4);">
+          <div class="industry-card offline framework-box">
+            <div class="industry-header">
+              <div class="industry-icon">🏪</div>
+              <div class="industry-title">Offline Service</div>
+            </div>
+            <div class="industry-funnel">DM or Call Funnel</div>
+            <div class="industry-examples">
+              <span class="industry-example">Dentist</span>
+              <span class="industry-example">HVAC</span>
+              <span class="industry-example">Salon</span>
+              <span class="industry-example">Gym</span>
+            </div>
+            <div class="industry-ticket">💵 $80 - $8,000</div>
+          </div>
+
+          <div class="industry-card online framework-box">
+            <div class="industry-header">
+              <div class="industry-icon">💼</div>
+              <div class="industry-title">Online Service</div>
+            </div>
+            <div class="industry-funnel">Application or Call Funnel</div>
+            <div class="industry-examples">
+              <span class="industry-example">Law Firm</span>
+              <span class="industry-example">Agency</span>
+              <span class="industry-example">Consultant</span>
+              <span class="industry-example">Accountant</span>
+            </div>
+            <div class="industry-ticket">💵 $500 - $10,000+/mo</div>
+          </div>
+
+          <div class="industry-card coaching framework-box">
+            <div class="industry-header">
+              <div class="industry-icon">🎯</div>
+              <div class="industry-title">Coaching & Education</div>
+            </div>
+            <div class="industry-funnel">Webinar or Digital Funnel</div>
+            <div class="industry-examples">
+              <span class="industry-example">Fitness Coach</span>
+              <span class="industry-example">Business Coach</span>
+              <span class="industry-example">Tutor</span>
+              <span class="industry-example">Career Coach</span>
+            </div>
+            <div class="industry-ticket">💵 $300 - $5,000/program</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 18: Industry 1 - Offline Service -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal" style="background: rgba(0, 217, 163, 0.1); color: var(--color-success);">Industry 1</span>
+        <h2 class="slide-title size-lg reveal stagger-1">Offline Service</h2>
+        <p class="slide-subtitle reveal stagger-2">Local businesses serving customers face-to-face</p>
+
+        <div class="grid-2" style="margin-top: var(--space-6); max-width: 700px; gap: var(--space-4);">
+          <div class="card reveal stagger-3" style="padding: var(--space-4);">
+            <div style="font-weight: 600; color: var(--color-text);">🦷 Dr. Lim's Dental</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-secondary);">$80 - $8,000</div>
+          </div>
+          <div class="card reveal stagger-4" style="padding: var(--space-4);">
+            <div style="font-weight: 600; color: var(--color-text);">❄️ CoolBreeze HVAC</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-secondary);">$150 - $8,000</div>
+          </div>
+          <div class="card reveal stagger-5" style="padding: var(--space-4);">
+            <div style="font-weight: 600; color: var(--color-text);">💇 Glamour Hair Salon</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-secondary);">$50 - $300</div>
+          </div>
+          <div class="card reveal stagger-6" style="padding: var(--space-4);">
+            <div style="font-weight: 600; color: var(--color-text);">🏋️ FitZone Gym</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-secondary);">$80/month</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 19: Industry 2 - Online Service -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal" style="background: rgba(0, 153, 255, 0.1); color: var(--color-info);">Industry 2</span>
+        <h2 class="slide-title size-lg reveal stagger-1">Online Service / High-Ticket</h2>
+        <p class="slide-subtitle reveal stagger-2">Professional services selling expertise and relationships</p>
+
+        <div class="grid-2" style="margin-top: var(--space-6); max-width: 700px; gap: var(--space-4);">
+          <div class="card reveal stagger-3" style="padding: var(--space-4);">
+            <div style="font-weight: 600; color: var(--color-text);">⚖️ Sarah's Law Firm</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-secondary);">$3,000/mo retainer</div>
+          </div>
+          <div class="card reveal stagger-4" style="padding: var(--space-4);">
+            <div style="font-weight: 600; color: var(--color-text);">📈 Jackson's Marketing Agency</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-secondary);">$2,000 - $5,000/mo</div>
+          </div>
+          <div class="card reveal stagger-5" style="padding: var(--space-4);">
+            <div style="font-weight: 600; color: var(--color-text);">💡 Paul's Business Consulting</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-secondary);">$3,000 - $10,000/project</div>
+          </div>
+          <div class="card reveal stagger-6" style="padding: var(--space-4);">
+            <div style="font-weight: 600; color: var(--color-text);">📊 Rachel's Accounting Firm</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-secondary);">$500 - $2,000/mo</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 20: Industry 3 - Coaching -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal" style="background: var(--color-primary-soft); color: var(--color-primary);">Industry 3</span>
+        <h2 class="slide-title size-lg reveal stagger-1">Coaching & Education</h2>
+        <p class="slide-subtitle reveal stagger-2">Transformation through programs, courses, and coaching</p>
+
+        <div class="grid-2" style="margin-top: var(--space-6); max-width: 700px; gap: var(--space-4);">
+          <div class="card reveal stagger-3" style="padding: var(--space-4);">
+            <div style="font-weight: 600; color: var(--color-text);">💪 Coach Danny</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-secondary);">$997/program</div>
+          </div>
+          <div class="card reveal stagger-4" style="padding: var(--space-4);">
+            <div style="font-weight: 600; color: var(--color-text);">🚀 Maya's Business Coaching</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-secondary);">$2,500/program</div>
+          </div>
+          <div class="card reveal stagger-5" style="padding: var(--space-4);">
+            <div style="font-weight: 600; color: var(--color-text);">📚 LingoMaster Tutoring</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-secondary);">$50/hr, $800/package</div>
+          </div>
+          <div class="card reveal stagger-6" style="padding: var(--space-4);">
+            <div style="font-weight: 600; color: var(--color-text);">🎯 CareerBoost Coaching</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-secondary);">$300 - $1,000/package</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 21: Why These Industries -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Why these 3? <span class="highlight">High ticket = fewer clients needed</span></h2>
+
+        <div class="grid-2" style="margin-top: var(--space-8); max-width: 800px; gap: var(--space-6);">
+          <div class="card reveal stagger-1" style="padding: var(--space-6); border-color: var(--color-success);">
+            <div style="font-size: var(--text-xl); margin-bottom: var(--space-3);">🎯</div>
+            <div style="font-weight: 600; color: var(--color-text); margin-bottom: var(--space-2);">Coach Danny</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-secondary);">3 clients × $997 = <strong style="color: var(--color-success);">$2,991/month</strong></div>
+            <div style="font-size: var(--text-xs); color: var(--color-text-muted); margin-top: var(--space-2);">Help him get 3 people.</div>
+          </div>
+          <div class="card reveal stagger-2" style="padding: var(--space-6); border-color: var(--color-danger);">
+            <div style="font-size: var(--text-xl); margin-bottom: var(--space-3);">🛒</div>
+            <div style="font-weight: 600; color: var(--color-text); margin-bottom: var(--space-2);">E-commerce Store</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-secondary);">$35 avg order × 86 = <strong style="color: var(--color-danger);">$3,010</strong></div>
+            <div style="font-size: var(--text-xs); color: var(--color-text-muted); margin-top: var(--space-2);">Need 86 strangers to complete checkout. Much harder.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 22: Fishing Analogy -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Think of it like <span class="highlight">fishing</span></h2>
+
+        <div class="grid-2" style="margin-top: var(--space-8); max-width: 800px; gap: var(--space-6);">
+          <div class="card reveal stagger-1" style="padding: var(--space-6); text-align: center;">
+            <div style="font-size: var(--text-4xl); margin-bottom: var(--space-4);">🎯</div>
+            <div style="font-weight: 600; color: var(--color-success); font-size: var(--text-lg); margin-bottom: var(--space-2);">Spear fishing</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-secondary);">Find the right fish, aim carefully, catch one big one. Done.</div>
+            <div style="font-size: var(--text-xs); color: var(--color-text-muted); margin-top: var(--space-3);">Our 3 industries</div>
+          </div>
+          <div class="card reveal stagger-2" style="padding: var(--space-6); text-align: center;">
+            <div style="font-size: var(--text-4xl); margin-bottom: var(--space-4);">🥅</div>
+            <div style="font-weight: 600; color: var(--color-warning); font-size: var(--text-lg); margin-bottom: var(--space-2);">Net fishing</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-secondary);">Cast wide, catch hundreds of small fish, hope enough stay.</div>
+            <div style="font-size: var(--text-xs); color: var(--color-text-muted); margin-top: var(--space-3);">E-commerce / SaaS</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 23: Exercise 3 -->
+    <section class="slide exercise-slide">
+      <div class="slide-content">
+        <div class="exercise-card" style="max-width: 700px;">
+          <div class="exercise-header">
+            <div class="exercise-icon">✏️</div>
+            <div class="exercise-label">Exercise</div>
+          </div>
+          <div class="exercise-title">Pick Your Industry</div>
+          <div class="exercise-time">⏱️ 10 minutes</div>
+
+          <div class="numbered-list" style="text-align: left;">
+            <div class="numbered-item">Look at the 3 Industries and 12 examples</div>
+            <div class="numbered-item">Pick the 1 industry you're MOST interested in</div>
+            <div class="numbered-item">Pick 1-2 example businesses that excite you</div>
+            <div class="numbered-item">Write: "I want to work with <span class="highlight">[industry]</span> businesses like <span class="highlight">[example]</span> because <span class="highlight">[reason]</span>"</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION D: WHAT THIS MEANS FOR YOU ==================== -->
+
+    <!-- Slide 24: Section Header -->
+    <section class="slide section-divider">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Section D</span>
+        <h1 class="slide-title reveal stagger-1">What This Means <span class="highlight">For YOU</span></h1>
+      </div>
+    </section>
+
+    <!-- Slide 25: Your Role -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">You are the person who <span class="highlight">fixes</span> The 3 Things</h2>
+        <p class="slide-subtitle reveal stagger-1">When a business hires you, it's because one or more parts isn't working.</p>
+
+        <table class="diagnostic-table reveal stagger-2" style="margin-top: var(--space-6);">
+          <tr>
+            <th>Problem</th>
+            <th>Broken Pillar</th>
+            <th>What you do</th>
+          </tr>
+          <tr>
+            <td>"Nobody knows about us"</td>
+            <td>LEADS</td>
+            <td style="color: var(--color-text-secondary);">Create content, build social presence</td>
+          </tr>
+          <tr>
+            <td>"People visit but don't buy"</td>
+            <td>FUNNEL</td>
+            <td style="color: var(--color-text-secondary);">Fix website, create landing page</td>
+          </tr>
+          <tr>
+            <td>"Our offer isn't clear"</td>
+            <td>OFFER</td>
+            <td style="color: var(--color-text-secondary);">Clarify positioning, design presentation</td>
+          </tr>
+          <tr>
+            <td>"Clients don't come back"</td>
+            <td>FUNNEL (retention)</td>
+            <td style="color: var(--color-text-secondary);">Email follow-ups, review requests</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- Slide 26: Why AI Marketer is Best -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Why <span class="highlight">AI Marketer</span> is the best business</h2>
+
+        <div style="max-width: 700px; margin-top: var(--space-6);">
+          <div class="step-card reveal stagger-1" style="margin-bottom: var(--space-4);">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <div class="step-title">High demand</div>
+              <div class="step-description">Every business needs marketing. EVERY. SINGLE. ONE.</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-2" style="margin-bottom: var(--space-4);">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <div class="step-title">AI makes you 10x faster</div>
+              <div class="step-description">What used to take 10 hours now takes 1 hour.</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-3">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <div class="step-title">You're genuinely helping</div>
+              <div class="step-description">You help businesses survive and thrive.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 27: The Mission -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="quote-box reveal" style="max-width: 800px;">
+          <p class="quote-text">
+            When you help a business fix their Leads problem, you're not just "doing marketing."
+          </p>
+          <p style="color: var(--color-text-secondary); margin-top: var(--space-4); font-size: var(--text-lg);">
+            You're helping <strong style="color: var(--color-text);">Dr. Lim</strong> keep his clinic open.<br>
+            You're helping <strong style="color: var(--color-text);">Coach Danny</strong> change more lives.<br>
+            You're helping <strong style="color: var(--color-text);">Sarah's Law Firm</strong> grow.
+          </p>
+        </div>
+        <p class="reveal stagger-1" style="margin-top: var(--space-6); color: var(--color-primary); font-family: var(--font-display); font-weight: 700; font-size: var(--text-xl);">
+          You're not selling marketing — you're helping businesses survive and thrive.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 28: 3-Day Map -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">The Journey</span>
+        <h2 class="slide-title size-lg reveal stagger-1">Your 3-Day Path to <span class="highlight">$1K</span></h2>
+
+        <div class="flow-diagram reveal stagger-2" style="margin-top: var(--space-8);">
+          <div class="flow-node" style="border-color: var(--color-primary); background: rgba(255, 79, 0, 0.05);">
+            <div style="font-weight: 700; color: var(--color-primary);">DAY 1</div>
+            <div class="label">WHY</div>
+            <div style="font-size: var(--text-xs); color: var(--color-text-muted);">Understand</div>
+          </div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-node">
+            <div style="font-weight: 700; color: var(--color-text-muted);">DAY 2</div>
+            <div class="label">WHERE</div>
+            <div style="font-size: var(--text-xs); color: var(--color-text-muted);">Get Leads</div>
+          </div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-node">
+            <div style="font-weight: 700; color: var(--color-text-muted);">DAY 3</div>
+            <div class="label">HOW</div>
+            <div style="font-size: var(--text-xs); color: var(--color-text-muted);">Close</div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-6);">
+          Now you know how businesses work.<br>Next: How to <span class="highlight">find</span> them and how to <span class="highlight">close</span> them.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 29: Checkpoint -->
+    <section class="slide checkpoint-slide">
+      <div class="slide-content">
+        <div class="checkpoint-card" style="max-width: 700px;">
+          <div class="checkpoint-title">✓ Module 1 Checkpoint</div>
+
+          <div class="checklist">
+            <div class="checklist-item reveal">
+              <span class="check-icon">✓</span>
+              <span class="check-text">Name the 3 parts of The 3 Things (Offer, Leads, Funnel)</span>
+            </div>
+            <div class="checklist-item reveal stagger-1">
+              <span class="check-icon">✓</span>
+              <span class="check-text">Explain that closing happens INSIDE the funnel</span>
+            </div>
+            <div class="checklist-item reveal stagger-2">
+              <span class="check-icon">✓</span>
+              <span class="check-text">Explain The Money Flow for any business</span>
+            </div>
+            <div class="checklist-item reveal stagger-3">
+              <span class="check-icon">✓</span>
+              <span class="check-text">Name the 3 industries with examples</span>
+            </div>
+            <div class="checklist-item reveal stagger-4">
+              <span class="check-icon">✓</span>
+              <span class="check-text">Articulate what an AI Marketer does</span>
+            </div>
+            <div class="checklist-item reveal stagger-5">
+              <span class="check-icon">✓</span>
+              <span class="check-text">Explain WHY AI Marketer is the best business</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 30: Transition -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Up Next</span>
+        <h2 class="slide-title size-lg reveal stagger-1">Module 2: The <span class="highlight">Customer Journey</span></h2>
+        <p class="slide-subtitle reveal stagger-2" style="max-width: 700px;">
+          When a customer goes from stranger to buyer, what EXACTLY happens?<br><br>
+          <strong style="color: var(--color-text);">Stranger → Lead → Buyer.</strong><br>
+          Just 3 steps.
+        </p>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="../../shared/js/slides.js"></script>
+</body>
+</html>

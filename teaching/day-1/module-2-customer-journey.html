@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module 2: The Customer Journey | AIA Workshop</title>
+  <link rel="stylesheet" href="../../shared/css/base.css">
+  <link rel="stylesheet" href="../../shared/css/slides.css">
+  <link rel="stylesheet" href="../../shared/css/animations.css">
+  <link rel="stylesheet" href="../../shared/css/components.css">
+  <style>
+    .journey-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+
+    .journey-step {
+      width: 220px;
+      padding: var(--space-6);
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-2xl);
+      text-align: center;
+      transition: all 0.4s var(--ease-out-expo);
+    }
+
+    .journey-step:hover {
+      border-color: var(--color-primary);
+      transform: translateY(-4px);
+    }
+
+    .journey-step.active {
+      border-color: var(--color-primary);
+      background: rgba(255, 79, 0, 0.05);
+      box-shadow: 0 0 30px var(--color-primary-glow);
+    }
+
+    .journey-icon {
+      font-size: var(--text-3xl);
+      margin-bottom: var(--space-3);
+    }
+
+    .journey-title {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+    }
+
+    .journey-question {
+      font-size: var(--text-sm);
+      color: var(--color-primary);
+      font-style: italic;
+    }
+
+    .journey-arrow {
+      font-size: var(--text-2xl);
+      color: var(--color-primary);
+    }
+
+    .touchpoint-table {
+      width: 100%;
+      max-width: 900px;
+      border-collapse: collapse;
+    }
+
+    .touchpoint-table th,
+    .touchpoint-table td {
+      padding: var(--space-4);
+      text-align: left;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .touchpoint-table th {
+      font-family: var(--font-display);
+      font-weight: 600;
+      color: var(--color-text);
+      background: var(--color-bg-card);
+    }
+
+    .touchpoint-table td {
+      color: var(--color-text-secondary);
+      font-size: var(--text-sm);
+    }
+
+    .touchpoint-table td:first-child {
+      font-weight: 500;
+      color: var(--color-primary);
+    }
+
+    .speed-bar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-bg-card);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-3);
+    }
+
+    .speed-label {
+      min-width: 160px;
+      font-weight: 500;
+      color: var(--color-text);
+    }
+
+    .speed-indicator {
+      flex: 1;
+      height: 8px;
+      background: var(--color-border);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+
+    .speed-fill {
+      height: 100%;
+      background: var(--color-primary);
+      border-radius: var(--radius-full);
+      transition: width 0.8s var(--ease-out-expo);
+    }
+
+    .speed-time {
+      min-width: 80px;
+      text-align: right;
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+
+    .vs-container {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: var(--space-6);
+      align-items: center;
+      max-width: 800px;
+    }
+
+    .vs-divider {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: var(--color-text-muted);
+    }
+
+    .doctor-card {
+      background: rgba(0, 217, 163, 0.05);
+      border: 2px solid var(--color-success);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      text-align: center;
+    }
+
+    .pharmacist-card {
+      background: rgba(255, 71, 87, 0.05);
+      border: 2px solid var(--color-danger);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      text-align: center;
+    }
+
+    .analogy-icon {
+      font-size: var(--text-4xl);
+      margin-bottom: var(--space-4);
+    }
+
+    .analogy-title {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 700;
+      margin-bottom: var(--space-3);
+    }
+
+    .analogy-description {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+    }
+
+    @media (max-width: 768px) {
+      .journey-flow {
+        flex-direction: column;
+      }
+
+      .journey-arrow {
+        transform: rotate(90deg);
+      }
+
+      .vs-container {
+        grid-template-columns: 1fr;
+        gap: var(--space-4);
+      }
+
+      .vs-divider {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="slides-container">
+
+    <!-- ==================== OPENING ==================== -->
+
+    <!-- Slide 1: Module Title -->
+    <section class="slide title-slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Day 1 | Module 2 | 1:00 - 3:00</span>
+        <h1 class="slide-title reveal stagger-1">The <span class="highlight">Customer Journey</span></h1>
+        <p class="slide-subtitle reveal stagger-2">What does the client's customer go through from stranger to buyer?</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: The Big Question -->
+    <section class="slide">
+      <div class="slide-content">
+        <h1 class="slide-title size-xl reveal">"What happens between<br><span class="highlight">'I've never heard of you'</span><br>and<br><span class="highlight">'take my money'</span>?"</h1>
+      </div>
+    </section>
+
+    <!-- Slide 3: The Answer -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">The answer is simpler than you think.</h2>
+        <p class="slide-subtitle reveal stagger-1">Just <span class="highlight">3 steps</span>. Every time.</p>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION A: THE 3 STEPS ==================== -->
+
+    <!-- Slide 4: The Journey Framework -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">The Customer Journey</span>
+        <div class="journey-flow" style="margin-top: var(--space-8);">
+          <div class="journey-step framework-box">
+            <div class="journey-icon">👤</div>
+            <div class="journey-title">STRANGER</div>
+            <div class="journey-question">"Who are you?"</div>
+          </div>
+          <span class="journey-arrow reveal stagger-1">→</span>
+          <div class="journey-step framework-box">
+            <div class="journey-icon">👋</div>
+            <div class="journey-title">LEAD</div>
+            <div class="journey-question">"Interested in you"</div>
+          </div>
+          <span class="journey-arrow reveal stagger-2">→</span>
+          <div class="journey-step framework-box">
+            <div class="journey-icon">💰</div>
+            <div class="journey-title">BUYER</div>
+            <div class="journey-question">"Paid customer"</div>
+          </div>
+        </div>
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-8);">
+          Nobody teleports from stranger to buyer. They go <span class="highlight">step by step</span>.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 5: What Each Step Means -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">What happens at each step?</h2>
+
+        <div style="max-width: 700px; margin-top: var(--space-6);">
+          <div class="step-card reveal stagger-1" style="margin-bottom: var(--space-4);">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <div class="step-title">STRANGER → "I don't know you exist"</div>
+              <div class="step-description">They see your content, ad, referral, or search result → <strong style="color: var(--color-primary);">WHERE (4 Doors)</strong></div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-2" style="margin-bottom: var(--space-4);">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <div class="step-title">LEAD → "Tell me more"</div>
+              <div class="step-description">They engage, follow, sign up, ask questions → <strong style="color: var(--color-primary);">WHAT (Offer)</strong></div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-3">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <div class="step-title">BUYER → "Take my money"</div>
+              <div class="step-description">They pay and receive the product/service → <strong style="color: var(--color-primary);">HOW (Funnel + Closing)</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 6: Think About Your Last Purchase -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Think about the last time <span class="highlight">YOU</span> bought something.</h2>
+        <p class="slide-subtitle reveal stagger-1" style="max-width: 700px;">
+          You didn't just wake up and buy. You found out about it → got interested → decided to buy.
+        </p>
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-4);">
+          <strong style="color: var(--color-text);">Same 3 steps. Every time.</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 7: Example - Coach Danny -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Example</span>
+        <h2 class="slide-title size-lg reveal stagger-1">Coach Danny's Journey</h2>
+        <p class="slide-subtitle reveal stagger-2">Online fitness coach | $997 transformation program</p>
+
+        <div style="max-width: 800px; margin-top: var(--space-6);">
+          <div class="step-card reveal stagger-3" style="margin-bottom: var(--space-3);">
+            <div class="step-number" style="background: var(--color-text-muted);">👤</div>
+            <div class="step-content">
+              <div class="step-title">STRANGER</div>
+              <div class="step-description">Scrolling Instagram. Sees reel: "3 exercises to lose belly fat in 2 weeks."</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-4" style="margin-bottom: var(--space-3);">
+            <div class="step-number" style="background: var(--color-warning);">👋</div>
+            <div class="step-content">
+              <div class="step-title">LEAD</div>
+              <div class="step-description">Follows him. Watches more videos. Comments "READY" on challenge post. Joins free 5-Day Challenge.</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-5">
+            <div class="step-number" style="background: var(--color-success);">💰</div>
+            <div class="step-content">
+              <div class="step-title">BUYER</div>
+              <div class="step-description">After challenge, books call with Coach Danny. Hears about 12-week program. Pays $997.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 8: Coach Danny Insight -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Coach Danny's journey takes <span class="highlight">weeks</span></h2>
+        <p class="slide-subtitle reveal stagger-1" style="max-width: 700px;">
+          Someone doesn't see one video and pay $997. They need to be <strong style="color: var(--color-text);">nurtured</strong> — multiple touchpoints, trust building, then the close.
+        </p>
+        <div class="reveal stagger-2" style="margin-top: var(--space-6); padding: var(--space-4) var(--space-6); background: var(--color-primary-soft); border-radius: var(--radius-lg); color: var(--color-primary); font-weight: 500;">
+          This is typical for coaching and high-ticket services.
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 9: Example - Dr. Lim -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Example</span>
+        <h2 class="slide-title size-lg reveal stagger-1">Dr. Lim's Journey</h2>
+        <p class="slide-subtitle reveal stagger-2">Neighborhood dentist | $80 - $8,000 services</p>
+
+        <div style="max-width: 800px; margin-top: var(--space-6);">
+          <div class="step-card reveal stagger-3" style="margin-bottom: var(--space-3);">
+            <div class="step-number" style="background: var(--color-text-muted);">👤</div>
+            <div class="step-content">
+              <div class="step-title">STRANGER</div>
+              <div class="step-description">Someone has a toothache. Googles "dentist near me." Dr. Lim shows up with 4.8 stars.</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-4" style="margin-bottom: var(--space-3);">
+            <div class="step-number" style="background: var(--color-warning);">👋</div>
+            <div class="step-content">
+              <div class="step-title">LEAD</div>
+              <div class="step-description">Clicks website. Sees "Free first consultation." Clean clinic photos. Reads 3 reviews. "This looks legit."</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-5">
+            <div class="step-number" style="background: var(--color-success);">💰</div>
+            <div class="step-content">
+              <div class="step-title">BUYER</div>
+              <div class="step-description">Clicks "Book Appointment." Picks time slot. Shows up. Gets treated. Pays $80.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 10: Dr. Lim Insight -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Dr. Lim's journey is <span class="highlight">FAST</span></h2>
+        <p class="slide-subtitle reveal stagger-1" style="max-width: 700px;">
+          A toothache is urgent — the customer moves from stranger to buyer in <strong style="color: var(--color-text);">HOURS</strong>, not weeks.
+        </p>
+        <div class="reveal stagger-2" style="margin-top: var(--space-6); padding: var(--space-4) var(--space-6); background: rgba(0, 217, 163, 0.1); border-radius: var(--radius-lg); color: var(--color-success); font-weight: 500;">
+          Urgency-driven businesses have the shortest journeys.
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 11: Journey Speed Comparison -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Journey <span class="highlight">Speed</span> Varies</h2>
+
+        <div style="max-width: 700px; margin-top: var(--space-6);">
+          <div class="speed-bar reveal stagger-1">
+            <div class="speed-label">CoolBreeze HVAC</div>
+            <div class="speed-indicator"><div class="speed-fill" style="width: 10%;"></div></div>
+            <div class="speed-time">2 hours</div>
+          </div>
+          <div class="speed-bar reveal stagger-2">
+            <div class="speed-label">Dr. Lim's Dental</div>
+            <div class="speed-indicator"><div class="speed-fill" style="width: 15%;"></div></div>
+            <div class="speed-time">Same day</div>
+          </div>
+          <div class="speed-bar reveal stagger-3">
+            <div class="speed-label">FitZone Gym</div>
+            <div class="speed-indicator"><div class="speed-fill" style="width: 30%;"></div></div>
+            <div class="speed-time">1-3 days</div>
+          </div>
+          <div class="speed-bar reveal stagger-4">
+            <div class="speed-label">Sarah's Law Firm</div>
+            <div class="speed-indicator"><div class="speed-fill" style="width: 60%;"></div></div>
+            <div class="speed-time">1-2 weeks</div>
+          </div>
+          <div class="speed-bar reveal stagger-5">
+            <div class="speed-label">Coach Danny</div>
+            <div class="speed-indicator"><div class="speed-fill" style="width: 90%;"></div></div>
+            <div class="speed-time">2-4 weeks</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 12: The Pattern -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">The Pattern</span>
+        <h2 class="slide-title size-lg reveal stagger-1">Low ticket + Urgency = <span class="highlight" style="color: var(--color-success);">Fast</span></h2>
+        <h2 class="slide-title size-lg reveal stagger-2">High ticket + Consideration = <span class="highlight" style="color: var(--color-warning);">Slow</span></h2>
+
+        <div class="reveal stagger-3" style="margin-top: var(--space-8); padding: var(--space-4) var(--space-6); background: var(--color-bg-card); border-radius: var(--radius-lg);">
+          <strong style="color: var(--color-primary);">Why this matters:</strong>
+          <span style="color: var(--color-text-secondary);">The slower the journey, the more touchpoints you need.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 13: Find the Bottleneck -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Find the <span class="highlight">Bottleneck</span></h2>
+        <p class="slide-subtitle reveal stagger-1">When diagnosing a business, ask: "Where are people getting stuck?"</p>
+
+        <div class="grid-2" style="margin-top: var(--space-8); max-width: 800px; gap: var(--space-6);">
+          <div class="card reveal stagger-2" style="padding: var(--space-6); border-color: var(--color-danger);">
+            <div style="font-size: var(--text-xl); margin-bottom: var(--space-3);">👤 → 👋</div>
+            <div style="font-weight: 600; color: var(--color-danger); margin-bottom: var(--space-2);">Stranger → Lead stuck?</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-secondary);">That's an <strong>ATTENTION</strong> problem.<br>Fix with: Content, Ads, Outreach</div>
+          </div>
+          <div class="card reveal stagger-3" style="padding: var(--space-6); border-color: var(--color-warning);">
+            <div style="font-size: var(--text-xl); margin-bottom: var(--space-3);">👋 → 💰</div>
+            <div style="font-weight: 600; color: var(--color-warning); margin-bottom: var(--space-2);">Lead → Buyer stuck?</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-secondary);">That's a <strong>CONVERSION</strong> problem.<br>Fix with: Landing page, Sales calls, Follow-up</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 14: Exercise 1 -->
+    <section class="slide exercise-slide">
+      <div class="slide-content">
+        <div class="exercise-card" style="max-width: 700px;">
+          <div class="exercise-header">
+            <div class="exercise-icon">✏️</div>
+            <div class="exercise-label">Exercise</div>
+          </div>
+          <div class="exercise-title">Map the Journey</div>
+          <div class="exercise-time">⏱️ 15 minutes</div>
+
+          <div class="numbered-list" style="text-align: left;">
+            <div class="numbered-item">Pick ONE of the 12 example businesses</div>
+            <div class="numbered-item">Map the 3-step journey:<br>
+              <span style="color: var(--color-text-secondary); font-size: var(--text-sm);">• STRANGER: How do they find out?<br>• LEAD: What makes them interested?<br>• BUYER: How does the sale happen?</span>
+            </div>
+            <div class="numbered-item">Identify the BOTTLENECK — which transition is hardest?</div>
+            <div class="numbered-item">Share with partner: "What would fix that bottleneck?"</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION B: THE TOUCHPOINT MAP ==================== -->
+
+    <!-- Slide 15: Section Header -->
+    <section class="slide section-divider">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Section B</span>
+        <h1 class="slide-title reveal stagger-1">The <span class="highlight">Touchpoint Map</span></h1>
+        <p class="slide-subtitle reveal stagger-2">What does the business NEED at each step?</p>
+      </div>
+    </section>
+
+    <!-- Slide 16: Touchpoints Concept -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Every step has <span class="highlight">touchpoints</span></h2>
+        <p class="slide-subtitle reveal stagger-1" style="max-width: 700px;">
+          A website. A social post. A review. An email. A phone call. These are the bricks that build the journey.
+        </p>
+        <div class="reveal stagger-2" style="margin-top: var(--space-6); padding: var(--space-4) var(--space-6); background: var(--color-primary-soft); border-radius: var(--radius-lg); color: var(--color-primary); font-weight: 500;">
+          Every touchpoint is a marketing task that someone needs to create. That someone is YOU.
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 17: Touchpoint Map -->
+    <section class="slide">
+      <div class="slide-content">
+        <table class="touchpoint-table reveal">
+          <tr>
+            <th>Journey Step</th>
+            <th>What they need</th>
+            <th>Common touchpoints</th>
+          </tr>
+          <tr>
+            <td>STRANGER → LEAD</td>
+            <td style="color: var(--color-text);">Get attention + Build interest</td>
+            <td>Social content, ads, SEO, Google listing, lead magnet, profile</td>
+          </tr>
+          <tr>
+            <td>LEAD → BUYER</td>
+            <td style="color: var(--color-text);">Create trust + Close</td>
+            <td>Website, landing page, testimonials, case studies, sales call</td>
+          </tr>
+          <tr>
+            <td>BUYER → REPEAT</td>
+            <td style="color: var(--color-text);">Keep them</td>
+            <td>Follow-up emails, review request, loyalty program, upsells</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- Slide 18: Restaurant Analogy -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Think of it like a restaurant</span>
+
+        <div class="grid-3" style="margin-top: var(--space-8); max-width: 900px; gap: var(--space-4);">
+          <div class="card reveal stagger-1" style="padding: var(--space-6); text-align: center;">
+            <div style="font-size: var(--text-3xl); margin-bottom: var(--space-3);">🪧</div>
+            <div style="font-weight: 600; color: var(--color-text); margin-bottom: var(--space-2);">STRANGER → LEAD</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-secondary);">The sign outside, the smell, the reviews</div>
+            <div style="font-size: var(--text-xs); color: var(--color-text-muted); margin-top: var(--space-2);">Gets you to walk in</div>
+          </div>
+          <div class="card reveal stagger-2" style="padding: var(--space-6); text-align: center;">
+            <div style="font-size: var(--text-3xl); margin-bottom: var(--space-3);">📋</div>
+            <div style="font-weight: 600; color: var(--color-text); margin-bottom: var(--space-2);">LEAD → BUYER</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-secondary);">The menu, the waiter's recommendation</div>
+            <div style="font-size: var(--text-xs); color: var(--color-text-muted); margin-top: var(--space-2);">Gets you to order and pay</div>
+          </div>
+          <div class="card reveal stagger-3" style="padding: var(--space-6); text-align: center;">
+            <div style="font-size: var(--text-3xl); margin-bottom: var(--space-3);">🎁</div>
+            <div style="font-weight: 600; color: var(--color-text); margin-bottom: var(--space-2);">BUYER → REPEAT</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-secondary);">"Thanks! Here's 10% off next time."</div>
+            <div style="font-size: var(--text-xs); color: var(--color-text-muted); margin-top: var(--space-2);">Gets you to come back</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 19: Different Industries, Different Touchpoints -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Different industries = different <span class="highlight">touchpoints</span></h2>
+
+        <div class="grid-2" style="margin-top: var(--space-8); max-width: 800px; gap: var(--space-6);">
+          <div class="card reveal stagger-1" style="padding: var(--space-6);">
+            <div style="font-size: var(--text-xl); margin-bottom: var(--space-3);">💪</div>
+            <div style="font-weight: 600; color: var(--color-text); margin-bottom: var(--space-2);">Coach Danny</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-secondary);">
+              <strong style="color: var(--color-primary);">Touchpoint-heavy</strong><br>
+              Lots of content, nurturing, calls. Takes weeks.
+            </div>
+          </div>
+          <div class="card reveal stagger-2" style="padding: var(--space-6);">
+            <div style="font-size: var(--text-xl); margin-bottom: var(--space-3);">🦷</div>
+            <div style="font-weight: 600; color: var(--color-text); margin-bottom: var(--space-2);">Dr. Lim</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-secondary);">
+              <strong style="color: var(--color-success);">Speed-heavy</strong><br>
+              Quick Google → book → done. Takes hours.
+            </div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-6);">
+          Your job: Know which touchpoints matter most for <span class="highlight">THAT</span> business.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 20: Exercise 2 -->
+    <section class="slide exercise-slide">
+      <div class="slide-content">
+        <div class="exercise-card" style="max-width: 700px;">
+          <div class="exercise-header">
+            <div class="exercise-icon">✏️</div>
+            <div class="exercise-label">Exercise</div>
+          </div>
+          <div class="exercise-title">Map the Touchpoints</div>
+          <div class="exercise-time">⏱️ 15 minutes</div>
+
+          <div class="numbered-list" style="text-align: left;">
+            <div class="numbered-item">Take your journey from the previous exercise</div>
+            <div class="numbered-item">For each step, list the touchpoints the business currently HAS</div>
+            <div class="numbered-item">Circle any transitions with NO touchpoint (gaps!)</div>
+            <div class="numbered-item">Star touchpoints an AI Marketer could CREATE or IMPROVE</div>
+            <div class="numbered-item">Share: "Here's where this business is missing something. I could help with ___."</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION C: THE CLIENT'S POV ==================== -->
+
+    <!-- Slide 21: Section Header -->
+    <section class="slide section-divider">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Section C</span>
+        <h1 class="slide-title reveal stagger-1">The Client's <span class="highlight">POV</span></h1>
+        <p class="slide-subtitle reveal stagger-2">Think like a business owner, not a marketer.</p>
+      </div>
+    </section>
+
+    <!-- Slide 22: The Mindset Shift -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">When Coach Danny hires you...</h2>
+        <p class="slide-subtitle reveal stagger-1" style="max-width: 800px;">
+          He's NOT thinking: "I need someone who's good at Canva."
+        </p>
+        <div class="quote-box reveal stagger-2" style="margin-top: var(--space-6); max-width: 700px;">
+          <p class="quote-text" style="font-size: var(--text-lg);">
+            "I'm stuck at 10 clients a month. I need to get to 30. My Instagram gets views but nobody signs up for the challenge. Something's broken between 'they watch my video' and 'they join the challenge.' <span class="highlight">Can you fix THAT?</span>"
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 23: The 3 Questions -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">The 3 Questions Every Client Asks</h2>
+        <p class="slide-subtitle reveal stagger-1">(Even if they don't say it out loud)</p>
+
+        <div style="max-width: 700px; margin-top: var(--space-6);">
+          <div class="step-card reveal stagger-2" style="margin-bottom: var(--space-3);">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <div class="step-title">"Do you understand MY business?"</div>
+              <div class="step-description">What they say: "So what do you know about [my industry]?"</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-3" style="margin-bottom: var(--space-3);">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <div class="step-title">"Can you actually help me get results?"</div>
+              <div class="step-description">What they say: "What have you done before?"</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-4">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <div class="step-title">"Is this going to be worth the money?"</div>
+              <div class="step-description">What they say: "How much do you charge?"</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 24: Doctor vs Pharmacist -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Doctor vs. <span class="highlight">Pharmacist</span></h2>
+
+        <div class="vs-container reveal stagger-1" style="margin-top: var(--space-8);">
+          <div class="pharmacist-card">
+            <div class="analogy-icon">💊</div>
+            <div class="analogy-title" style="color: var(--color-danger);">Pharmacist</div>
+            <div class="analogy-description">
+              "I need Panadol."<br>
+              "Here's Panadol."<br><br>
+              <em>Gives you what you ask for.</em>
+            </div>
+          </div>
+
+          <div class="vs-divider">VS</div>
+
+          <div class="doctor-card">
+            <div class="analogy-icon">🩺</div>
+            <div class="analogy-title" style="color: var(--color-success);">Doctor</div>
+            <div class="analogy-description">
+              "Tell me your symptoms..."<br>
+              "You don't need Panadol. You need antibiotics."<br><br>
+              <em>Diagnoses first, THEN prescribes.</em>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 25: Be a Doctor -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">AI Marketers are <span class="highlight">doctors</span></h2>
+        <p class="slide-subtitle reveal stagger-1" style="max-width: 700px;">
+          Most freelancers are pharmacists. Client says "I need a website" → they build a website.
+        </p>
+        <p class="slide-subtitle reveal stagger-2" style="max-width: 700px; margin-top: var(--space-4);">
+          But maybe the client doesn't need a website — they need more Google reviews. Or a better landing page. Or a content strategy.
+        </p>
+        <div class="reveal stagger-3" style="margin-top: var(--space-6); padding: var(--space-4) var(--space-6); background: rgba(0, 217, 163, 0.1); border-radius: var(--radius-lg); color: var(--color-success); font-weight: 500;">
+          You diagnose first (using The Customer Journey), then prescribe (using your skills).
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 26: Exercise 3 -->
+    <section class="slide exercise-slide">
+      <div class="slide-content">
+        <div class="exercise-card" style="max-width: 700px;">
+          <div class="exercise-header">
+            <div class="exercise-icon">✏️</div>
+            <div class="exercise-label">Exercise</div>
+          </div>
+          <div class="exercise-title">The Client Brief (Role-play)</div>
+          <div class="exercise-time">⏱️ 15 minutes</div>
+
+          <div class="numbered-list" style="text-align: left;">
+            <div class="numbered-item">Pair up: One is the business owner, one is the AI Marketer</div>
+            <div class="numbered-item">Business owner says: "I need help with marketing. Can you help?"</div>
+            <div class="numbered-item">AI Marketer asks 3 diagnostic questions using the journey framework</div>
+            <div class="numbered-item">Identify: Which transition is broken? What would you look at first?</div>
+            <div class="numbered-item">Switch roles and repeat</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CHECKPOINT ==================== -->
+
+    <!-- Slide 27: Checkpoint -->
+    <section class="slide checkpoint-slide">
+      <div class="slide-content">
+        <div class="checkpoint-card" style="max-width: 700px;">
+          <div class="checkpoint-title">✓ Module 2 Checkpoint</div>
+
+          <div class="checklist">
+            <div class="checklist-item reveal">
+              <span class="check-icon">✓</span>
+              <span class="check-text">Draw The Customer Journey (Stranger → Lead → Buyer)</span>
+            </div>
+            <div class="checklist-item reveal stagger-1">
+              <span class="check-icon">✓</span>
+              <span class="check-text">Map touchpoints at each step</span>
+            </div>
+            <div class="checklist-item reveal stagger-2">
+              <span class="check-icon">✓</span>
+              <span class="check-text">Identify WHERE the journey breaks (the bottleneck)</span>
+            </div>
+            <div class="checklist-item reveal stagger-3">
+              <span class="check-icon">✓</span>
+              <span class="check-text">Think from the client's POV</span>
+            </div>
+            <div class="checklist-item reveal stagger-4">
+              <span class="check-icon">✓</span>
+              <span class="check-text">Start diagnostic conversations (like a doctor)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 28: Transition -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Up Next</span>
+        <h2 class="slide-title size-lg reveal stagger-1">Module 3: <span class="highlight">Pick Your Offer</span></h2>
+        <p class="slide-subtitle reveal stagger-2" style="max-width: 700px;">
+          You can see the Customer Journey for any business. You know where the gaps are.
+        </p>
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-4);">
+          The next question: <strong style="color: var(--color-text);">What can YOU actually offer to fix those gaps?</strong>
+        </p>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="../../shared/js/slides.js"></script>
+</body>
+</html>

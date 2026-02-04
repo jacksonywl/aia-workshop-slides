@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The 3 Things | AIA Workshop</title>
+  <link rel="stylesheet" href="../../shared/css/base.css">
+  <link rel="stylesheet" href="../../shared/css/slides.css">
+  <link rel="stylesheet" href="../../shared/css/animations.css">
+  <link rel="stylesheet" href="../../shared/css/components.css">
+  <style>
+    .three-things-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-6);
+      flex-wrap: wrap;
+    }
+
+    .thing-box {
+      width: 280px;
+      padding: var(--space-8);
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-2xl);
+      text-align: center;
+      transition: all 0.4s var(--ease-out-expo);
+    }
+
+    .thing-box:hover {
+      border-color: var(--color-primary);
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(255, 79, 0, 0.15);
+    }
+
+    .thing-number {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto var(--space-4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-primary);
+      border-radius: 50%;
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 800;
+      color: var(--color-bg);
+    }
+
+    .thing-title {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+    }
+
+    .thing-question {
+      font-size: var(--text-base);
+      color: var(--color-primary);
+      font-weight: 500;
+      margin-bottom: var(--space-3);
+    }
+
+    .thing-description {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+
+    .connector-arrow {
+      font-size: var(--text-3xl);
+      color: var(--color-primary);
+    }
+
+    .missing-warning {
+      margin-top: var(--space-8);
+      padding: var(--space-4) var(--space-8);
+      background: rgba(255, 71, 87, 0.1);
+      border: 1px solid rgba(255, 71, 87, 0.3);
+      border-radius: var(--radius-lg);
+      color: var(--color-danger);
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: var(--text-lg);
+    }
+
+    .funnel-note {
+      margin-top: var(--space-4);
+      padding: var(--space-3) var(--space-6);
+      background: var(--color-bg-card);
+      border-radius: var(--radius-lg);
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .funnel-note strong {
+      color: var(--color-primary);
+    }
+
+    /* Closing inside Funnel visualization */
+    .funnel-detail {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin-top: var(--space-3);
+      padding: var(--space-2) var(--space-4);
+      background: var(--color-primary-soft);
+      border-radius: var(--radius-md);
+      font-size: var(--text-xs);
+      color: var(--color-primary);
+    }
+
+    @media (max-width: 1024px) {
+      .three-things-container {
+        flex-direction: column;
+      }
+
+      .connector-arrow {
+        transform: rotate(90deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="slides-container">
+
+    <!-- Slide 1: Title -->
+    <section class="slide title-slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Module 1 Framework</span>
+        <h1 class="slide-title reveal stagger-1">The <span class="highlight">3 Things</span></h1>
+        <p class="slide-subtitle reveal stagger-2">Every business in the world needs exactly 3 things to make money. Master this and you'll never be confused about marketing again.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: The Question -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">What does <span class="highlight">every business</span> need to make money?</h2>
+        <p class="slide-subtitle reveal stagger-1">From nasi lemak stalls to billion-dollar companies — they all need the same 3 things.</p>
+      </div>
+    </section>
+
+    <!-- Slide 3: Thing 1 - OFFER -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="three-things-container">
+          <div class="thing-box framework-box">
+            <div class="thing-number">1</div>
+            <div class="thing-title">OFFER</div>
+            <div class="thing-question">"What are you selling?"</div>
+            <div class="thing-description">A product or service that solves a problem people will pay for.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 4: Thing 2 - LEADS -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="three-things-container">
+          <div class="thing-box framework-box" style="opacity: 0.5;">
+            <div class="thing-number">1</div>
+            <div class="thing-title">OFFER</div>
+            <div class="thing-question">"What are you selling?"</div>
+          </div>
+          <span class="connector-arrow reveal stagger-1">→</span>
+          <div class="thing-box framework-box">
+            <div class="thing-number">2</div>
+            <div class="thing-title">LEADS</div>
+            <div class="thing-question">"Where do you get attention?"</div>
+            <div class="thing-description">People who might buy — strangers who become interested in what you offer.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 5: Thing 3 - FUNNEL -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="three-things-container">
+          <div class="thing-box framework-box" style="opacity: 0.5;">
+            <div class="thing-number">1</div>
+            <div class="thing-title">OFFER</div>
+          </div>
+          <span class="connector-arrow">→</span>
+          <div class="thing-box framework-box" style="opacity: 0.5;">
+            <div class="thing-number">2</div>
+            <div class="thing-title">LEADS</div>
+          </div>
+          <span class="connector-arrow reveal stagger-1">→</span>
+          <div class="thing-box framework-box">
+            <div class="thing-number">3</div>
+            <div class="thing-title">FUNNEL</div>
+            <div class="thing-question">"How do you convert?"</div>
+            <div class="thing-description">The system that turns leads into paying customers.</div>
+            <div class="funnel-detail reveal stagger-2">
+              <span>💡</span>
+              <span>Closing happens <strong>inside</strong> the funnel</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 6: Complete Framework -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">The Complete Picture</span>
+        <div class="three-things-container" style="margin-top: var(--space-8);">
+          <div class="thing-box framework-box">
+            <div class="thing-number">1</div>
+            <div class="thing-title">OFFER</div>
+            <div class="thing-question">"What are you selling?"</div>
+          </div>
+          <span class="connector-arrow reveal stagger-1">→</span>
+          <div class="thing-box framework-box">
+            <div class="thing-number">2</div>
+            <div class="thing-title">LEADS</div>
+            <div class="thing-question">"Where do you get attention?"</div>
+          </div>
+          <span class="connector-arrow reveal stagger-2">→</span>
+          <div class="thing-box framework-box">
+            <div class="thing-number">3</div>
+            <div class="thing-title">FUNNEL</div>
+            <div class="thing-question">"How do you convert?"</div>
+          </div>
+        </div>
+        <div class="missing-warning reveal stagger-3">
+          ⚠️ Missing any ONE = No money
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 7: Diagnostic -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">The Diagnostic Power</h2>
+        <p class="slide-subtitle reveal stagger-1">When a business isn't making money, one of these 3 things is broken.</p>
+
+        <div class="grid-3" style="margin-top: var(--space-8); max-width: 900px;">
+          <div class="card reveal stagger-2">
+            <div class="thing-title" style="color: var(--color-primary); margin-bottom: var(--space-2);">Bad Offer?</div>
+            <p class="thing-description">Nobody wants what they're selling, or the price is wrong.</p>
+          </div>
+          <div class="card reveal stagger-3">
+            <div class="thing-title" style="color: var(--color-primary); margin-bottom: var(--space-2);">No Leads?</div>
+            <p class="thing-description">Good offer but nobody knows they exist.</p>
+          </div>
+          <div class="card reveal stagger-4">
+            <div class="thing-title" style="color: var(--color-primary); margin-bottom: var(--space-2);">Broken Funnel?</div>
+            <p class="thing-description">Leads come in but don't convert to buyers.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 8: Your Role -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">As an AI Marketer</span>
+        <h2 class="slide-title size-lg reveal stagger-1">You fix <span class="highlight">Leads</span> and <span class="highlight">Funnels</span></h2>
+        <p class="slide-subtitle reveal stagger-2">Clients usually have an Offer. They need help getting attention (Leads) and converting that attention into sales (Funnel).</p>
+        <div class="funnel-note reveal stagger-3">
+          <strong>Remember:</strong> This framework is your diagnostic tool. Every client conversation starts here.
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="../../shared/js/slides.js"></script>
+</body>
+</html>

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Money Flow | AIA Workshop</title>
+  <link rel="stylesheet" href="../../shared/css/base.css">
+  <link rel="stylesheet" href="../../shared/css/slides.css">
+  <link rel="stylesheet" href="../../shared/css/animations.css">
+  <link rel="stylesheet" href="../../shared/css/components.css">
+  <style>
+    .flow-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-8);
+    }
+
+    .flow-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+
+    .flow-box {
+      width: 200px;
+      padding: var(--space-6);
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      text-align: center;
+      transition: all 0.4s var(--ease-out-expo);
+    }
+
+    .flow-box:hover {
+      border-color: var(--color-primary);
+      transform: scale(1.05);
+    }
+
+    .flow-box.highlight {
+      border-color: var(--color-success);
+      background: rgba(0, 217, 163, 0.05);
+    }
+
+    .flow-box .icon {
+      font-size: var(--text-3xl);
+      margin-bottom: var(--space-2);
+    }
+
+    .flow-box .title {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--color-text);
+    }
+
+    .flow-box .subtitle {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      margin-top: var(--space-1);
+    }
+
+    .flow-arrow {
+      font-size: var(--text-2xl);
+      color: var(--color-primary);
+    }
+
+    .flow-arrow.down {
+      transform: rotate(90deg);
+    }
+
+    /* Flywheel visualization */
+    .flywheel {
+      position: relative;
+      width: 400px;
+      height: 400px;
+    }
+
+    .flywheel-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 120px;
+      height: 120px;
+      background: var(--color-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-3xl);
+      box-shadow: 0 0 60px var(--color-primary-glow);
+    }
+
+    .flywheel-node {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .flywheel-node:hover {
+      border-color: var(--color-primary);
+      transform: scale(1.1);
+    }
+
+    .flywheel-node .node-icon {
+      font-size: var(--text-xl);
+    }
+
+    .flywheel-node .node-label {
+      font-size: var(--text-xs);
+      font-weight: 600;
+      color: var(--color-text);
+      margin-top: var(--space-1);
+    }
+
+    .flywheel-node:nth-child(1) { top: 0; left: 50%; transform: translateX(-50%); }
+    .flywheel-node:nth-child(2) { top: 50%; right: 0; transform: translateY(-50%); }
+    .flywheel-node:nth-child(3) { bottom: 0; left: 50%; transform: translateX(-50%); }
+    .flywheel-node:nth-child(4) { top: 50%; left: 0; transform: translateY(-50%); }
+
+    /* Circular arrows */
+    .flywheel-arrows {
+      position: absolute;
+      inset: 20px;
+      border: 2px dashed var(--color-border);
+      border-radius: 50%;
+      animation: rotate 20s linear infinite;
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .money-in {
+      color: var(--color-success);
+      font-weight: 600;
+    }
+
+    .money-out {
+      color: var(--color-danger);
+      font-weight: 600;
+    }
+
+    @media (max-width: 640px) {
+      .flywheel {
+        width: 300px;
+        height: 300px;
+      }
+
+      .flywheel-center {
+        width: 80px;
+        height: 80px;
+        font-size: var(--text-xl);
+      }
+
+      .flywheel-node {
+        width: 70px;
+        height: 70px;
+      }
+
+      .flywheel-node .node-icon {
+        font-size: var(--text-base);
+      }
+
+      .flywheel-node .node-label {
+        font-size: 9px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="slides-container">
+
+    <!-- Slide 1: Title -->
+    <section class="slide title-slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Module 1 Framework</span>
+        <h1 class="slide-title reveal stagger-1">The <span class="highlight">Money Flow</span></h1>
+        <p class="slide-subtitle reveal stagger-2">See how money actually moves through a business — from stranger to repeat customer.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: Linear Flow -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">The Basic Flow</span>
+        <div class="flow-row" style="margin-top: var(--space-8);">
+          <div class="flow-box framework-box">
+            <div class="icon">👤</div>
+            <div class="title">Strangers</div>
+            <div class="subtitle">Don't know you</div>
+          </div>
+          <span class="flow-arrow reveal stagger-1">→</span>
+          <div class="flow-box framework-box">
+            <div class="icon">👋</div>
+            <div class="title">Leads</div>
+            <div class="subtitle">Interested</div>
+          </div>
+          <span class="flow-arrow reveal stagger-2">→</span>
+          <div class="flow-box framework-box">
+            <div class="icon">💰</div>
+            <div class="title">Customers</div>
+            <div class="subtitle">Paid once</div>
+          </div>
+          <span class="flow-arrow reveal stagger-3">→</span>
+          <div class="flow-box framework-box highlight">
+            <div class="icon">🔄</div>
+            <div class="title">Repeat/Referrals</div>
+            <div class="subtitle">Pay again + bring friends</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 3: Where Money Comes From -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Where does <span class="highlight">money</span> come from?</h2>
+
+        <div class="flow-row" style="margin-top: var(--space-8);">
+          <div class="card reveal stagger-1" style="text-align: center; padding: var(--space-8);">
+            <div style="font-size: var(--text-4xl); margin-bottom: var(--space-3);">💰</div>
+            <div class="title" style="font-size: var(--text-xl); color: var(--color-text);">Customers</div>
+            <div class="money-in" style="margin-top: var(--space-2);">Money flows IN</div>
+          </div>
+          <span class="flow-arrow reveal stagger-2">→</span>
+          <div class="card reveal stagger-3" style="text-align: center; padding: var(--space-8);">
+            <div style="font-size: var(--text-4xl); margin-bottom: var(--space-3);">🏢</div>
+            <div class="title" style="font-size: var(--text-xl); color: var(--color-text);">Business</div>
+            <div class="money-out" style="margin-top: var(--space-2);">Money flows OUT (costs)</div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-4" style="margin-top: var(--space-8);">
+          Marketing's job: Get MORE money flowing IN than going OUT.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 4: The Flywheel -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">The Growth Engine</span>
+        <h2 class="slide-title size-md reveal stagger-1">It's not a line — it's a <span class="highlight">flywheel</span></h2>
+
+        <div class="flywheel reveal stagger-2" style="margin-top: var(--space-6);">
+          <div class="flywheel-arrows"></div>
+          <div class="flywheel-node framework-box">
+            <span class="node-icon">👤</span>
+            <span class="node-label">STRANGERS</span>
+          </div>
+          <div class="flywheel-node framework-box">
+            <span class="node-icon">👋</span>
+            <span class="node-label">LEADS</span>
+          </div>
+          <div class="flywheel-node framework-box">
+            <span class="node-icon">💰</span>
+            <span class="node-label">CUSTOMERS</span>
+          </div>
+          <div class="flywheel-node framework-box">
+            <span class="node-icon">🔄</span>
+            <span class="node-label">REPEAT</span>
+          </div>
+          <div class="flywheel-center">💵</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 5: The Loop -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">The <span class="highlight">Referral Loop</span></h2>
+
+        <div style="max-width: 600px; margin-top: var(--space-8);">
+          <div class="step-card reveal stagger-1" style="margin-bottom: var(--space-4);">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <div class="step-title">Happy Customer</div>
+              <div class="step-description">They got great results from your service</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-2" style="margin-bottom: var(--space-4);">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <div class="step-title">Tells Friends</div>
+              <div class="step-description">Word-of-mouth creates new strangers who already trust you</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-3" style="margin-bottom: var(--space-4);">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <div class="step-title">Faster Conversion</div>
+              <div class="step-description">Referred leads become customers faster (they already trust)</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-4">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <div class="step-title">Repeat</div>
+              <div class="step-description">The flywheel spins faster and faster</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 6: Your Focus -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">As an AI Marketer</span>
+        <h2 class="slide-title size-lg reveal stagger-1">Your job is to <span class="highlight">spin the flywheel</span></h2>
+
+        <div class="grid-2" style="margin-top: var(--space-8); max-width: 700px; gap: var(--space-6);">
+          <div class="card reveal stagger-2" style="text-align: center;">
+            <div style="font-size: var(--text-3xl); margin-bottom: var(--space-3);">📢</div>
+            <div style="font-size: var(--text-lg); font-weight: 600; color: var(--color-text);">Get Attention</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-secondary); margin-top: var(--space-2);">Stranger → Lead</div>
+          </div>
+          <div class="card reveal stagger-3" style="text-align: center;">
+            <div style="font-size: var(--text-3xl); margin-bottom: var(--space-3);">🤝</div>
+            <div style="font-size: var(--text-lg); font-weight: 600; color: var(--color-text);">Close Sales</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-secondary); margin-top: var(--space-2);">Lead → Customer</div>
+          </div>
+          <div class="card reveal stagger-4" style="text-align: center;">
+            <div style="font-size: var(--text-3xl); margin-bottom: var(--space-3);">⭐</div>
+            <div style="font-size: var(--text-lg); font-weight: 600; color: var(--color-text);">Delight Customers</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-secondary); margin-top: var(--space-2);">Customer → Repeat</div>
+          </div>
+          <div class="card reveal stagger-5" style="text-align: center;">
+            <div style="font-size: var(--text-3xl); margin-bottom: var(--space-3);">📣</div>
+            <div style="font-size: var(--text-lg); font-weight: 600; color: var(--color-text);">Encourage Referrals</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-secondary); margin-top: var(--space-2);">Repeat → New Strangers</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 7: Summary -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Money flows in a <span class="highlight">loop</span></h2>
+        <p class="slide-subtitle reveal stagger-1" style="max-width: 700px;">
+          Every business that grows understands this. New customers come from marketing. Repeat customers come from great service. Referrals come from happy customers. The flywheel keeps spinning.
+        </p>
+        <div class="reveal stagger-2" style="margin-top: var(--space-8); padding: var(--space-4) var(--space-8); background: var(--color-primary-soft); border-radius: var(--radius-lg);">
+          <strong style="color: var(--color-primary);">Your job:</strong> Help businesses spin this flywheel faster.
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="../../shared/js/slides.js"></script>
+</body>
+</html>

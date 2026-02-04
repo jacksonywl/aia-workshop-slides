@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The 4 Core Skills | AIA Workshop</title>
+  <link rel="stylesheet" href="../../shared/css/base.css">
+  <link rel="stylesheet" href="../../shared/css/slides.css">
+  <link rel="stylesheet" href="../../shared/css/animations.css">
+  <link rel="stylesheet" href="../../shared/css/components.css">
+  <style>
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-6);
+      max-width: 900px;
+    }
+
+    .skill-card {
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-8);
+      transition: all 0.4s var(--ease-out-expo);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--skill-color, var(--color-primary));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s var(--ease-out-expo);
+    }
+
+    .skill-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .skill-card:hover {
+      border-color: var(--skill-color, var(--color-primary));
+      transform: translateY(-4px);
+    }
+
+    .skill-card.design { --skill-color: #A855F7; }
+    .skill-card.website { --skill-color: #0099FF; }
+    .skill-card.video { --skill-color: #FF4F00; }
+    .skill-card.automation { --skill-color: #00D9A3; }
+
+    .skill-icon {
+      width: 64px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: color-mix(in srgb, var(--skill-color, var(--color-primary)) 15%, transparent);
+      border-radius: var(--radius-xl);
+      font-size: var(--text-2xl);
+      margin-bottom: var(--space-4);
+    }
+
+    .skill-title {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+    }
+
+    .skill-subtitle {
+      font-size: var(--text-sm);
+      color: var(--skill-color, var(--color-primary));
+      font-weight: 500;
+      margin-bottom: var(--space-4);
+    }
+
+    .skill-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .skill-list li {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      padding-left: var(--space-4);
+      position: relative;
+    }
+
+    .skill-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--skill-color, var(--color-primary));
+    }
+
+    .journey-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-top: var(--space-4);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--color-border);
+    }
+
+    .journey-tag {
+      font-size: var(--text-xs);
+      padding: var(--space-1) var(--space-2);
+      background: var(--color-bg-elevated);
+      border-radius: var(--radius-sm);
+      color: var(--color-text-muted);
+    }
+
+    .copywriting-note {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-left: 4px solid var(--color-warning);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      max-width: 700px;
+    }
+
+    .copywriting-note .title {
+      font-family: var(--font-display);
+      font-weight: 600;
+      color: var(--color-warning);
+      margin-bottom: var(--space-2);
+    }
+
+    @media (max-width: 768px) {
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="slides-container">
+
+    <!-- Slide 1: Title -->
+    <section class="slide title-slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Module 3 Framework</span>
+        <h1 class="slide-title reveal stagger-1">The <span class="highlight">4 Core Skills</span></h1>
+        <p class="slide-subtitle reveal stagger-2">These are the services you SELL to clients. Master these and you can help any business grow.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: Overview Grid -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="skills-grid">
+          <div class="skill-card design framework-box">
+            <div class="skill-icon">🎨</div>
+            <div class="skill-title">Design</div>
+            <div class="skill-subtitle">Visual content that captures attention</div>
+            <ul class="skill-list">
+              <li>Social media graphics</li>
+              <li>Brand visuals</li>
+              <li>Thumbnails & banners</li>
+            </ul>
+            <div class="journey-tags">
+              <span class="journey-tag">Stranger → Lead</span>
+            </div>
+          </div>
+
+          <div class="skill-card website framework-box">
+            <div class="skill-icon">🌐</div>
+            <div class="skill-title">Website / Landing Page</div>
+            <div class="skill-subtitle">Digital storefronts that convert</div>
+            <ul class="skill-list">
+              <li>Websites & portfolios</li>
+              <li>Landing pages</li>
+              <li>Sales pages & opt-ins</li>
+            </ul>
+            <div class="journey-tags">
+              <span class="journey-tag">Lead → Customer</span>
+            </div>
+          </div>
+
+          <div class="skill-card video framework-box">
+            <div class="skill-icon">🎬</div>
+            <div class="skill-title">Video</div>
+            <div class="skill-subtitle">Moving content that builds trust</div>
+            <ul class="skill-list">
+              <li>Short-form content (Reels, TikToks)</li>
+              <li>Testimonial videos</li>
+              <li>Ads & UGC-style</li>
+            </ul>
+            <div class="journey-tags">
+              <span class="journey-tag">Stranger → Lead</span>
+            </div>
+          </div>
+
+          <div class="skill-card automation framework-box">
+            <div class="skill-icon">⚡</div>
+            <div class="skill-title">Automation</div>
+            <div class="skill-subtitle">Systems that work while you sleep</div>
+            <ul class="skill-list">
+              <li>Email sequences</li>
+              <li>Booking systems</li>
+              <li>Follow-up workflows</li>
+            </ul>
+            <div class="journey-tags">
+              <span class="journey-tag">Lead → Customer</span>
+              <span class="journey-tag">Customer → Repeat</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 3: Skill 1 Deep Dive - Design -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="skill-card design" style="max-width: 600px; margin: 0 auto;">
+          <div class="skill-icon">🎨</div>
+          <div class="skill-title">Design</div>
+          <div class="skill-subtitle">Creates first impressions that stop the scroll</div>
+          <ul class="skill-list reveal stagger-1">
+            <li>Social media graphics (posts, stories, carousels)</li>
+            <li>Brand visuals (logos, color schemes)</li>
+            <li>Thumbnails for YouTube/content</li>
+            <li>Banners and covers</li>
+            <li>Infographics and data visuals</li>
+          </ul>
+        </div>
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-6);">
+          <strong style="color: var(--color-text);">Best for:</strong> Coaches, local businesses, anyone who needs to look professional on social media.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 4: Skill 2 Deep Dive - Website -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="skill-card website" style="max-width: 600px; margin: 0 auto;">
+          <div class="skill-icon">🌐</div>
+          <div class="skill-title">Website / Landing Page</div>
+          <div class="skill-subtitle">Converts visitors into leads and customers</div>
+          <ul class="skill-list reveal stagger-1">
+            <li>Business websites (portfolio, about, services)</li>
+            <li>Landing pages (lead magnets, free offers)</li>
+            <li>Sales pages (products, courses)</li>
+            <li>Opt-in pages (email capture)</li>
+            <li>Booking/checkout pages</li>
+          </ul>
+        </div>
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-6);">
+          <strong style="color: var(--color-text);">Best for:</strong> Service businesses, coaches, consultants — anyone who needs a "home base" online.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 5: Skill 3 Deep Dive - Video -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="skill-card video" style="max-width: 600px; margin: 0 auto;">
+          <div class="skill-icon">🎬</div>
+          <div class="skill-title">Video</div>
+          <div class="skill-subtitle">Builds trust and personality faster than any other medium</div>
+          <ul class="skill-list reveal stagger-1">
+            <li>Short-form content (Reels, TikToks, Shorts)</li>
+            <li>Testimonial videos (client success stories)</li>
+            <li>Video ads (paid traffic)</li>
+            <li>UGC-style content (authentic, relatable)</li>
+            <li>Behind-the-scenes content</li>
+          </ul>
+        </div>
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-6);">
+          <strong style="color: var(--color-text);">Best for:</strong> Personal brands, coaches, anyone who wants to build trust quickly.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 6: Skill 4 Deep Dive - Automation -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="skill-card automation" style="max-width: 600px; margin: 0 auto;">
+          <div class="skill-icon">⚡</div>
+          <div class="skill-title">Automation</div>
+          <div class="skill-subtitle">Systems that nurture leads and close sales automatically</div>
+          <ul class="skill-list reveal stagger-1">
+            <li>Email sequences (welcome, nurture, sales)</li>
+            <li>Booking systems (calendar integrations)</li>
+            <li>Chatbots (basic customer service)</li>
+            <li>Follow-up workflows (reminders, check-ins)</li>
+            <li>Review request systems</li>
+          </ul>
+        </div>
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-6);">
+          <strong style="color: var(--color-text);">Best for:</strong> Busy business owners who need systems that work without them.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 7: What About Copywriting? -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">What about <span class="highlight">copywriting</span>?</h2>
+
+        <div class="copywriting-note reveal stagger-1" style="margin-top: var(--space-8);">
+          <div class="title">⚠️ Important Note</div>
+          <p style="color: var(--color-text-secondary);">
+            Copywriting is <strong style="color: var(--color-text);">NOT</strong> a standalone service we teach you to sell.
+          </p>
+          <p style="color: var(--color-text-secondary); margin-top: var(--space-2);">
+            Instead, copywriting is <strong style="color: var(--color-text);">embedded</strong> in everything you do. AI helps you write copy for landing pages, emails, social posts, and more.
+          </p>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-6);">
+          You use AI for copywriting. You sell the <span class="highlight">deliverables</span> it creates.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 8: Pick Your Focus -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Your Strategy</span>
+        <h2 class="slide-title size-lg reveal stagger-1">Start with <span class="highlight">1-2 skills</span></h2>
+
+        <div style="max-width: 600px; margin-top: var(--space-8);">
+          <div class="step-card reveal stagger-2" style="margin-bottom: var(--space-4);">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <div class="step-title">Stage 1: First $1K</div>
+              <div class="step-description">1-2 skills for 1 industry. Get good at one thing first.</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-3" style="margin-bottom: var(--space-4);">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <div class="step-title">Stage 2: After 3-5 clients</div>
+              <div class="step-description">Add skills OR add industries. Expand strategically.</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-4">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <div class="step-title">Stage 3: Consistent income</div>
+              <div class="step-description">Full-service packages OR premium specialist pricing.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 9: Summary -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Remember</span>
+        <h2 class="slide-title size-md reveal stagger-1">4 Skills. Pick 1-2. Master them.</h2>
+
+        <div class="flow-horizontal reveal stagger-2" style="margin-top: var(--space-8); gap: var(--space-4);">
+          <div style="text-align: center;">
+            <div style="font-size: var(--text-3xl);">🎨</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-muted);">Design</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: var(--text-3xl);">🌐</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-muted);">Website</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: var(--text-3xl);">🎬</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-muted);">Video</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: var(--text-3xl);">⚡</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-muted);">Automation</div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-8);">
+          Which skill excites you most? That's where you start.
+        </p>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="../../shared/js/slides.js"></script>
+</body>
+</html>

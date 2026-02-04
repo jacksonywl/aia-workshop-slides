@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIA Workshop Slides | AI Marketer 3-Day Training</title>
+  <link rel="stylesheet" href="shared/css/base.css">
+  <style>
+    body {
+      overflow: auto;
+      padding: var(--space-12) var(--space-8);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: var(--space-16);
+    }
+
+    .header h1 {
+      font-size: var(--text-5xl);
+      margin-bottom: var(--space-4);
+    }
+
+    .header .subtitle {
+      font-size: var(--text-xl);
+      color: var(--color-text-secondary);
+    }
+
+    .header .date {
+      margin-top: var(--space-4);
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+
+    .section {
+      margin-bottom: var(--space-12);
+    }
+
+    .section-title {
+      font-size: var(--text-2xl);
+      margin-bottom: var(--space-6);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .section-title .day-badge {
+      padding: var(--space-1) var(--space-3);
+      background: var(--color-primary);
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--color-bg);
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-6);
+    }
+
+    .slide-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: block;
+    }
+
+    .slide-card:hover {
+      border-color: var(--color-primary);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(255, 79, 0, 0.1);
+    }
+
+    .slide-card .card-type {
+      font-size: var(--text-xs);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .slide-card .card-title {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+    }
+
+    .slide-card .card-desc {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-4);
+    }
+
+    .slide-card .card-meta {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .slide-card.teaching {
+      border-left: 3px solid var(--color-primary);
+    }
+
+    .slide-card.framework {
+      border-left: 3px solid var(--color-success);
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--color-border);
+      margin: var(--space-12) 0;
+    }
+
+    .quick-nav {
+      display: flex;
+      gap: var(--space-4);
+      justify-content: center;
+      margin-bottom: var(--space-12);
+      flex-wrap: wrap;
+    }
+
+    .quick-nav a {
+      padding: var(--space-2) var(--space-4);
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .quick-nav a:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-sm);
+      font-size: var(--text-xs);
+      font-weight: 500;
+    }
+
+    .status-badge.ready {
+      background: rgba(0, 217, 163, 0.1);
+      color: var(--color-success);
+    }
+
+    .status-badge.coming {
+      background: rgba(255, 184, 0, 0.1);
+      color: var(--color-warning);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>AIA <span style="color: var(--color-primary);">Workshop</span> Slides</h1>
+      <p class="subtitle">AI Marketer 3-Day Training</p>
+      <p class="date">Feb 4-6, 2026 | 10:00-12:00, 1:00-3:00, 3:30-5:30</p>
+    </header>
+
+    <nav class="quick-nav">
+      <a href="#day-1">Day 1: WHY</a>
+      <a href="#day-2">Day 2: WHERE</a>
+      <a href="#day-3">Day 3: HOW</a>
+      <a href="#frameworks">All Frameworks</a>
+    </nav>
+
+    <!-- Day 1 -->
+    <section class="section" id="day-1">
+      <h2 class="section-title">
+        <span class="day-badge">Day 1</span>
+        <span>WHY — Understanding Business</span>
+      </h2>
+
+      <div class="cards-grid">
+        <a href="teaching/day-1/module-1-business-model.html" class="slide-card teaching">
+          <div class="card-type">Teaching Slides</div>
+          <div class="card-title">Module 1: Business Model</div>
+          <div class="card-desc">How does a business actually make money?</div>
+          <div class="card-meta">
+            <span>10:00 - 12:00</span>
+            <span>•</span>
+            <span>30 slides</span>
+            <span class="status-badge ready">✓ Ready</span>
+          </div>
+        </a>
+
+        <a href="teaching/day-1/module-2-customer-journey.html" class="slide-card teaching">
+          <div class="card-type">Teaching Slides</div>
+          <div class="card-title">Module 2: The Customer Journey</div>
+          <div class="card-desc">Stranger → Lead → Buyer</div>
+          <div class="card-meta">
+            <span>1:00 - 3:00</span>
+            <span>•</span>
+            <span>28 slides</span>
+            <span class="status-badge ready">✓ Ready</span>
+          </div>
+        </a>
+
+        <a href="teaching/day-1/module-3-pick-your-offer.html" class="slide-card teaching">
+          <div class="card-type">Teaching Slides</div>
+          <div class="card-title">Module 3: Pick Your Offer</div>
+          <div class="card-desc">The Mirror Test + 4 Core Skills</div>
+          <div class="card-meta">
+            <span>3:30 - 5:30</span>
+            <span>•</span>
+            <span>28 slides</span>
+            <span class="status-badge ready">✓ Ready</span>
+          </div>
+        </a>
+      </div>
+
+      <h3 style="font-size: var(--text-lg); margin-top: var(--space-8); margin-bottom: var(--space-4); color: var(--color-text-secondary);">Day 1 Frameworks</h3>
+      <div class="cards-grid">
+        <a href="frameworks/day-1/the-3-things.html" class="slide-card framework">
+          <div class="card-type">Framework</div>
+          <div class="card-title">The 3 Things</div>
+          <div class="card-desc">Offer → Leads → Funnel</div>
+          <div class="card-meta"><span class="status-badge ready">✓ Ready</span></div>
+        </a>
+
+        <a href="frameworks/day-1/money-flow.html" class="slide-card framework">
+          <div class="card-type">Framework</div>
+          <div class="card-title">The Money Flow</div>
+          <div class="card-desc">Strangers → Leads → Customers → Repeat</div>
+          <div class="card-meta"><span class="status-badge ready">✓ Ready</span></div>
+        </a>
+
+        <a href="frameworks/day-1/customer-journey.html" class="slide-card framework">
+          <div class="card-type">Framework</div>
+          <div class="card-title">The Customer Journey</div>
+          <div class="card-desc">Stranger → Lead → Buyer (3 Steps)</div>
+          <div class="card-meta"><span class="status-badge ready">✓ Ready</span></div>
+        </a>
+
+        <a href="frameworks/day-1/4-core-skills.html" class="slide-card framework">
+          <div class="card-type">Framework</div>
+          <div class="card-title">The 4 Core Skills</div>
+          <div class="card-desc">Design, Website, Video, Automation</div>
+          <div class="card-meta"><span class="status-badge ready">✓ Ready</span></div>
+        </a>
+
+        <a href="frameworks/day-1/value-equation.html" class="slide-card framework">
+          <div class="card-type">Framework</div>
+          <div class="card-title">The Value Equation</div>
+          <div class="card-desc">(Dream × Likelihood) / (Time × Effort)</div>
+          <div class="card-meta"><span class="status-badge ready">✓ Ready</span></div>
+        </a>
+
+        <a href="frameworks/day-1/mirror-test.html" class="slide-card framework">
+          <div class="card-type">Framework</div>
+          <div class="card-title">The Mirror Test</div>
+          <div class="card-desc">"I'm an AI Marketer who helps [X] with [Y] through [Z]"</div>
+          <div class="card-meta"><span class="status-badge ready">✓ Ready</span></div>
+        </a>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Day 2 -->
+    <section class="section" id="day-2">
+      <h2 class="section-title">
+        <span class="day-badge">Day 2</span>
+        <span>WHERE — Getting Leads</span>
+      </h2>
+
+      <div class="cards-grid">
+        <div class="slide-card teaching" style="opacity: 0.6; cursor: not-allowed;">
+          <div class="card-type">Teaching Slides</div>
+          <div class="card-title">Module 4: Skills & Lead Strategy</div>
+          <div class="card-desc">The 4 Doors to leads</div>
+          <div class="card-meta">
+            <span>10:00 - 12:00</span>
+            <span class="status-badge coming">Coming Soon</span>
+          </div>
+        </div>
+
+        <div class="slide-card teaching" style="opacity: 0.6; cursor: not-allowed;">
+          <div class="card-type">Teaching Slides</div>
+          <div class="card-title">Module 5: Lead Content & Graphics</div>
+          <div class="card-desc">The Content Machine</div>
+          <div class="card-meta">
+            <span>1:00 - 3:00</span>
+            <span class="status-badge coming">Coming Soon</span>
+          </div>
+        </div>
+
+        <div class="slide-card teaching" style="opacity: 0.6; cursor: not-allowed;">
+          <div class="card-type">Teaching Slides</div>
+          <div class="card-title">Module 6: Lead Assets & Platforms</div>
+          <div class="card-desc">Profile, Portfolio, Landing Page</div>
+          <div class="card-meta">
+            <span>3:30 - 5:30</span>
+            <span class="status-badge coming">Coming Soon</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Day 3 -->
+    <section class="section" id="day-3">
+      <h2 class="section-title">
+        <span class="day-badge">Day 3</span>
+        <span>HOW — Closing</span>
+      </h2>
+
+      <div class="cards-grid">
+        <div class="slide-card teaching" style="opacity: 0.6; cursor: not-allowed;">
+          <div class="card-type">Teaching Slides</div>
+          <div class="card-title">Module 7: Outreach & Commenting</div>
+          <div class="card-desc">The E.V.I. Framework</div>
+          <div class="card-meta">
+            <span>10:00 - 12:00</span>
+            <span class="status-badge coming">Coming Soon</span>
+          </div>
+        </div>
+
+        <div class="slide-card teaching" style="opacity: 0.6; cursor: not-allowed;">
+          <div class="card-type">Teaching Slides</div>
+          <div class="card-title">Module 8: The Conversation</div>
+          <div class="card-desc">The 5-Step Conversation</div>
+          <div class="card-meta">
+            <span>1:00 - 3:00</span>
+            <span class="status-badge coming">Coming Soon</span>
+          </div>
+        </div>
+
+        <div class="slide-card teaching" style="opacity: 0.6; cursor: not-allowed;">
+          <div class="card-type">Teaching Slides</div>
+          <div class="card-title">Module 9: Closing & Graduation</div>
+          <div class="card-desc">The $1K Sprint</div>
+          <div class="card-meta">
+            <span>3:30 - 5:30</span>
+            <span class="status-badge coming">Coming Soon</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- All Frameworks -->
+    <section class="section" id="frameworks">
+      <h2 class="section-title">All Frameworks</h2>
+      <p style="color: var(--color-text-secondary); margin-bottom: var(--space-6);">Standalone animated framework slides for reuse.</p>
+
+      <div class="cards-grid">
+        <!-- Day 1 Frameworks -->
+        <a href="frameworks/day-1/the-3-things.html" class="slide-card framework">
+          <div class="card-type">Day 1</div>
+          <div class="card-title">The 3 Things</div>
+        </a>
+        <a href="frameworks/day-1/money-flow.html" class="slide-card framework">
+          <div class="card-type">Day 1</div>
+          <div class="card-title">The Money Flow</div>
+        </a>
+        <a href="frameworks/day-1/customer-journey.html" class="slide-card framework">
+          <div class="card-type">Day 1</div>
+          <div class="card-title">The Customer Journey</div>
+        </a>
+        <a href="frameworks/day-1/4-core-skills.html" class="slide-card framework">
+          <div class="card-type">Day 1</div>
+          <div class="card-title">The 4 Core Skills</div>
+        </a>
+        <a href="frameworks/day-1/value-equation.html" class="slide-card framework">
+          <div class="card-type">Day 1</div>
+          <div class="card-title">The Value Equation</div>
+        </a>
+        <a href="frameworks/day-1/mirror-test.html" class="slide-card framework">
+          <div class="card-type">Day 1</div>
+          <div class="card-title">The Mirror Test</div>
+        </a>
+      </div>
+    </section>
+
+    <footer style="text-align: center; padding: var(--space-12) 0; color: var(--color-text-muted); font-size: var(--text-sm);">
+      <p>AIA Workshop Slides • Built with Claude</p>
+    </footer>
+  </div>
+</body>
+</html>

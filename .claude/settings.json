@@ -1,0 +1,8 @@
+{
+  "enabledPlugins": {
+    "playwright@claude-plugins-official": false,
+    "greptile@claude-plugins-official": false,
+    "figma@claude-plugins-official": false,
+    "Notion@claude-plugins-official": false
+  }
+}

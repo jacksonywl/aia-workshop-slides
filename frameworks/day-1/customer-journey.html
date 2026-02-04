@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Customer Journey | AIA Workshop</title>
+  <link rel="stylesheet" href="../../shared/css/base.css">
+  <link rel="stylesheet" href="../../shared/css/slides.css">
+  <link rel="stylesheet" href="../../shared/css/animations.css">
+  <link rel="stylesheet" href="../../shared/css/components.css">
+  <style>
+    .journey-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+
+    .journey-step {
+      width: 260px;
+      padding: var(--space-8);
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-2xl);
+      text-align: center;
+      transition: all 0.4s var(--ease-out-expo);
+      position: relative;
+    }
+
+    .journey-step:hover {
+      border-color: var(--color-primary);
+      transform: translateY(-4px);
+    }
+
+    .journey-step.active {
+      border-color: var(--color-primary);
+      background: rgba(255, 79, 0, 0.05);
+      box-shadow: 0 0 40px var(--color-primary-glow);
+    }
+
+    .step-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto var(--space-4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-primary-soft);
+      border-radius: 50%;
+      font-size: var(--text-2xl);
+    }
+
+    .step-title {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+    }
+
+    .step-question {
+      font-size: var(--text-lg);
+      color: var(--color-primary);
+      font-style: italic;
+      margin-bottom: var(--space-3);
+    }
+
+    .step-description {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+
+    .journey-arrow {
+      font-size: var(--text-3xl);
+      color: var(--color-primary);
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: all 0.5s var(--ease-out-expo);
+    }
+
+    .slide.visible .journey-arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .action-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-4);
+      margin-top: var(--space-6);
+    }
+
+    .action-label {
+      padding: var(--space-2) var(--space-4);
+      background: var(--color-bg-card);
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      min-width: 120px;
+      text-align: center;
+    }
+
+    .action-label.highlight {
+      background: var(--color-primary);
+      color: var(--color-bg);
+      font-weight: 600;
+    }
+
+    .bottleneck-card {
+      background: rgba(255, 71, 87, 0.1);
+      border: 1px solid rgba(255, 71, 87, 0.3);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .bottleneck-card .title {
+      color: var(--color-danger);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: var(--text-lg);
+      margin-bottom: var(--space-2);
+    }
+
+    @media (max-width: 1024px) {
+      .journey-container {
+        flex-direction: column;
+      }
+
+      .journey-arrow {
+        transform: rotate(90deg);
+      }
+
+      .slide.visible .journey-arrow {
+        transform: rotate(90deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="slides-container">
+
+    <!-- Slide 1: Title -->
+    <section class="slide title-slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Module 2 Framework</span>
+        <h1 class="slide-title reveal stagger-1">The <span class="highlight">Customer Journey</span></h1>
+        <p class="slide-subtitle reveal stagger-2">Every customer follows the same 3-step journey from stranger to buyer. Your job is to help businesses move people through it.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: The 3 Steps -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">The 3 Steps</span>
+        <div class="journey-container" style="margin-top: var(--space-8);">
+          <div class="journey-step framework-box">
+            <div class="step-icon">👤</div>
+            <div class="step-title">STRANGER</div>
+            <div class="step-question">"Who are you?"</div>
+            <div class="step-description">They don't know you exist yet.</div>
+          </div>
+          <span class="journey-arrow stagger-1">→</span>
+          <div class="journey-step framework-box">
+            <div class="step-icon">👋</div>
+            <div class="step-title">LEAD</div>
+            <div class="step-question">"Interested in you"</div>
+            <div class="step-description">They know you and are considering.</div>
+          </div>
+          <span class="journey-arrow stagger-2">→</span>
+          <div class="journey-step framework-box">
+            <div class="step-icon">💰</div>
+            <div class="step-title">BUYER</div>
+            <div class="step-question">"Paid customer"</div>
+            <div class="step-description">They've given you money.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 3: What Happens at Each Step -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">What happens at each transition?</h2>
+
+        <div class="journey-container" style="margin-top: var(--space-6);">
+          <div class="journey-step framework-box" style="padding: var(--space-6);">
+            <div class="step-title" style="font-size: var(--text-lg);">STRANGER</div>
+          </div>
+          <div style="text-align: center;">
+            <span class="journey-arrow">→</span>
+            <div class="action-label highlight reveal stagger-1">Get Attention</div>
+          </div>
+          <div class="journey-step framework-box" style="padding: var(--space-6);">
+            <div class="step-title" style="font-size: var(--text-lg);">LEAD</div>
+          </div>
+          <div style="text-align: center;">
+            <span class="journey-arrow">→</span>
+            <div class="action-label highlight reveal stagger-2">Build Trust & Close</div>
+          </div>
+          <div class="journey-step framework-box" style="padding: var(--space-6);">
+            <div class="step-title" style="font-size: var(--text-lg);">BUYER</div>
+          </div>
+        </div>
+
+        <div class="action-row reveal stagger-3">
+          <div class="action-label">WHERE (4 Doors)</div>
+          <div class="action-label">WHAT (Offer)</div>
+          <div class="action-label">HOW (Funnel + Closing)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 4: The Bottleneck Question -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Find the <span class="highlight">Bottleneck</span></h2>
+        <p class="slide-subtitle reveal stagger-1">When diagnosing a business, ask: "Where are people getting stuck?"</p>
+
+        <div class="grid-2" style="margin-top: var(--space-8); max-width: 800px; gap: var(--space-8);">
+          <div class="bottleneck-card reveal stagger-2">
+            <div class="title">Stranger → Lead stuck?</div>
+            <p class="step-description">That's an <strong style="color: var(--color-text);">ATTENTION</strong> problem.<br>Fix with: Content, Ads, Outreach</p>
+          </div>
+          <div class="bottleneck-card reveal stagger-3">
+            <div class="title">Lead → Buyer stuck?</div>
+            <p class="step-description">That's a <strong style="color: var(--color-text);">CONVERSION</strong> problem.<br>Fix with: Landing page, Sales calls, Follow-up</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 5: Journey Speed -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Journey <span class="highlight">Speed</span> Varies</h2>
+        <p class="slide-subtitle reveal stagger-1">Different businesses have different journey lengths.</p>
+
+        <div style="margin-top: var(--space-8); max-width: 700px;">
+          <div class="step-card reveal stagger-2" style="margin-bottom: var(--space-4);">
+            <div class="step-number" style="background: var(--color-success);">⚡</div>
+            <div class="step-content">
+              <div class="step-title">FAST: 2 hours - Same day</div>
+              <div class="step-description">HVAC repair, Emergency dentist — urgency drives quick decisions</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-3" style="margin-bottom: var(--space-4);">
+            <div class="step-number" style="background: var(--color-warning);">⏱️</div>
+            <div class="step-content">
+              <div class="step-title">MEDIUM: 1-3 days</div>
+              <div class="step-description">Gym membership, Salon — moderate consideration</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-4">
+            <div class="step-number" style="background: var(--color-info);">📅</div>
+            <div class="step-content">
+              <div class="step-title">SLOW: 1-4 weeks</div>
+              <div class="step-description">Law firm, Business coaching — high-ticket needs more trust</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 6: The Pattern -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">The Pattern</span>
+        <h2 class="slide-title size-lg reveal stagger-1">Low ticket + Urgency = <span class="highlight">Fast</span></h2>
+        <h2 class="slide-title size-lg reveal stagger-2">High ticket + Consideration = <span class="highlight">Slow</span></h2>
+
+        <div class="funnel-note reveal stagger-3" style="margin-top: var(--space-8); max-width: 600px;">
+          <strong>Why this matters:</strong> The journey speed tells you how many touchpoints you need. Fast = few. Slow = many.
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 7: Summary -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Remember</span>
+        <div class="journey-container" style="margin-top: var(--space-6);">
+          <div class="journey-step active framework-box">
+            <div class="step-icon">👤</div>
+            <div class="step-title">STRANGER</div>
+          </div>
+          <span class="journey-arrow">→</span>
+          <div class="journey-step active framework-box">
+            <div class="step-icon">👋</div>
+            <div class="step-title">LEAD</div>
+          </div>
+          <span class="journey-arrow">→</span>
+          <div class="journey-step active framework-box">
+            <div class="step-icon">💰</div>
+            <div class="step-title">BUYER</div>
+          </div>
+        </div>
+        <p class="slide-subtitle reveal stagger-1" style="margin-top: var(--space-8);">Every customer goes through this journey.<br>Your job: Make the journey <span class="highlight">smoother</span> and <span class="highlight">faster</span>.</p>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="../../shared/js/slides.js"></script>
+</body>
+</html>

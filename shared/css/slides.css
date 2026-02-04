@@ -1,0 +1,278 @@
+/* AIA Workshop Slides - Slide System */
+
+/* Slide Container */
+.slides-container {
+  width: 100vw;
+  height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+/* Individual Slide */
+.slide {
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-16);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Slide Content */
+.slide-content {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-8);
+  z-index: 1;
+}
+
+.slide-content.align-left {
+  align-items: flex-start;
+}
+
+/* Eyebrow / Label */
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-primary);
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-primary-soft);
+  border-radius: var(--radius-full);
+}
+
+/* Slide Title */
+.slide-title {
+  font-family: var(--font-display);
+  font-size: var(--text-6xl);
+  font-weight: 800;
+  line-height: 1.1;
+  text-align: center;
+  max-width: 900px;
+}
+
+.slide-title.size-xl {
+  font-size: var(--text-7xl);
+}
+
+.slide-title.size-lg {
+  font-size: var(--text-5xl);
+}
+
+.slide-title.size-md {
+  font-size: var(--text-4xl);
+}
+
+/* Slide Subtitle */
+.slide-subtitle {
+  font-family: var(--font-body);
+  font-size: var(--text-xl);
+  color: var(--color-text-secondary);
+  text-align: center;
+  max-width: 700px;
+  line-height: 1.6;
+}
+
+/* Highlight Text */
+.highlight {
+  color: var(--color-primary);
+}
+
+.highlight-box {
+  background: var(--color-primary);
+  color: var(--color-bg);
+  padding: 0.1em 0.3em;
+  border-radius: var(--radius-sm);
+}
+
+/* Progress Bar */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--color-primary);
+  z-index: 1000;
+  transition: width 0.3s ease;
+}
+
+/* Navigation Dots */
+.nav-dots {
+  position: fixed;
+  right: var(--space-8);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  z-index: 1000;
+}
+
+.nav-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-border);
+  cursor: pointer;
+  transition: all var(--duration-fast) ease;
+  border: none;
+  padding: 0;
+}
+
+.nav-dot:hover {
+  background: var(--color-border-strong);
+  transform: scale(1.2);
+}
+
+.nav-dot.active {
+  background: var(--color-primary);
+  transform: scale(1.3);
+}
+
+/* Slide Number */
+.slide-number {
+  position: fixed;
+  bottom: var(--space-8);
+  right: var(--space-8);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  z-index: 1000;
+}
+
+/* Keyboard Hint */
+.keyboard-hint {
+  position: fixed;
+  bottom: var(--space-8);
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  z-index: 1000;
+  opacity: 0.5;
+  transition: opacity var(--duration-fast) ease;
+}
+
+.keyboard-hint:hover {
+  opacity: 1;
+}
+
+.key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 var(--space-2);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+}
+
+/* Section Divider Slide */
+.slide.section-divider {
+  background: linear-gradient(135deg, var(--color-bg) 0%, rgba(255, 79, 0, 0.05) 100%);
+}
+
+.slide.section-divider .slide-title {
+  font-size: var(--text-7xl);
+}
+
+/* Title Slide */
+.slide.title-slide {
+  background: radial-gradient(ellipse at center, rgba(255, 79, 0, 0.08) 0%, transparent 70%);
+}
+
+/* Exercise Slide */
+.slide.exercise-slide {
+  background: linear-gradient(135deg, rgba(0, 217, 163, 0.05) 0%, var(--color-bg) 100%);
+}
+
+/* Checkpoint Slide */
+.slide.checkpoint-slide {
+  background: linear-gradient(135deg, rgba(0, 153, 255, 0.05) 0%, var(--color-bg) 100%);
+}
+
+/* Fullscreen Button */
+.fullscreen-btn {
+  position: fixed;
+  top: var(--space-8);
+  right: var(--space-8);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  z-index: 1000;
+  transition: all var(--duration-fast) ease;
+}
+
+.fullscreen-btn:hover {
+  background: var(--color-bg-card-hover);
+  color: var(--color-text);
+  border-color: var(--color-border-strong);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .slide {
+    padding: var(--space-8);
+  }
+
+  .slide-title {
+    font-size: var(--text-4xl);
+  }
+
+  .slide-title.size-xl {
+    font-size: var(--text-5xl);
+  }
+
+  .nav-dots {
+    right: var(--space-4);
+  }
+}
+
+@media (max-width: 640px) {
+  .slide {
+    padding: var(--space-6);
+  }
+
+  .slide-title {
+    font-size: var(--text-3xl);
+  }
+
+  .slide-title.size-xl {
+    font-size: var(--text-4xl);
+  }
+
+  .nav-dots {
+    display: none;
+  }
+
+  .keyboard-hint {
+    display: none;
+  }
+}

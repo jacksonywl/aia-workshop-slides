@@ -1,0 +1,303 @@
+/* AIA Workshop Slides - Animations */
+
+/* Base Reveal Animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity var(--duration-slow) var(--ease-out-expo),
+    transform var(--duration-slow) var(--ease-out-expo);
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition:
+    opacity var(--duration-slow) var(--ease-out-expo),
+    transform var(--duration-slow) var(--ease-out-expo);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition:
+    opacity var(--duration-slow) var(--ease-out-expo),
+    transform var(--duration-slow) var(--ease-out-expo);
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.8);
+  transition:
+    opacity var(--duration-slow) var(--ease-out-expo),
+    transform var(--duration-slow) var(--ease-out-expo);
+}
+
+.reveal-fade {
+  opacity: 0;
+  transition: opacity var(--duration-slow) var(--ease-out-expo);
+}
+
+/* When slide is visible */
+.slide.visible .reveal,
+.slide.visible .reveal-left,
+.slide.visible .reveal-right,
+.slide.visible .reveal-scale,
+.slide.visible .reveal-fade {
+  opacity: 1;
+  transform: translateY(0) translateX(0) scale(1);
+}
+
+/* Stagger Delays */
+.stagger-1 { transition-delay: 0.1s; }
+.stagger-2 { transition-delay: 0.2s; }
+.stagger-3 { transition-delay: 0.3s; }
+.stagger-4 { transition-delay: 0.4s; }
+.stagger-5 { transition-delay: 0.5s; }
+.stagger-6 { transition-delay: 0.6s; }
+.stagger-7 { transition-delay: 0.7s; }
+.stagger-8 { transition-delay: 0.8s; }
+
+/* Draw Line Animation */
+.draw-line {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  transition: stroke-dashoffset 1s var(--ease-out-expo);
+}
+
+.slide.visible .draw-line {
+  stroke-dashoffset: 0;
+}
+
+/* Arrow Animation */
+.arrow-animate {
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition:
+    opacity var(--duration-normal) var(--ease-out-expo),
+    transform var(--duration-slow) var(--ease-out-expo);
+}
+
+.slide.visible .arrow-animate {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+/* Box Highlight Animation */
+.box-highlight {
+  position: relative;
+}
+
+.box-highlight::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border: 2px solid var(--color-primary);
+  border-radius: inherit;
+  opacity: 0;
+  transform: scale(1.1);
+  transition:
+    opacity var(--duration-normal) ease,
+    transform var(--duration-normal) var(--ease-out-expo);
+}
+
+.slide.visible .box-highlight.active::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 var(--color-primary-glow);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px 5px var(--color-primary-glow);
+  }
+}
+
+.pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Glow Animation */
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px var(--color-primary-glow);
+  }
+  50% {
+    box-shadow: 0 0 40px var(--color-primary-glow), 0 0 60px var(--color-primary-glow);
+  }
+}
+
+.glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* Float Animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Typewriter Effect */
+.typewriter {
+  overflow: hidden;
+  border-right: 2px solid var(--color-primary);
+  white-space: nowrap;
+  animation:
+    typing 3s steps(40, end),
+    blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: var(--color-primary); }
+}
+
+/* Counter Animation */
+.counter {
+  display: inline-block;
+}
+
+/* Flow Connection Line */
+.flow-line {
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-primary));
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 0.6s var(--ease-out-expo);
+}
+
+.slide.visible .flow-line {
+  transform: scaleX(1);
+}
+
+/* Step Progress */
+.step-indicator {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-bg-card);
+  border: 2px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  transition: all var(--duration-normal) var(--ease-out-expo);
+}
+
+.step-indicator.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-bg);
+  transform: scale(1.1);
+}
+
+.step-indicator.completed {
+  background: var(--color-success);
+  border-color: var(--color-success);
+  color: var(--color-bg);
+}
+
+/* Entrance Animations for Framework Elements */
+.framework-box {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity var(--duration-slow) var(--ease-out-expo),
+    transform var(--duration-slow) var(--ease-out-expo),
+    box-shadow var(--duration-normal) ease;
+}
+
+.slide.visible .framework-box {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Sequential Framework Build */
+.slide.visible .framework-box:nth-child(1) { transition-delay: 0.1s; }
+.slide.visible .framework-box:nth-child(2) { transition-delay: 0.25s; }
+.slide.visible .framework-box:nth-child(3) { transition-delay: 0.4s; }
+.slide.visible .framework-box:nth-child(4) { transition-delay: 0.55s; }
+.slide.visible .framework-box:nth-child(5) { transition-delay: 0.7s; }
+.slide.visible .framework-box:nth-child(6) { transition-delay: 0.85s; }
+.slide.visible .framework-box:nth-child(7) { transition-delay: 1s; }
+
+/* Arrow Sequential Animation */
+.slide.visible .flow-arrow:nth-child(1) { transition-delay: 0.2s; }
+.slide.visible .flow-arrow:nth-child(2) { transition-delay: 0.4s; }
+.slide.visible .flow-arrow:nth-child(3) { transition-delay: 0.6s; }
+.slide.visible .flow-arrow:nth-child(4) { transition-delay: 0.8s; }
+
+/* Shake Animation (for emphasis) */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* Pop Animation */
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.pop {
+  animation: pop 0.3s var(--ease-out-back);
+}
+
+/* Slide In From Different Directions */
+.slide-in-up {
+  opacity: 0;
+  transform: translateY(100px);
+  transition: all var(--duration-slow) var(--ease-out-expo);
+}
+
+.slide-in-down {
+  opacity: 0;
+  transform: translateY(-100px);
+  transition: all var(--duration-slow) var(--ease-out-expo);
+}
+
+.slide.visible .slide-in-up,
+.slide.visible .slide-in-down {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Checkmark Animation */
+@keyframes checkmark {
+  0% {
+    stroke-dashoffset: 100;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.checkmark-animate {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+}
+
+.slide.visible .checkmark-animate {
+  animation: checkmark 0.5s var(--ease-out-expo) forwards;
+}
