@@ -92,52 +92,6 @@
       border-radius: var(--radius-md);
     }
 
-    .equation-box {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: var(--space-4);
-      padding: var(--space-8);
-      background: var(--color-bg-card);
-      border: 2px solid var(--color-border);
-      border-radius: var(--radius-2xl);
-      max-width: 600px;
-    }
-
-    .equation-row {
-      display: flex;
-      align-items: center;
-      gap: var(--space-3);
-    }
-
-    .equation-term {
-      padding: var(--space-3) var(--space-5);
-      background: var(--color-bg-elevated);
-      border-radius: var(--radius-lg);
-      font-family: var(--font-display);
-      font-weight: 600;
-      color: var(--color-text);
-    }
-
-    .equation-term.result {
-      background: var(--color-primary);
-      color: var(--color-bg);
-    }
-
-    .equation-operator {
-      font-family: var(--font-display);
-      font-size: var(--text-xl);
-      font-weight: 700;
-      color: var(--color-primary);
-    }
-
-    .fraction-line {
-      width: 100%;
-      height: 3px;
-      background: var(--color-primary);
-      border-radius: var(--radius-full);
-    }
-
     .stage-card {
       background: var(--color-bg-card);
       border: 2px solid var(--color-border);
@@ -309,29 +263,19 @@
             <th>Skills</th>
           </tr>
           <tr>
-            <td>Stranger → Aware</td>
-            <td style="color: var(--color-text);">Get attention</td>
-            <td><span style="color: #FF4F00;">Video</span>, <span style="color: #A855F7;">Design</span></td>
+            <td>Stranger → Lead</td>
+            <td style="color: var(--color-text);">Get attention + build interest</td>
+            <td><span style="color: #FF4F00;">Video</span>, <span style="color: #A855F7;">Design</span>, <span style="color: #0099FF;">Website</span></td>
           </tr>
           <tr>
-            <td>Aware → Interested</td>
-            <td style="color: var(--color-text);">Build trust</td>
-            <td><span style="color: #0099FF;">Website</span>, <span style="color: #FF4F00;">Video</span>, <span style="color: #A855F7;">Design</span></td>
+            <td>Lead → Buyer</td>
+            <td style="color: var(--color-text);">Create trust + close</td>
+            <td><span style="color: #0099FF;">Landing Page</span>, <span style="color: #00D9A3;">Automation</span>, <span style="color: #FF4F00;">Video</span></td>
           </tr>
           <tr>
-            <td>Interested → Ready</td>
-            <td style="color: var(--color-text);">Create desire</td>
-            <td><span style="color: #0099FF;">Landing Page</span>, <span style="color: #00D9A3;">Automation</span></td>
-          </tr>
-          <tr>
-            <td>Ready → Customer</td>
-            <td style="color: var(--color-text);">Close the sale</td>
-            <td><span style="color: #0099FF;">Landing Page</span>, <span style="color: #00D9A3;">Automation</span></td>
-          </tr>
-          <tr>
-            <td>Customer → Fan</td>
+            <td>Buyer → Repeat</td>
             <td style="color: var(--color-text);">Keep & grow</td>
-            <td><span style="color: #00D9A3;">Automation</span>, <span style="color: #FF4F00;">Video</span></td>
+            <td><span style="color: #00D9A3;">Automation</span>, <span style="color: #A855F7;">Design</span></td>
           </tr>
         </table>
       </div>
@@ -493,135 +437,12 @@
       </div>
     </section>
 
-    <!-- ==================== SECTION B: THE VALUE EQUATION ==================== -->
+    <!-- ==================== SECTION B: THE MIRROR TEST ==================== -->
 
     <!-- Slide 13: Section Header -->
     <section class="slide section-divider">
       <div class="slide-content">
         <span class="eyebrow reveal">Section B</span>
-        <h1 class="slide-title reveal stagger-1">The <span class="highlight">Value Equation</span></h1>
-        <p class="slide-subtitle reveal stagger-2">How to make your offer irresistible.</p>
-      </div>
-    </section>
-
-    <!-- Slide 14: The Formula -->
-    <section class="slide">
-      <div class="slide-content">
-        <div class="equation-box reveal">
-          <div class="equation-row">
-            <div class="equation-term result">VALUE</div>
-            <div class="equation-operator">=</div>
-          </div>
-          <div class="equation-row" style="margin-top: var(--space-4);">
-            <div class="equation-term">Dream Outcome</div>
-            <div class="equation-operator">×</div>
-            <div class="equation-term">Likelihood</div>
-          </div>
-          <div class="fraction-line" style="margin: var(--space-4) 0;"></div>
-          <div class="equation-row">
-            <div class="equation-term">Time Delay</div>
-            <div class="equation-operator">×</div>
-            <div class="equation-term">Effort</div>
-          </div>
-        </div>
-
-        <p class="slide-subtitle reveal stagger-1" style="margin-top: var(--space-6);">
-          <strong style="color: var(--color-success);">↑ Maximize the top</strong> · <strong style="color: var(--color-danger);">↓ Minimize the bottom</strong>
-        </p>
-      </div>
-    </section>
-
-    <!-- Slide 15: In Plain English -->
-    <section class="slide">
-      <div class="slide-content">
-        <h2 class="slide-title size-lg reveal">In plain English:</h2>
-
-        <div style="max-width: 600px; margin-top: var(--space-6);">
-          <div class="step-card reveal stagger-1" style="margin-bottom: var(--space-3); border-color: var(--color-success);">
-            <div class="step-number" style="background: var(--color-success);">⬆️</div>
-            <div class="step-content">
-              <div class="step-title">Dream Outcome</div>
-              <div class="step-description">How BIG is the result they want?</div>
-            </div>
-          </div>
-          <div class="step-card reveal stagger-2" style="margin-bottom: var(--space-3); border-color: var(--color-success);">
-            <div class="step-number" style="background: var(--color-success);">⬆️</div>
-            <div class="step-content">
-              <div class="step-title">Perceived Likelihood</div>
-              <div class="step-description">How likely do they BELIEVE it'll work?</div>
-            </div>
-          </div>
-          <div class="step-card reveal stagger-3" style="margin-bottom: var(--space-3); border-color: var(--color-danger);">
-            <div class="step-number" style="background: var(--color-danger);">⬇️</div>
-            <div class="step-content">
-              <div class="step-title">Time Delay</div>
-              <div class="step-description">How FAST will they see results?</div>
-            </div>
-          </div>
-          <div class="step-card reveal stagger-4" style="border-color: var(--color-danger);">
-            <div class="step-number" style="background: var(--color-danger);">⬇️</div>
-            <div class="step-content">
-              <div class="step-title">Effort & Sacrifice</div>
-              <div class="step-description">How much WORK do they have to do?</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Slide 16: Before vs After -->
-    <section class="slide">
-      <div class="slide-content">
-        <h2 class="slide-title size-lg reveal">How it changes your offer</h2>
-
-        <div class="grid-2" style="margin-top: var(--space-8); max-width: 900px; gap: var(--space-6);">
-          <div class="card reveal stagger-1" style="padding: var(--space-6); border-color: var(--color-danger);">
-            <div style="color: var(--color-danger); font-weight: 600; margin-bottom: var(--space-3);">❌ Before (Features)</div>
-            <div style="font-size: var(--text-base); color: var(--color-text);">"I'll build a landing page"</div>
-          </div>
-          <div class="card reveal stagger-2" style="padding: var(--space-6); border-color: var(--color-success);">
-            <div style="color: var(--color-success); font-weight: 600; margin-bottom: var(--space-3);">✅ After (Value Equation)</div>
-            <div style="font-size: var(--text-sm); color: var(--color-text);">"You'll have a sign-up page that turns followers into challenge participants — most coaches see 3-5× more sign-ups within the first week. Done in 2 weeks, and you don't write a word."</div>
-          </div>
-        </div>
-
-        <div class="reveal stagger-3" style="margin-top: var(--space-6); display: flex; gap: var(--space-3); justify-content: center; flex-wrap: wrap;">
-          <span class="tag success">Dream: More sign-ups</span>
-          <span class="tag success">Likelihood: 3-5× results</span>
-          <span class="tag success">Time: 2 weeks</span>
-          <span class="tag success">Effort: Zero writing</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Slide 17: Apply to Your Offer -->
-    <section class="slide exercise-slide">
-      <div class="slide-content">
-        <div class="exercise-card" style="max-width: 700px;">
-          <div class="exercise-header">
-            <div class="exercise-icon">✏️</div>
-            <div class="exercise-label">Exercise</div>
-          </div>
-          <div class="exercise-title">Apply the Value Equation</div>
-          <div class="exercise-time">⏱️ 10 minutes</div>
-
-          <div class="numbered-list" style="text-align: left;">
-            <div class="numbered-item">Write a simple offer: "I help [industry] with [skill]"</div>
-            <div class="numbered-item">Upgrade using the Value Equation:
-              <span style="color: var(--color-text-secondary); font-size: var(--text-sm); display: block; margin-top: var(--space-2);">• What's the DREAM OUTCOME?<br>• What PROOF do you have?<br>• How FAST can you deliver?<br>• How EASY is it for them?</span>
-            </div>
-            <div class="numbered-item">Partner feedback: "Would you pay for this?"</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== SECTION C: THE MIRROR TEST ==================== -->
-
-    <!-- Slide 18: Section Header -->
-    <section class="slide section-divider">
-      <div class="slide-content">
-        <span class="eyebrow reveal">Section C</span>
         <h1 class="slide-title reveal stagger-1">The <span class="highlight">Mirror Test</span></h1>
         <p class="slide-subtitle reveal stagger-2">Your offer statement that goes everywhere.</p>
       </div>
@@ -660,8 +481,8 @@
             <div style="font-size: var(--text-sm); color: var(--color-text); font-style: italic;">"I'm an AI Marketer who helps dental clinics fill their appointment books through Google optimization and review systems."</div>
           </div>
           <div class="card reveal stagger-3" style="padding: var(--space-5);">
-            <div style="font-size: var(--text-xs); color: var(--color-primary); font-weight: 600; margin-bottom: var(--space-2);">HOME SERVICES</div>
-            <div style="font-size: var(--text-sm); color: var(--color-text); font-style: italic;">"I'm an AI Marketer who helps HVAC companies get more service calls through professional websites and automated follow-ups."</div>
+            <div style="font-size: var(--text-xs); color: var(--color-primary); font-weight: 600; margin-bottom: var(--space-2);">RESTAURANTS & CAFES</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text); font-style: italic;">"I'm an AI Marketer who helps restaurants get more reservations through Google optimization and social media content."</div>
           </div>
           <div class="card reveal stagger-4" style="padding: var(--space-5);">
             <div style="font-size: var(--text-xs); color: var(--color-primary); font-weight: 600; margin-bottom: var(--space-2);">BUSINESS COACHES</div>
@@ -839,10 +660,6 @@
               <span class="check-text">Map skills to journey steps</span>
             </div>
             <div class="checklist-item reveal stagger-2">
-              <span class="check-icon">✓</span>
-              <span class="check-text">Apply the Value Equation to your offer</span>
-            </div>
-            <div class="checklist-item reveal stagger-3">
               <span class="check-icon">✓</span>
               <span class="check-text">Say your Mirror Test statement without stumbling</span>
             </div>

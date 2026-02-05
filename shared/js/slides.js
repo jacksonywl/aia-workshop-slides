@@ -89,6 +89,18 @@ class SlideController {
       document.body.appendChild(this.keyboardHint);
     }
 
+    // Back button
+    this.backBtn = document.createElement('a');
+    this.backBtn.className = 'back-btn';
+    this.backBtn.href = '../../index.html';
+    this.backBtn.innerHTML = `
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 12H5m0 0l7 7m-7-7l7-7"/>
+      </svg>
+      <span>All Slides</span>
+    `;
+    document.body.appendChild(this.backBtn);
+
     // Fullscreen button
     if (this.options.showFullscreenBtn) {
       this.fullscreenBtn = document.createElement('button');
