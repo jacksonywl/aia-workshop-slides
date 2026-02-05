@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The $1K Sprint | AIA Workshop</title>
+  <link rel="stylesheet" href="../../shared/css/base.css">
+  <link rel="stylesheet" href="../../shared/css/slides.css">
+  <link rel="stylesheet" href="../../shared/css/animations.css">
+  <link rel="stylesheet" href="../../shared/css/components.css">
+  <style>
+    .goal-display {
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-primary);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-10) var(--space-8);
+      text-align: center;
+      max-width: 600px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .goal-display::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, #FF4F00, #FFB800, #00D9A3);
+    }
+
+    .goal-display .goal-amount {
+      font-family: var(--font-display);
+      font-size: 5rem;
+      font-weight: 800;
+      color: var(--color-primary);
+      line-height: 1;
+      margin-bottom: var(--space-2);
+    }
+
+    .goal-display .goal-timeframe {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: var(--space-3);
+    }
+
+    .goal-display .goal-subtitle {
+      font-size: var(--text-base);
+      color: var(--color-text-secondary);
+    }
+
+    .week-card {
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      max-width: 650px;
+      border-left: 5px solid var(--week-color, var(--color-primary));
+      transition: all 0.3s var(--ease-out-expo);
+    }
+
+    .week-card:hover {
+      border-color: var(--week-color, var(--color-primary));
+    }
+
+    .week-card .week-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-5);
+    }
+
+    .week-card .week-badge {
+      background: var(--week-color, var(--color-primary));
+      color: var(--color-bg);
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: var(--text-sm);
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .week-card .week-theme {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--week-color, var(--color-primary));
+    }
+
+    .week-card .week-title {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-4);
+    }
+
+    .week-card .week-tasks {
+      list-style: none;
+    }
+
+    .week-card .week-tasks li {
+      padding: var(--space-2) 0;
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      color: var(--color-text-secondary);
+    }
+
+    .week-card .week-tasks li .task-icon {
+      color: var(--week-color, var(--color-primary));
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .week-card .week-tasks li strong {
+      color: var(--color-text);
+    }
+
+    .week-card .week-metric {
+      margin-top: var(--space-4);
+      padding: var(--space-3);
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: var(--radius-lg);
+      text-align: center;
+    }
+
+    .week-card .week-metric .metric-label {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-1);
+    }
+
+    .week-card .week-metric .metric-value {
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--week-color, var(--color-primary));
+      font-size: var(--text-lg);
+    }
+
+    .math-breakdown {
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      max-width: 650px;
+    }
+
+    .math-breakdown .math-title {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--color-primary);
+      text-align: center;
+      margin-bottom: var(--space-6);
+    }
+
+    .math-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .math-row:last-child {
+      border-bottom: none;
+    }
+
+    .math-row .math-label {
+      color: var(--color-text-secondary);
+      font-size: var(--text-base);
+    }
+
+    .math-row .math-value {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: var(--text-lg);
+      color: var(--color-text);
+    }
+
+    .math-row.total {
+      background: rgba(255, 79, 0, 0.08);
+      border-radius: var(--radius-lg);
+      margin-top: var(--space-3);
+      padding: var(--space-4);
+    }
+
+    .math-row.total .math-label {
+      color: var(--color-text);
+      font-weight: 700;
+    }
+
+    .math-row.total .math-value {
+      color: var(--color-primary);
+      font-size: var(--text-2xl);
+    }
+
+    .math-arrow {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-2) var(--space-4);
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+    }
+
+    .math-arrow .arrow {
+      color: var(--color-primary);
+    }
+
+    .commitment-card {
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-primary);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-8);
+      max-width: 600px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .commitment-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #FF4F00, #00D9A3);
+    }
+
+    .commitment-card .commit-title {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-5);
+    }
+
+    .commitment-card .commit-list {
+      list-style: none;
+      text-align: left;
+      margin-bottom: var(--space-6);
+    }
+
+    .commitment-card .commit-list li {
+      padding: var(--space-2) 0;
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      color: var(--color-text-secondary);
+      font-size: var(--text-base);
+    }
+
+    .commitment-card .commit-list li .commit-check {
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--color-primary);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--color-primary);
+      font-weight: 700;
+      font-size: var(--text-sm);
+    }
+
+    .commitment-card .commit-cta {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+
+    .timeline-overview {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-4);
+      max-width: 800px;
+    }
+
+    .timeline-week {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      text-align: center;
+      border-top: 3px solid var(--tw-color, var(--color-primary));
+      transition: all 0.3s var(--ease-out-expo);
+    }
+
+    .timeline-week:hover {
+      border-color: var(--tw-color, var(--color-primary));
+      transform: translateY(-2px);
+    }
+
+    .timeline-week .tw-label {
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--tw-color, var(--color-primary));
+      font-size: var(--text-sm);
+      margin-bottom: var(--space-2);
+    }
+
+    .timeline-week .tw-name {
+      font-weight: 600;
+      color: var(--color-text);
+      font-size: var(--text-base);
+      margin-bottom: var(--space-1);
+    }
+
+    .timeline-week .tw-desc {
+      font-size: var(--text-xs);
+      color: var(--color-text-secondary);
+    }
+
+    @media (max-width: 768px) {
+      .timeline-overview {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .goal-display .goal-amount {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="slides-container">
+
+    <!-- Slide 1: Title -->
+    <section class="slide title-slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Day 3 Framework</span>
+        <h1 class="slide-title reveal stagger-1">The <span class="highlight">$1K Sprint</span></h1>
+        <p class="slide-subtitle reveal stagger-2">Your 30-day action plan to earn your first $1,000. No theory. Just execution.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: The Goal -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="goal-display reveal stagger-1">
+          <div class="goal-amount">$1,000</div>
+          <div class="goal-timeframe">in 30 Days</div>
+          <div class="goal-subtitle">Not someday. Not eventually. In the next 30 days.</div>
+        </div>
+
+        <div class="timeline-overview reveal stagger-2" style="margin-top: var(--space-8);">
+          <div class="timeline-week" style="--tw-color: #0099FF;">
+            <div class="tw-label">Week 1</div>
+            <div class="tw-name">Start</div>
+            <div class="tw-desc">Build the machine</div>
+          </div>
+          <div class="timeline-week" style="--tw-color: #A855F7;">
+            <div class="tw-label">Week 2</div>
+            <div class="tw-name">Momentum</div>
+            <div class="tw-desc">Scale outreach</div>
+          </div>
+          <div class="timeline-week" style="--tw-color: #FFB800;">
+            <div class="tw-label">Week 3</div>
+            <div class="tw-name">Close</div>
+            <div class="tw-desc">Convert leads</div>
+          </div>
+          <div class="timeline-week" style="--tw-color: #00D9A3;">
+            <div class="tw-label">Week 4</div>
+            <div class="tw-name">Get Paid</div>
+            <div class="tw-desc">Deliver + collect</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 3: Week 1 -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="week-card reveal stagger-1" style="--week-color: #0099FF;">
+          <div class="week-header">
+            <div class="week-badge">Week 1</div>
+            <div class="week-theme">Days 1-7</div>
+          </div>
+
+          <div class="week-title">Start the Machine</div>
+
+          <ul class="week-tasks">
+            <li>
+              <span class="task-icon">&rarr;</span>
+              <span><strong>Finalize your offer</strong> -- one specific service, one clear outcome</span>
+            </li>
+            <li>
+              <span class="task-icon">&rarr;</span>
+              <span><strong>Set up your storefront</strong> -- optimize your profile/landing page</span>
+            </li>
+            <li>
+              <span class="task-icon">&rarr;</span>
+              <span><strong>Make your hit list</strong> -- 50 people to reach out to (warm + cold)</span>
+            </li>
+            <li>
+              <span class="task-icon">&rarr;</span>
+              <span><strong>Send 10 outreach messages per day</strong> using the Outreach Playbook</span>
+            </li>
+            <li>
+              <span class="task-icon">&rarr;</span>
+              <span><strong>Post 3 pieces of content</strong> using the Content Machine</span>
+            </li>
+          </ul>
+
+          <div class="week-metric">
+            <div class="metric-label">Week 1 target</div>
+            <div class="metric-value">50 messages sent + 3 posts published</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 4: Week 2 -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="week-card reveal stagger-1" style="--week-color: #A855F7;">
+          <div class="week-header">
+            <div class="week-badge">Week 2</div>
+            <div class="week-theme">Days 8-14</div>
+          </div>
+
+          <div class="week-title">Build Momentum</div>
+
+          <ul class="week-tasks">
+            <li>
+              <span class="task-icon">&rarr;</span>
+              <span><strong>Follow up on Week 1 messages</strong> -- use the FOLLOW step</span>
+            </li>
+            <li>
+              <span class="task-icon">&rarr;</span>
+              <span><strong>Send 10 more outreach messages per day</strong> -- new people</span>
+            </li>
+            <li>
+              <span class="task-icon">&rarr;</span>
+              <span><strong>Leave 10 E.V.I. comments per day</strong> on target accounts</span>
+            </li>
+            <li>
+              <span class="task-icon">&rarr;</span>
+              <span><strong>Post 3 more pieces of content</strong> -- aim for at least 1 proof post</span>
+            </li>
+            <li>
+              <span class="task-icon">&rarr;</span>
+              <span><strong>Book 2-3 discovery calls</strong> from interested replies</span>
+            </li>
+          </ul>
+
+          <div class="week-metric">
+            <div class="metric-label">Week 2 target</div>
+            <div class="metric-value">100+ total messages + 2-3 calls booked</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 5: Week 3 -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="week-card reveal stagger-1" style="--week-color: #FFB800;">
+          <div class="week-header">
+            <div class="week-badge">Week 3</div>
+            <div class="week-theme">Days 15-21</div>
+          </div>
+
+          <div class="week-title">Close</div>
+
+          <ul class="week-tasks">
+            <li>
+              <span class="task-icon">&rarr;</span>
+              <span><strong>Run discovery calls</strong> using the 5-Step Conversation</span>
+            </li>
+            <li>
+              <span class="task-icon">&rarr;</span>
+              <span><strong>Send proposals</strong> within 24 hours of each call</span>
+            </li>
+            <li>
+              <span class="task-icon">&rarr;</span>
+              <span><strong>Follow up on proposals</strong> -- don't wait for them to come to you</span>
+            </li>
+            <li>
+              <span class="task-icon">&rarr;</span>
+              <span><strong>Close 2-3 starter projects</strong> at $300-$500 each</span>
+            </li>
+            <li>
+              <span class="task-icon">&rarr;</span>
+              <span><strong>Continue outreach</strong> -- don't stop the pipeline</span>
+            </li>
+          </ul>
+
+          <div class="week-metric">
+            <div class="metric-label">Week 3 target</div>
+            <div class="metric-value">2-3 clients signed + invoices sent</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 6: Week 4 -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="week-card reveal stagger-1" style="--week-color: #00D9A3;">
+          <div class="week-header">
+            <div class="week-badge">Week 4</div>
+            <div class="week-theme">Days 22-30</div>
+          </div>
+
+          <div class="week-title">Get Paid</div>
+
+          <ul class="week-tasks">
+            <li>
+              <span class="task-icon">&rarr;</span>
+              <span><strong>Deliver the work</strong> -- overdeliver on your first clients</span>
+            </li>
+            <li>
+              <span class="task-icon">&rarr;</span>
+              <span><strong>Collect payment</strong> -- send invoice immediately, follow up</span>
+            </li>
+            <li>
+              <span class="task-icon">&rarr;</span>
+              <span><strong>Ask for a testimonial</strong> -- screenshot the results + their words</span>
+            </li>
+            <li>
+              <span class="task-icon">&rarr;</span>
+              <span><strong>Upsell or get a referral</strong> -- "know anyone else who needs this?"</span>
+            </li>
+            <li>
+              <span class="task-icon">&rarr;</span>
+              <span><strong>Post proof content</strong> -- share the win (with permission)</span>
+            </li>
+          </ul>
+
+          <div class="week-metric">
+            <div class="metric-label">Week 4 target</div>
+            <div class="metric-value">$1,000+ collected + 1-2 testimonials</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 7: The Math -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">The <span class="highlight">Math</span></h2>
+        <p class="slide-subtitle reveal stagger-1">It's simpler than you think</p>
+
+        <div class="math-breakdown reveal stagger-2" style="margin-top: var(--space-6);">
+          <div class="math-title">30-Day Breakdown</div>
+
+          <div class="math-row">
+            <span class="math-label">Outreach messages sent</span>
+            <span class="math-value">200</span>
+          </div>
+          <div class="math-arrow">
+            <span class="arrow">&darr;</span> ~10-15% reply rate
+          </div>
+          <div class="math-row">
+            <span class="math-label">Conversations started</span>
+            <span class="math-value">20-30</span>
+          </div>
+          <div class="math-arrow">
+            <span class="arrow">&darr;</span> ~30% book a call
+          </div>
+          <div class="math-row">
+            <span class="math-label">Discovery calls</span>
+            <span class="math-value">6-10</span>
+          </div>
+          <div class="math-arrow">
+            <span class="arrow">&darr;</span> ~30-50% close rate
+          </div>
+          <div class="math-row">
+            <span class="math-label">Clients closed</span>
+            <span class="math-value">2-5</span>
+          </div>
+          <div class="math-row">
+            <span class="math-label">Average project value</span>
+            <span class="math-value">$300-$500</span>
+          </div>
+          <div class="math-row total">
+            <span class="math-label">Total revenue</span>
+            <span class="math-value">$1,000+</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 8: Commitment -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="commitment-card reveal stagger-1">
+          <div class="commit-title">Your 30-Day Commitment</div>
+
+          <ul class="commit-list">
+            <li>
+              <span class="commit-check">&#10003;</span>
+              <span>I will send <strong>10 outreach messages per day</strong></span>
+            </li>
+            <li>
+              <span class="commit-check">&#10003;</span>
+              <span>I will leave <strong>10 E.V.I. comments per day</strong></span>
+            </li>
+            <li>
+              <span class="commit-check">&#10003;</span>
+              <span>I will post <strong>3 pieces of content per week</strong></span>
+            </li>
+            <li>
+              <span class="commit-check">&#10003;</span>
+              <span>I will follow up on <strong>every conversation</strong></span>
+            </li>
+            <li>
+              <span class="commit-check">&#10003;</span>
+              <span>I will <strong>not quit</strong> before 30 days</span>
+            </li>
+          </ul>
+
+          <div class="commit-cta">The only way to fail is to stop.</div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-6);">
+          You have the skills. You have the frameworks. <strong style="color: var(--color-text);">Now execute.</strong>
+        </p>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="../../shared/js/slides.js"></script>
+</body>
+</html>

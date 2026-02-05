@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Outreach Playbook | AIA Workshop</title>
+  <link rel="stylesheet" href="../../shared/css/base.css">
+  <link rel="stylesheet" href="../../shared/css/slides.css">
+  <link rel="stylesheet" href="../../shared/css/animations.css">
+  <link rel="stylesheet" href="../../shared/css/components.css">
+  <style>
+    .playbook-flow {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .playbook-step {
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-6) var(--space-8);
+      text-align: center;
+      min-width: 180px;
+      transition: all 0.4s var(--ease-out-expo);
+      position: relative;
+    }
+
+    .playbook-step:hover {
+      transform: translateY(-4px);
+      border-color: var(--step-color, var(--color-primary));
+    }
+
+    .playbook-step::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--step-color, var(--color-primary));
+      border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+    }
+
+    .playbook-step.who { --step-color: #0099FF; }
+    .playbook-step.where { --step-color: #A855F7; }
+    .playbook-step.what { --step-color: #00D9A3; }
+    .playbook-step.follow { --step-color: #FFB800; }
+
+    .playbook-step .step-num {
+      font-family: var(--font-display);
+      font-size: var(--text-5xl);
+      font-weight: 800;
+      color: var(--step-color, var(--color-primary));
+      opacity: 0.2;
+      line-height: 1;
+      margin-bottom: var(--space-2);
+    }
+
+    .playbook-step .step-label {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--step-color, var(--color-primary));
+      margin-bottom: var(--space-2);
+    }
+
+    .playbook-step .step-desc {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .flow-arrow {
+      font-size: var(--text-2xl);
+      color: var(--color-primary);
+    }
+
+    .message-template {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      max-width: 650px;
+      position: relative;
+    }
+
+    .message-template .template-label {
+      position: absolute;
+      top: calc(-1 * var(--space-3));
+      left: var(--space-4);
+      background: var(--template-color, var(--color-primary));
+      color: var(--color-bg);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .message-template.warm { --template-color: #00D9A3; }
+    .message-template.cold { --template-color: #0099FF; }
+
+    .message-template .template-text {
+      font-size: var(--text-base);
+      color: var(--color-text-secondary);
+      line-height: 1.8;
+      font-style: italic;
+    }
+
+    .message-template .template-text .fill-in {
+      color: var(--color-primary);
+      font-weight: 600;
+      font-style: normal;
+    }
+
+    .target-list {
+      list-style: none;
+      max-width: 550px;
+    }
+
+    .target-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .target-list li:last-child {
+      border-bottom: none;
+    }
+
+    .target-list .bullet {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-sm);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .target-list .text {
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+    }
+
+    .target-list .text strong {
+      color: var(--color-text);
+    }
+
+    .platform-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+      max-width: 700px;
+    }
+
+    .platform-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      text-align: center;
+      transition: all 0.3s var(--ease-out-expo);
+    }
+
+    .platform-card:hover {
+      border-color: #A855F7;
+      transform: translateY(-2px);
+    }
+
+    .platform-card .platform-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+    }
+
+    .platform-card .platform-tip {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .value-box {
+      background: rgba(0, 217, 163, 0.08);
+      border: 1px solid rgba(0, 217, 163, 0.2);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      max-width: 600px;
+    }
+
+    .value-box .principle {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: #00D9A3;
+      text-align: center;
+      margin-bottom: var(--space-4);
+    }
+
+    .follow-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      max-width: 500px;
+    }
+
+    .follow-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      padding: var(--space-4);
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      transition: all 0.3s var(--ease-out-expo);
+    }
+
+    .follow-item:hover {
+      border-color: #FFB800;
+    }
+
+    .follow-item .day-badge {
+      background: #FFB800;
+      color: var(--color-bg);
+      font-weight: 700;
+      font-size: var(--text-sm);
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+    }
+
+    .follow-item .follow-text {
+      color: var(--color-text-secondary);
+      font-size: var(--text-base);
+    }
+
+    .summary-steps {
+      display: flex;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .summary-step {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-5);
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      font-weight: 600;
+    }
+
+    .summary-step .label {
+      color: var(--step-color, var(--color-text));
+    }
+
+    @media (max-width: 900px) {
+      .playbook-flow {
+        flex-direction: column;
+      }
+      .flow-arrow {
+        transform: rotate(90deg);
+      }
+      .platform-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="slides-container">
+
+    <!-- Slide 1: Title -->
+    <section class="slide title-slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Day 3 Framework</span>
+        <h1 class="slide-title reveal stagger-1">The <span class="highlight">Outreach Playbook</span></h1>
+        <p class="slide-subtitle reveal stagger-2">4 steps to reach anyone and start a real conversation. No spam. No cringe. Just value.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: 4-Step Overview -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">The 4 Steps</span>
+
+        <div class="playbook-flow" style="margin-top: var(--space-8);">
+          <div class="playbook-step who framework-box">
+            <div class="step-num">1</div>
+            <div class="step-label">WHO</div>
+            <div class="step-desc">Define your target</div>
+          </div>
+
+          <span class="flow-arrow reveal stagger-1">&rarr;</span>
+
+          <div class="playbook-step where framework-box">
+            <div class="step-num">2</div>
+            <div class="step-label">WHERE</div>
+            <div class="step-desc">Find them</div>
+          </div>
+
+          <span class="flow-arrow reveal stagger-2">&rarr;</span>
+
+          <div class="playbook-step what framework-box">
+            <div class="step-num">3</div>
+            <div class="step-label">WHAT</div>
+            <div class="step-desc">The message</div>
+          </div>
+
+          <span class="flow-arrow reveal stagger-3">&rarr;</span>
+
+          <div class="playbook-step follow framework-box">
+            <div class="step-num">4</div>
+            <div class="step-label">FOLLOW</div>
+            <div class="step-desc">Follow up</div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-4" style="margin-top: var(--space-6);">
+          Simple. Repeatable. <strong style="color: var(--color-text);">Works every time.</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 3: Step 1 - WHO -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Step 1: <span class="highlight" style="color: #0099FF;">WHO</span></h2>
+        <p class="slide-subtitle reveal stagger-1">Define exactly who you're reaching out to</p>
+
+        <ul class="target-list reveal stagger-2" style="margin-top: var(--space-6);">
+          <li>
+            <span class="bullet" style="background: rgba(0, 153, 255, 0.15); color: #0099FF;">1</span>
+            <span class="text"><strong>Your ideal client profile</strong> -- who has the problem you solve?</span>
+          </li>
+          <li>
+            <span class="bullet" style="background: rgba(0, 153, 255, 0.15); color: #0099FF;">2</span>
+            <span class="text"><strong>Their role or business type</strong> -- coach, restaurant owner, agency?</span>
+          </li>
+          <li>
+            <span class="bullet" style="background: rgba(0, 153, 255, 0.15); color: #0099FF;">3</span>
+            <span class="text"><strong>Their current pain</strong> -- what keeps them up at night?</span>
+          </li>
+          <li>
+            <span class="bullet" style="background: rgba(0, 153, 255, 0.15); color: #0099FF;">4</span>
+            <span class="text"><strong>Their budget level</strong> -- can they afford to pay you?</span>
+          </li>
+        </ul>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-6);">
+          If you can't describe them in one sentence, <strong style="color: #0099FF;">you're not specific enough.</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 4: Step 2 - WHERE -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Step 2: <span class="highlight" style="color: #A855F7;">WHERE</span></h2>
+        <p class="slide-subtitle reveal stagger-1">Find where they hang out online</p>
+
+        <div class="platform-grid reveal stagger-2" style="margin-top: var(--space-8);">
+          <div class="platform-card">
+            <div class="platform-name">Instagram</div>
+            <div class="platform-tip">Follow hashtags, explore pages, competitor followers</div>
+          </div>
+          <div class="platform-card">
+            <div class="platform-name">Facebook Groups</div>
+            <div class="platform-tip">Join groups where your clients ask questions</div>
+          </div>
+          <div class="platform-card">
+            <div class="platform-name">LinkedIn</div>
+            <div class="platform-tip">Search by job title, industry, location</div>
+          </div>
+          <div class="platform-card">
+            <div class="platform-name">Google Maps</div>
+            <div class="platform-tip">Local businesses with bad websites or no social</div>
+          </div>
+          <div class="platform-card">
+            <div class="platform-name">Twitter / X</div>
+            <div class="platform-tip">Follow industry conversations, reply to threads</div>
+          </div>
+          <div class="platform-card">
+            <div class="platform-name">TikTok</div>
+            <div class="platform-tip">Comment on creators in your niche</div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-6);">
+          Go where <strong style="color: #A855F7;">they already are</strong>. Don't make them come to you.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 5: Step 3 - WHAT (Value First) -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Step 3: <span class="highlight" style="color: #00D9A3;">WHAT</span></h2>
+        <p class="slide-subtitle reveal stagger-1">The message -- value first, not a pitch</p>
+
+        <div class="value-box reveal stagger-2" style="margin-top: var(--space-8);">
+          <div class="principle">Lead with value. Never with a pitch.</div>
+          <ul style="list-style: none; color: var(--color-text-secondary);">
+            <li style="padding: var(--space-2) 0; display: flex; gap: var(--space-3);">
+              <span style="color: var(--color-danger); font-weight: 700;">X</span>
+              <span>"Hey, I do social media management. Want to work together?"</span>
+            </li>
+            <li style="padding: var(--space-2) 0; display: flex; gap: var(--space-3);">
+              <span style="color: var(--color-success); font-weight: 700;">&#10003;</span>
+              <span>"Hey, I noticed your Reels are getting good views but your bio doesn't convert. Quick tip: add a clear CTA."</span>
+            </li>
+          </ul>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-6);">
+          Give something useful <strong style="color: #00D9A3;">before</strong> you ask for anything.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 6: Warm Message Template -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal" style="color: #00D9A3;">Warm Outreach</span>
+        <h2 class="slide-title size-lg reveal stagger-1">The <span class="highlight" style="color: #00D9A3;">Warm</span> Message Template</h2>
+
+        <div class="message-template warm reveal stagger-2" style="margin-top: var(--space-8);">
+          <div class="template-label">Warm Template</div>
+          <p class="template-text">
+            "Hey <span class="fill-in">[Name]</span>! I saw your <span class="fill-in">[post/story/update]</span> about <span class="fill-in">[topic]</span> -- really cool.
+            <br><br>
+            I actually just helped someone with <span class="fill-in">[similar problem]</span> and got them <span class="fill-in">[specific result]</span>.
+            <br><br>
+            I had a quick idea for you -- want me to share it?"
+          </p>
+        </div>
+
+        <div class="reveal stagger-3" style="margin-top: var(--space-6); max-width: 500px;">
+          <div class="checklist">
+            <div class="checklist-item">
+              <span class="checklist-icon">&#10003;</span>
+              <span class="checklist-text">Personal -- references something specific</span>
+            </div>
+            <div class="checklist-item">
+              <span class="checklist-icon">&#10003;</span>
+              <span class="checklist-text">Proof -- shows you've done this before</span>
+            </div>
+            <div class="checklist-item">
+              <span class="checklist-icon">&#10003;</span>
+              <span class="checklist-text">Permission-based -- asks if they want more</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 7: Cold Message Template -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal" style="color: #0099FF;">Cold Outreach</span>
+        <h2 class="slide-title size-lg reveal stagger-1">The <span class="highlight" style="color: #0099FF;">Cold</span> Message Template</h2>
+
+        <div class="message-template cold reveal stagger-2" style="margin-top: var(--space-8);">
+          <div class="template-label">Cold Template</div>
+          <p class="template-text">
+            "Hey <span class="fill-in">[Name]</span>, I came across your <span class="fill-in">[business/page/website]</span> and noticed <span class="fill-in">[specific observation]</span>.
+            <br><br>
+            I work with <span class="fill-in">[similar businesses]</span> to help them <span class="fill-in">[specific outcome]</span>.
+            <br><br>
+            I put together a quick <span class="fill-in">[idea/audit/suggestion]</span> -- would it be okay to send it over?"
+          </p>
+        </div>
+
+        <div class="reveal stagger-3" style="margin-top: var(--space-6); max-width: 500px;">
+          <div class="checklist">
+            <div class="checklist-item">
+              <span class="checklist-icon">&#10003;</span>
+              <span class="checklist-text">Shows you've done research on THEM</span>
+            </div>
+            <div class="checklist-item">
+              <span class="checklist-icon">&#10003;</span>
+              <span class="checklist-text">Leads with a specific observation, not a pitch</span>
+            </div>
+            <div class="checklist-item">
+              <span class="checklist-icon">&#10003;</span>
+              <span class="checklist-text">Offers value upfront -- a free idea or audit</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 8: Step 4 - FOLLOW -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Step 4: <span class="highlight" style="color: #FFB800;">FOLLOW</span></h2>
+        <p class="slide-subtitle reveal stagger-1">Most people quit after 1 message. Don't be most people.</p>
+
+        <div class="follow-timeline reveal stagger-2" style="margin-top: var(--space-8);">
+          <div class="follow-item">
+            <span class="day-badge">Day 1</span>
+            <span class="follow-text">Send the first message (value-first)</span>
+          </div>
+          <div class="follow-item">
+            <span class="day-badge">Day 3-5</span>
+            <span class="follow-text">Follow up: "Hey, just checking -- did you see my note?"</span>
+          </div>
+          <div class="follow-item">
+            <span class="day-badge">Day 7-10</span>
+            <span class="follow-text">Add more value: share a resource, tip, or case study</span>
+          </div>
+          <div class="follow-item">
+            <span class="day-badge">Day 14</span>
+            <span class="follow-text">Final check-in: "No worries if the timing is off -- just wanted to help"</span>
+          </div>
+        </div>
+
+        <div class="quote-box reveal stagger-3" style="margin-top: var(--space-6); max-width: 500px;">
+          <p class="quote-text" style="font-size: var(--text-lg);">
+            <strong style="color: #FFB800;">80% of sales</strong> happen after the 5th touchpoint. Most people give up after the 1st.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 9: Summary -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">The <span class="highlight">Outreach Playbook</span></h2>
+
+        <div class="summary-steps reveal stagger-1" style="margin-top: var(--space-8);">
+          <div class="summary-step" style="--step-color: #0099FF; border-left: 3px solid #0099FF;">
+            <span class="label" style="color: #0099FF;">1. WHO</span>
+          </div>
+          <span style="color: var(--color-text-muted); font-size: var(--text-xl);">&rarr;</span>
+          <div class="summary-step" style="--step-color: #A855F7; border-left: 3px solid #A855F7;">
+            <span class="label" style="color: #A855F7;">2. WHERE</span>
+          </div>
+          <span style="color: var(--color-text-muted); font-size: var(--text-xl);">&rarr;</span>
+          <div class="summary-step" style="--step-color: #00D9A3; border-left: 3px solid #00D9A3;">
+            <span class="label" style="color: #00D9A3;">3. WHAT</span>
+          </div>
+          <span style="color: var(--color-text-muted); font-size: var(--text-xl);">&rarr;</span>
+          <div class="summary-step" style="--step-color: #FFB800; border-left: 3px solid #FFB800;">
+            <span class="label" style="color: #FFB800;">4. FOLLOW</span>
+          </div>
+        </div>
+
+        <div class="card reveal stagger-2" style="margin-top: var(--space-8); padding: var(--space-6); max-width: 600px; text-align: center;">
+          <p style="color: var(--color-text); font-size: var(--text-lg); margin-bottom: var(--space-2);">
+            <strong>Know WHO.</strong> Find WHERE. Say WHAT matters. Then FOLLOW up.
+          </p>
+          <p style="color: var(--color-text-secondary);">
+            Outreach isn't about volume. It's about <strong style="color: var(--color-primary);">relevance</strong>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="../../shared/js/slides.js"></script>
+</body>
+</html>

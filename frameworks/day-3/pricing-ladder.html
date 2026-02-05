@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Pricing Ladder | AIA Workshop</title>
+  <link rel="stylesheet" href="../../shared/css/base.css">
+  <link rel="stylesheet" href="../../shared/css/slides.css">
+  <link rel="stylesheet" href="../../shared/css/animations.css">
+  <link rel="stylesheet" href="../../shared/css/components.css">
+  <style>
+    .ladder-visual {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      max-width: 700px;
+      align-items: center;
+    }
+
+    .ladder-rung {
+      display: flex;
+      align-items: center;
+      gap: var(--space-5);
+      padding: var(--space-5) var(--space-6);
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      width: 100%;
+      transition: all 0.4s var(--ease-out-expo);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ladder-rung::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 5px;
+      background: var(--rung-color, var(--color-primary));
+    }
+
+    .ladder-rung:hover {
+      border-color: var(--rung-color, var(--color-primary));
+      transform: translateX(8px);
+    }
+
+    .ladder-rung.starter { --rung-color: #0099FF; }
+    .ladder-rung.package { --rung-color: #A855F7; }
+    .ladder-rung.retainer { --rung-color: #00D9A3; }
+
+    .ladder-rung .rung-level {
+      font-family: var(--font-display);
+      font-size: var(--text-4xl);
+      font-weight: 800;
+      color: var(--rung-color, var(--color-primary));
+      opacity: 0.3;
+      line-height: 1;
+      min-width: 50px;
+      text-align: center;
+    }
+
+    .ladder-rung .rung-info {
+      flex: 1;
+    }
+
+    .ladder-rung .rung-name {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-1);
+    }
+
+    .ladder-rung .rung-desc {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .ladder-rung .rung-price {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--rung-color, var(--color-primary));
+      white-space: nowrap;
+    }
+
+    .ladder-arrow {
+      color: var(--color-text-muted);
+      font-size: var(--text-xl);
+      transform: rotate(-90deg);
+    }
+
+    .tier-detail {
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      max-width: 650px;
+      border-top: 5px solid var(--tier-color, var(--color-primary));
+    }
+
+    .tier-detail .tier-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: var(--space-5);
+    }
+
+    .tier-detail .tier-name {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: var(--color-text);
+    }
+
+    .tier-detail .tier-tag {
+      font-size: var(--text-sm);
+      color: var(--tier-color, var(--color-primary));
+      font-weight: 500;
+    }
+
+    .tier-detail .tier-price-range {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      font-weight: 800;
+      color: var(--tier-color, var(--color-primary));
+    }
+
+    .tier-detail .tier-body {
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      margin-bottom: var(--space-4);
+    }
+
+    .tier-detail .tier-includes {
+      list-style: none;
+    }
+
+    .tier-detail .tier-includes li {
+      padding: var(--space-2) 0;
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      color: var(--color-text-secondary);
+    }
+
+    .tier-detail .tier-includes li .inc-icon {
+      color: var(--tier-color, var(--color-primary));
+      font-weight: 700;
+    }
+
+    .tier-detail .tier-example {
+      margin-top: var(--space-4);
+      padding: var(--space-4);
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: var(--radius-lg);
+      border-left: 3px solid var(--tier-color, var(--color-primary));
+    }
+
+    .tier-detail .tier-example .ex-label {
+      font-size: var(--text-xs);
+      font-weight: 700;
+      color: var(--tier-color, var(--color-primary));
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-2);
+    }
+
+    .tier-detail .tier-example .ex-text {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      font-style: italic;
+    }
+
+    .pricing-comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+      max-width: 800px;
+    }
+
+    .pricing-way {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+    }
+
+    .pricing-way.wrong {
+      border-top: 4px solid var(--color-danger);
+    }
+
+    .pricing-way.right {
+      border-top: 4px solid var(--color-success);
+    }
+
+    .pricing-way .way-label {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: 700;
+      margin-bottom: var(--space-4);
+    }
+
+    .pricing-way.wrong .way-label { color: var(--color-danger); }
+    .pricing-way.right .way-label { color: var(--color-success); }
+
+    .pricing-way .way-script {
+      font-size: var(--text-base);
+      color: var(--color-text-secondary);
+      font-style: italic;
+      line-height: 1.7;
+      padding: var(--space-4);
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-3);
+    }
+
+    .pricing-way .way-tags {
+      display: flex;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+    }
+
+    .pricing-way .way-tag {
+      font-size: var(--text-xs);
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+    }
+
+    .pricing-way.wrong .way-tag {
+      background: rgba(255, 77, 77, 0.1);
+      color: var(--color-danger);
+    }
+
+    .pricing-way.right .way-tag {
+      background: rgba(0, 217, 163, 0.1);
+      color: var(--color-success);
+    }
+
+    .objection-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      max-width: 650px;
+    }
+
+    .objection-item {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      transition: all 0.3s var(--ease-out-expo);
+    }
+
+    .objection-item:hover {
+      border-color: var(--color-primary);
+    }
+
+    .objection-item .obj-question {
+      font-weight: 700;
+      color: var(--color-text);
+      font-size: var(--text-base);
+      margin-bottom: var(--space-2);
+    }
+
+    .objection-item .obj-response {
+      color: var(--color-success);
+      font-size: var(--text-sm);
+      line-height: 1.6;
+      padding-left: var(--space-4);
+      border-left: 2px solid var(--color-success);
+    }
+
+    .ladder-summary {
+      display: flex;
+      gap: var(--space-4);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .ladder-sum-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4) var(--space-6);
+      text-align: center;
+      border-top: 3px solid var(--sum-color, var(--color-primary));
+    }
+
+    .ladder-sum-card .sum-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-1);
+    }
+
+    .ladder-sum-card .sum-price {
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--sum-color, var(--color-primary));
+      font-size: var(--text-lg);
+    }
+
+    @media (max-width: 768px) {
+      .pricing-comparison {
+        grid-template-columns: 1fr;
+      }
+      .ladder-rung {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="slides-container">
+
+    <!-- Slide 1: Title -->
+    <section class="slide title-slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Day 3 Framework</span>
+        <h1 class="slide-title reveal stagger-1">The <span class="highlight">Pricing Ladder</span></h1>
+        <p class="slide-subtitle reveal stagger-2">3 levels of pricing that grow with your confidence. Start small, climb fast.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: The 3-Level Ladder -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">The Ladder</span>
+
+        <div class="ladder-visual" style="margin-top: var(--space-8);">
+          <div class="ladder-rung retainer framework-box reveal stagger-3">
+            <div class="rung-level">3</div>
+            <div class="rung-info">
+              <div class="rung-name">Retainer</div>
+              <div class="rung-desc">Ongoing monthly work. Predictable income.</div>
+            </div>
+            <div class="rung-price">$500-$2,000/mo</div>
+          </div>
+
+          <div class="ladder-arrow reveal stagger-2">&uarr;</div>
+
+          <div class="ladder-rung package framework-box reveal stagger-2">
+            <div class="rung-level">2</div>
+            <div class="rung-info">
+              <div class="rung-name">Package</div>
+              <div class="rung-desc">Bundled deliverables. Clear scope.</div>
+            </div>
+            <div class="rung-price">$500-$1,500</div>
+          </div>
+
+          <div class="ladder-arrow reveal stagger-1">&uarr;</div>
+
+          <div class="ladder-rung starter framework-box reveal stagger-1">
+            <div class="rung-level">1</div>
+            <div class="rung-info">
+              <div class="rung-name">Starter</div>
+              <div class="rung-desc">One small deliverable. Quick win.</div>
+            </div>
+            <div class="rung-price">$150-$500</div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-4" style="margin-top: var(--space-6);">
+          Start at Level 1. <strong style="color: var(--color-text);">Climb as you prove yourself.</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 3: Level 1 - Starter -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="tier-detail reveal stagger-1" style="--tier-color: #0099FF;">
+          <div class="tier-header">
+            <div>
+              <div class="tier-name">Level 1: Starter</div>
+              <div class="tier-tag">Your first sales -- get in the door</div>
+            </div>
+            <div class="tier-price-range">$150-$500</div>
+          </div>
+
+          <div class="tier-body">
+            <p>One small, specific deliverable. Low risk for the client. <strong style="color: var(--color-text);">Designed to prove you can deliver.</strong></p>
+          </div>
+
+          <ul class="tier-includes">
+            <li><span class="inc-icon">&rarr;</span> Single landing page or website section</li>
+            <li><span class="inc-icon">&rarr;</span> 5-10 social media graphics</li>
+            <li><span class="inc-icon">&rarr;</span> One email sequence (3-5 emails)</li>
+            <li><span class="inc-icon">&rarr;</span> Logo or brand refresh</li>
+            <li><span class="inc-icon">&rarr;</span> Video editing for 3-5 short clips</li>
+          </ul>
+
+          <div class="tier-example">
+            <div class="ex-label">Why this works</div>
+            <div class="ex-text">It's easy for the client to say yes. Low price = low risk. You get a portfolio piece AND a potential upsell.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 4: Level 2 - Package -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="tier-detail reveal stagger-1" style="--tier-color: #A855F7;">
+          <div class="tier-header">
+            <div>
+              <div class="tier-name">Level 2: Package</div>
+              <div class="tier-tag">Bundled deliverables with clear scope</div>
+            </div>
+            <div class="tier-price-range">$500-$1,500</div>
+          </div>
+
+          <div class="tier-body">
+            <p>Multiple deliverables bundled together. <strong style="color: var(--color-text);">Solves a bigger problem.</strong> Higher value, higher price.</p>
+          </div>
+
+          <ul class="tier-includes">
+            <li><span class="inc-icon">&rarr;</span> Full website (3-5 pages)</li>
+            <li><span class="inc-icon">&rarr;</span> Brand kit (logo + colors + fonts + guidelines)</li>
+            <li><span class="inc-icon">&rarr;</span> Content package (20 posts + captions + hashtags)</li>
+            <li><span class="inc-icon">&rarr;</span> Full funnel setup (landing page + emails + automation)</li>
+            <li><span class="inc-icon">&rarr;</span> Video production package (10 edited clips + thumbnails)</li>
+          </ul>
+
+          <div class="tier-example">
+            <div class="ex-label">The upgrade path</div>
+            <div class="ex-text">"You loved the landing page? Let me build the full website + set up the email sequence to match. It's $1,200 for the complete package."</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 5: Level 3 - Retainer -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="tier-detail reveal stagger-1" style="--tier-color: #00D9A3;">
+          <div class="tier-header">
+            <div>
+              <div class="tier-name">Level 3: Retainer</div>
+              <div class="tier-tag">Monthly recurring revenue</div>
+            </div>
+            <div class="tier-price-range">$500-$2,000/mo</div>
+          </div>
+
+          <div class="tier-body">
+            <p>Ongoing monthly work. <strong style="color: var(--color-text);">Predictable income for you. Consistent support for them.</strong> The holy grail of freelancing.</p>
+          </div>
+
+          <ul class="tier-includes">
+            <li><span class="inc-icon">&rarr;</span> Social media management (content + posting + engagement)</li>
+            <li><span class="inc-icon">&rarr;</span> Monthly content creation (X posts per month)</li>
+            <li><span class="inc-icon">&rarr;</span> Ongoing website maintenance + updates</li>
+            <li><span class="inc-icon">&rarr;</span> Email marketing management</li>
+            <li><span class="inc-icon">&rarr;</span> Video editing on retainer (X videos per month)</li>
+          </ul>
+
+          <div class="tier-example">
+            <div class="ex-label">The pitch</div>
+            <div class="ex-text">"Instead of hiring and managing someone full-time, I handle your entire social media for $1,500/month. You save time, money, and headaches."</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 6: How to Say the Price -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">How to <span class="highlight">Say the Price</span></h2>
+
+        <div class="pricing-comparison reveal stagger-1" style="margin-top: var(--space-8);">
+          <div class="pricing-way wrong">
+            <div class="way-label">The Wrong Way</div>
+            <div class="way-script">"So... I was thinking maybe like $500? But it depends on the scope and we can always adjust if that's too much. I'm flexible on pricing. Let me know what works for you?"</div>
+            <div class="way-tags">
+              <span class="way-tag">Uncertain</span>
+              <span class="way-tag">Apologetic</span>
+              <span class="way-tag">Weak</span>
+            </div>
+          </div>
+
+          <div class="pricing-way right">
+            <div class="way-label">The Right Way</div>
+            <div class="way-script">"Based on everything we discussed, the investment is $500. That includes the landing page, 2 rounds of revisions, and delivery in 7 days. I can send the invoice today and start this week."</div>
+            <div class="way-tags">
+              <span class="way-tag">Confident</span>
+              <span class="way-tag">Specific</span>
+              <span class="way-tag">Clear next step</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-6);">
+          State the price. Shut up. <strong style="color: var(--color-text);">Let them respond.</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 7: Common Objections -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Common <span class="highlight">Objections</span> + Responses</h2>
+
+        <div class="objection-list reveal stagger-1" style="margin-top: var(--space-6);">
+          <div class="objection-item">
+            <div class="obj-question">"That's more than I expected"</div>
+            <div class="obj-response">"I understand. Let me break down what you're getting: [re-state deliverables]. Based on the results, this typically pays for itself within [timeframe]."</div>
+          </div>
+          <div class="objection-item">
+            <div class="obj-question">"I can find someone cheaper on Fiverr"</div>
+            <div class="obj-response">"You definitely can. The difference is I'm building this specifically for YOUR audience, with a strategy behind it -- not just a template. You get a partner, not a vendor."</div>
+          </div>
+          <div class="objection-item">
+            <div class="obj-question">"Can I pay in installments?"</div>
+            <div class="obj-response">"Absolutely. We can split it into 2 payments -- 50% to start, 50% on delivery. That work for you?"</div>
+          </div>
+          <div class="objection-item">
+            <div class="obj-question">"Let me think about it"</div>
+            <div class="obj-response">"Of course. What specifically would help you decide? I'm happy to answer any questions."</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 8: Summary -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">The <span class="highlight">Pricing Ladder</span></h2>
+
+        <div class="ladder-summary reveal stagger-1" style="margin-top: var(--space-8);">
+          <div class="ladder-sum-card" style="--sum-color: #0099FF;">
+            <div class="sum-name">Starter</div>
+            <div class="sum-price">$150-$500</div>
+          </div>
+          <span style="font-size: var(--text-2xl); color: var(--color-text-muted); display: flex; align-items: center;">&rarr;</span>
+          <div class="ladder-sum-card" style="--sum-color: #A855F7;">
+            <div class="sum-name">Package</div>
+            <div class="sum-price">$500-$1,500</div>
+          </div>
+          <span style="font-size: var(--text-2xl); color: var(--color-text-muted); display: flex; align-items: center;">&rarr;</span>
+          <div class="ladder-sum-card" style="--sum-color: #00D9A3;">
+            <div class="sum-name">Retainer</div>
+            <div class="sum-price">$500-$2K/mo</div>
+          </div>
+        </div>
+
+        <div class="card reveal stagger-2" style="margin-top: var(--space-8); padding: var(--space-6); max-width: 600px; text-align: center;">
+          <p style="color: var(--color-text); font-size: var(--text-lg); margin-bottom: var(--space-2);">
+            Start at Level 1. Deliver great work. <strong>Climb the ladder.</strong>
+          </p>
+          <p style="color: var(--color-text-secondary);">
+            Your price grows as your <strong style="color: var(--color-primary);">confidence and proof</strong> grow.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="../../shared/js/slides.js"></script>
+</body>
+</html>

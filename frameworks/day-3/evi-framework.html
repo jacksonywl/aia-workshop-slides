@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The E.V.I. Comment Strategy | AIA Workshop</title>
+  <link rel="stylesheet" href="../../shared/css/base.css">
+  <link rel="stylesheet" href="../../shared/css/slides.css">
+  <link rel="stylesheet" href="../../shared/css/animations.css">
+  <link rel="stylesheet" href="../../shared/css/components.css">
+  <style>
+    .evi-letters {
+      display: flex;
+      gap: var(--space-6);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .evi-letter {
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-6) var(--space-8);
+      text-align: center;
+      min-width: 220px;
+      transition: all 0.4s var(--ease-out-expo);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .evi-letter::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--letter-color, var(--color-primary));
+    }
+
+    .evi-letter:hover {
+      border-color: var(--letter-color, var(--color-primary));
+      transform: translateY(-4px);
+    }
+
+    .evi-letter.engage { --letter-color: #0099FF; }
+    .evi-letter.value { --letter-color: #00D9A3; }
+    .evi-letter.invite { --letter-color: #A855F7; }
+
+    .evi-letter .big-letter {
+      font-family: var(--font-display);
+      font-size: var(--text-6xl);
+      font-weight: 800;
+      color: var(--letter-color, var(--color-primary));
+      line-height: 1;
+      margin-bottom: var(--space-2);
+    }
+
+    .evi-letter .letter-word {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+    }
+
+    .evi-letter .letter-desc {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .benefit-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-5);
+      max-width: 900px;
+    }
+
+    .benefit-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      text-align: center;
+      transition: all 0.3s var(--ease-out-expo);
+    }
+
+    .benefit-card:hover {
+      border-color: var(--color-primary);
+      transform: translateY(-2px);
+    }
+
+    .benefit-card .benefit-icon {
+      font-size: var(--text-4xl);
+      margin-bottom: var(--space-3);
+    }
+
+    .benefit-card .benefit-title {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+    }
+
+    .benefit-card .benefit-desc {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+    }
+
+    .deep-dive-card {
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      max-width: 650px;
+      border-top: 4px solid var(--dive-color, var(--color-primary));
+    }
+
+    .deep-dive-card .dive-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      margin-bottom: var(--space-5);
+    }
+
+    .deep-dive-card .dive-letter {
+      font-family: var(--font-display);
+      font-size: var(--text-5xl);
+      font-weight: 800;
+      color: var(--dive-color, var(--color-primary));
+      line-height: 1;
+    }
+
+    .deep-dive-card .dive-title {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: var(--color-text);
+    }
+
+    .deep-dive-card .dive-subtitle {
+      font-size: var(--text-base);
+      color: var(--dive-color, var(--color-primary));
+      font-weight: 500;
+    }
+
+    .deep-dive-card .dive-example {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      margin-top: var(--space-4);
+      border-left: 3px solid var(--dive-color, var(--color-primary));
+    }
+
+    .deep-dive-card .dive-example .example-label {
+      font-size: var(--text-xs);
+      color: var(--dive-color, var(--color-primary));
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-2);
+    }
+
+    .deep-dive-card .dive-example .example-text {
+      font-size: var(--text-base);
+      color: var(--color-text-secondary);
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+      max-width: 850px;
+    }
+
+    .comparison-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+    }
+
+    .comparison-card.bad {
+      border-top: 4px solid var(--color-danger);
+    }
+
+    .comparison-card.good {
+      border-top: 4px solid var(--color-success);
+    }
+
+    .comparison-card .comp-label {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: 700;
+      margin-bottom: var(--space-4);
+    }
+
+    .comparison-card.bad .comp-label { color: var(--color-danger); }
+    .comparison-card.good .comp-label { color: var(--color-success); }
+
+    .comparison-card .comp-comment {
+      font-size: var(--text-base);
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      font-style: italic;
+      padding: var(--space-4);
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-3);
+    }
+
+    .comparison-card .comp-tags {
+      display: flex;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+    }
+
+    .comparison-card .comp-tag {
+      font-size: var(--text-xs);
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+    }
+
+    .comparison-card.bad .comp-tag {
+      background: rgba(255, 77, 77, 0.1);
+      color: var(--color-danger);
+    }
+
+    .comparison-card.good .comp-tag {
+      background: rgba(0, 217, 163, 0.1);
+      color: var(--color-success);
+    }
+
+    .evi-summary {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .evi-summary .sum-letter {
+      font-family: var(--font-display);
+      font-size: var(--text-4xl);
+      font-weight: 800;
+    }
+
+    .evi-summary .sum-dot {
+      font-size: var(--text-2xl);
+      color: var(--color-text-muted);
+    }
+
+    @media (max-width: 768px) {
+      .benefit-cards {
+        grid-template-columns: 1fr;
+      }
+      .comparison-grid {
+        grid-template-columns: 1fr;
+      }
+      .evi-letters {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="slides-container">
+
+    <!-- Slide 1: Title -->
+    <section class="slide title-slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Day 3 Framework</span>
+        <h1 class="slide-title reveal stagger-1">The <span class="highlight">E.V.I.</span> Comment Strategy</h1>
+        <p class="slide-subtitle reveal stagger-2">Turn every comment into a client magnet. 3 parts. 30 seconds. Massive results.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: Why Commenting Works -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Why <span class="highlight">Commenting</span> Works</h2>
+
+        <div class="benefit-cards reveal stagger-1" style="margin-top: var(--space-8);">
+          <div class="benefit-card">
+            <div class="benefit-icon">&#128065;</div>
+            <div class="benefit-title">Free Visibility</div>
+            <div class="benefit-desc">Your comment appears under posts with thousands of views. Free exposure to their entire audience.</div>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-icon">&#129309;</div>
+            <div class="benefit-title">Builds Relationships</div>
+            <div class="benefit-desc">Creators notice who comments consistently. You become familiar. Familiar leads to trust.</div>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-icon">&#127919;</div>
+            <div class="benefit-title">Attracts Clients</div>
+            <div class="benefit-desc">A smart comment makes people click your profile. Your profile is your storefront. They walk in.</div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-6);">
+          But only if you comment <strong style="color: var(--color-text);">the right way</strong>.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 3: The E.V.I. Framework Overview -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">The Framework</span>
+
+        <div class="evi-letters" style="margin-top: var(--space-8);">
+          <div class="evi-letter engage framework-box reveal stagger-1">
+            <div class="big-letter">E</div>
+            <div class="letter-word">Engage</div>
+            <div class="letter-desc">Acknowledge what they said</div>
+          </div>
+
+          <div class="evi-letter value framework-box reveal stagger-2">
+            <div class="big-letter">V</div>
+            <div class="letter-word">Value</div>
+            <div class="letter-desc">Add something useful</div>
+          </div>
+
+          <div class="evi-letter invite framework-box reveal stagger-3">
+            <div class="big-letter">I</div>
+            <div class="letter-word">Invite</div>
+            <div class="letter-desc">Subtle reason to check you out</div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-4" style="margin-top: var(--space-6);">
+          Every comment, every time. <strong style="color: var(--color-text);">3 sentences. 30 seconds.</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 4: E = Engage -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="deep-dive-card reveal stagger-1" style="--dive-color: #0099FF;">
+          <div class="dive-header">
+            <div class="dive-letter">E</div>
+            <div>
+              <div class="dive-title">Engage</div>
+              <div class="dive-subtitle">Acknowledge what they said</div>
+            </div>
+          </div>
+
+          <p style="color: var(--color-text-secondary); line-height: 1.6; margin-bottom: var(--space-4);">
+            Show the person you actually <strong style="color: var(--color-text);">read their content</strong>. Reference something specific. Don't just say "great post" -- prove you paid attention.
+          </p>
+
+          <div class="dive-example">
+            <div class="example-label">Example</div>
+            <div class="example-text">"Your point about pricing based on value instead of hours really hit home..."</div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-6);">
+          This separates you from the <strong style="color: #0099FF;">99% of generic comments</strong>.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 5: V = Value -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="deep-dive-card reveal stagger-1" style="--dive-color: #00D9A3;">
+          <div class="dive-header">
+            <div class="dive-letter">V</div>
+            <div>
+              <div class="dive-title">Value</div>
+              <div class="dive-subtitle">Add something useful</div>
+            </div>
+          </div>
+
+          <p style="color: var(--color-text-secondary); line-height: 1.6; margin-bottom: var(--space-4);">
+            Add a <strong style="color: var(--color-text);">tip, insight, or personal experience</strong> that builds on their point. Don't just agree -- extend the conversation with something others can learn from.
+          </p>
+
+          <div class="dive-example">
+            <div class="example-label">Example</div>
+            <div class="example-text">"I started doing this with my freelance clients last month and my close rate went from 20% to 45%. The key was framing the price around ROI, not deliverables."</div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-6);">
+          This is what makes people think: <strong style="color: #00D9A3;">"Who is this person? Let me check their profile."</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 6: I = Invite -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="deep-dive-card reveal stagger-1" style="--dive-color: #A855F7;">
+          <div class="dive-header">
+            <div class="dive-letter">I</div>
+            <div>
+              <div class="dive-title">Invite</div>
+              <div class="dive-subtitle">Subtle reason to check you out</div>
+            </div>
+          </div>
+
+          <p style="color: var(--color-text-secondary); line-height: 1.6; margin-bottom: var(--space-4);">
+            Give a <strong style="color: var(--color-text);">soft invitation</strong> -- not a sales pitch. Mention something relevant on your page, a resource you made, or just leave them curious enough to click.
+          </p>
+
+          <div class="dive-example">
+            <div class="example-label">Example</div>
+            <div class="example-text">"I actually wrote a breakdown of 3 pricing frameworks that work for freelancers -- it's on my page if you're interested."</div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-6);">
+          <strong style="color: #A855F7;">Never "hire me."</strong> Always "I have something useful."
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 7: Bad vs Good Comparison -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Bad Comment vs. <span class="highlight">E.V.I. Comment</span></h2>
+
+        <div class="comparison-grid reveal stagger-1" style="margin-top: var(--space-8);">
+          <div class="comparison-card bad">
+            <div class="comp-label">Bad Comment</div>
+            <div class="comp-comment">"Great post! So true. Keep it up!"</div>
+            <div class="comp-tags">
+              <span class="comp-tag">Generic</span>
+              <span class="comp-tag">No value</span>
+              <span class="comp-tag">Invisible</span>
+            </div>
+          </div>
+
+          <div class="comparison-card good">
+            <div class="comp-label">E.V.I. Comment</div>
+            <div class="comp-comment">"Your point about niching down is spot on. I resisted this for months until I niched into fitness coaches -- my income doubled in 60 days. I actually shared the exact steps on my page if anyone's curious."</div>
+            <div class="comp-tags">
+              <span class="comp-tag">E: Engages</span>
+              <span class="comp-tag">V: Adds value</span>
+              <span class="comp-tag">I: Invites</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-6);">
+          Same 30 seconds. <strong style="color: var(--color-text);">Completely different result.</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 8: Summary -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">The <span class="highlight">E.V.I.</span> Comment Strategy</h2>
+
+        <div class="evi-summary reveal stagger-1" style="margin-top: var(--space-8);">
+          <span class="sum-letter" style="color: #0099FF;">E</span>
+          <span class="sum-dot">ngage</span>
+          <span style="color: var(--color-text-muted); font-size: var(--text-2xl); margin: 0 var(--space-2);">+</span>
+          <span class="sum-letter" style="color: #00D9A3;">V</span>
+          <span class="sum-dot">alue</span>
+          <span style="color: var(--color-text-muted); font-size: var(--text-2xl); margin: 0 var(--space-2);">+</span>
+          <span class="sum-letter" style="color: #A855F7;">I</span>
+          <span class="sum-dot">nvite</span>
+        </div>
+
+        <div class="card reveal stagger-2" style="margin-top: var(--space-8); padding: var(--space-6); max-width: 600px; text-align: center;">
+          <p style="color: var(--color-text); font-size: var(--text-lg); margin-bottom: var(--space-3);">
+            <strong>10 E.V.I. comments per day</strong> = 70 per week
+          </p>
+          <p style="color: var(--color-text-secondary);">
+            That's 70 chances for someone to click your profile, see your offer, and DM you.
+          </p>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-6);">
+          Stop commenting like a fan. <strong style="color: var(--color-primary);">Start commenting like a professional.</strong>
+        </p>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="../../shared/js/slides.js"></script>
+</body>
+</html>

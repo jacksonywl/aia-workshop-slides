@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Funnel in Action | AIA Workshop</title>
+  <link rel="stylesheet" href="../../shared/css/base.css">
+  <link rel="stylesheet" href="../../shared/css/slides.css">
+  <link rel="stylesheet" href="../../shared/css/animations.css">
+  <link rel="stylesheet" href="../../shared/css/components.css">
+  <style>
+    .funnel-steps {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      max-width: 700px;
+    }
+
+    .funnel-step {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      padding: var(--space-4) var(--space-5);
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      transition: all 0.4s var(--ease-out-expo);
+      position: relative;
+    }
+
+    .funnel-step:hover {
+      border-color: var(--funnel-color, var(--color-primary));
+      transform: translateX(6px);
+    }
+
+    .funnel-step .f-num {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      background: var(--funnel-color, var(--color-primary));
+      color: var(--color-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: var(--text-lg);
+      flex-shrink: 0;
+    }
+
+    .funnel-step .f-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: var(--text-lg);
+      color: var(--color-text);
+    }
+
+    .funnel-step .f-desc {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      margin-top: var(--space-1);
+    }
+
+    .funnel-step .f-arrow {
+      margin-left: auto;
+      color: var(--funnel-color, var(--color-primary));
+      font-size: var(--text-xl);
+    }
+
+    .pair-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+      max-width: 800px;
+    }
+
+    .pair-card {
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      border-top: 4px solid var(--pair-color, var(--color-primary));
+      transition: all 0.3s var(--ease-out-expo);
+    }
+
+    .pair-card:hover {
+      border-color: var(--pair-color, var(--color-primary));
+    }
+
+    .pair-card .pair-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+
+    .pair-card .pair-num {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      background: var(--pair-color, var(--color-primary));
+      color: var(--color-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: var(--text-base);
+      flex-shrink: 0;
+    }
+
+    .pair-card .pair-title {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--color-text);
+    }
+
+    .pair-card .pair-body {
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+
+    .pair-card .pair-body strong {
+      color: var(--color-text);
+    }
+
+    .pair-card .pair-key {
+      margin-top: var(--space-4);
+      padding: var(--space-3);
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: var(--radius-lg);
+      border-left: 3px solid var(--pair-color, var(--color-primary));
+    }
+
+    .pair-card .pair-key .key-label {
+      font-size: var(--text-xs);
+      color: var(--pair-color, var(--color-primary));
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-1);
+    }
+
+    .pair-card .pair-key .key-text {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .onboard-card {
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      max-width: 600px;
+      border-top: 4px solid var(--color-success);
+      text-align: center;
+    }
+
+    .onboard-card .onboard-num {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--radius-sm);
+      background: var(--color-success);
+      color: var(--color-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: var(--text-2xl);
+      margin: 0 auto var(--space-4);
+    }
+
+    .onboard-card .onboard-title {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-4);
+    }
+
+    .onboard-checklist {
+      text-align: left;
+      list-style: none;
+    }
+
+    .onboard-checklist li {
+      padding: var(--space-2) 0;
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      color: var(--color-text-secondary);
+    }
+
+    .onboard-checklist li .check {
+      color: var(--color-success);
+      font-weight: 700;
+    }
+
+    .qualify-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+      max-width: 700px;
+    }
+
+    .qualify-item {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      transition: all 0.3s var(--ease-out-expo);
+    }
+
+    .qualify-item:hover {
+      border-color: #FFB800;
+    }
+
+    .qualify-item .q-label {
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: #FFB800;
+      font-size: var(--text-base);
+      margin-bottom: var(--space-2);
+    }
+
+    .qualify-item .q-question {
+      color: var(--color-text);
+      font-size: var(--text-base);
+      font-style: italic;
+      margin-bottom: var(--space-2);
+    }
+
+    .qualify-item .q-why {
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+    }
+
+    .proposal-template {
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      max-width: 600px;
+    }
+
+    .proposal-template .template-title {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--color-primary);
+      text-align: center;
+      margin-bottom: var(--space-5);
+    }
+
+    .proposal-section {
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .proposal-section:last-child {
+      border-bottom: none;
+    }
+
+    .proposal-section .ps-label {
+      font-weight: 700;
+      color: var(--color-text);
+      font-size: var(--text-base);
+      margin-bottom: var(--space-1);
+    }
+
+    .proposal-section .ps-content {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      font-style: italic;
+    }
+
+    .summary-funnel {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .summary-funnel .sf-step {
+      padding: var(--space-2) var(--space-4);
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      font-weight: 600;
+      font-size: var(--text-sm);
+      color: var(--color-text);
+    }
+
+    .summary-funnel .sf-arrow {
+      color: var(--color-primary);
+      font-size: var(--text-lg);
+    }
+
+    @media (max-width: 768px) {
+      .pair-section,
+      .qualify-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="slides-container">
+
+    <!-- Slide 1: Title -->
+    <section class="slide title-slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Day 3 Framework</span>
+        <h1 class="slide-title reveal stagger-1">The <span class="highlight">Funnel</span> in Action</h1>
+        <p class="slide-subtitle reveal stagger-2">7 steps from first contact to onboarded client. Every step has a purpose. Skip none.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: 7-Step Overview -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">The Full Funnel</span>
+
+        <div class="funnel-steps" style="margin-top: var(--space-6);">
+          <div class="funnel-step reveal stagger-1" style="--funnel-color: #0099FF;">
+            <div class="f-num">1</div>
+            <div><div class="f-name">Contact</div><div class="f-desc">Reach out or they find you</div></div>
+            <div class="f-arrow">&rarr;</div>
+          </div>
+          <div class="funnel-step reveal stagger-2" style="--funnel-color: #A855F7;">
+            <div class="f-num">2</div>
+            <div><div class="f-name">Qualify</div><div class="f-desc">Are they the right fit?</div></div>
+            <div class="f-arrow">&rarr;</div>
+          </div>
+          <div class="funnel-step reveal stagger-3" style="--funnel-color: #FFB800;">
+            <div class="f-num">3</div>
+            <div><div class="f-name">Call</div><div class="f-desc">Have the 5-step conversation</div></div>
+            <div class="f-arrow">&rarr;</div>
+          </div>
+          <div class="funnel-step reveal stagger-4" style="--funnel-color: #FF4F00;">
+            <div class="f-num">4</div>
+            <div><div class="f-name">Propose</div><div class="f-desc">Send a simple proposal</div></div>
+            <div class="f-arrow">&rarr;</div>
+          </div>
+          <div class="funnel-step reveal stagger-5" style="--funnel-color: #0099FF;">
+            <div class="f-num">5</div>
+            <div><div class="f-name">Price</div><div class="f-desc">State the investment</div></div>
+            <div class="f-arrow">&rarr;</div>
+          </div>
+          <div class="funnel-step reveal stagger-6" style="--funnel-color: #A855F7;">
+            <div class="f-num">6</div>
+            <div><div class="f-name">Close</div><div class="f-desc">Get the yes</div></div>
+            <div class="f-arrow">&rarr;</div>
+          </div>
+          <div class="funnel-step reveal stagger-7" style="--funnel-color: #00D9A3;">
+            <div class="f-num">7</div>
+            <div><div class="f-name">Onboard</div><div class="f-desc">Start the work right</div></div>
+            <div class="f-arrow" style="color: var(--color-success);">&#10003;</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 3: Steps 1-2: Contact + Qualify -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="pair-section reveal stagger-1">
+          <div class="pair-card" style="--pair-color: #0099FF;">
+            <div class="pair-header">
+              <div class="pair-num">1</div>
+              <div class="pair-title">Contact</div>
+            </div>
+            <div class="pair-body">
+              <p>The first touch. They either <strong>find you</strong> (content, referral) or <strong>you find them</strong> (outreach).</p>
+              <div class="pair-key">
+                <div class="key-label">Key metric</div>
+                <div class="key-text">How many new conversations did you START this week?</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pair-card" style="--pair-color: #A855F7;">
+            <div class="pair-header">
+              <div class="pair-num">2</div>
+              <div class="pair-title">Qualify</div>
+            </div>
+            <div class="pair-body">
+              <p>Not everyone is a good fit. <strong>Filter fast.</strong> Don't waste time on people who can't or won't pay.</p>
+              <div class="pair-key">
+                <div class="key-label">Key question</div>
+                <div class="key-text">Do they have the problem, budget, and urgency?</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 4: Steps 3-4: Call + Propose -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="pair-section reveal stagger-1">
+          <div class="pair-card" style="--pair-color: #FFB800;">
+            <div class="pair-header">
+              <div class="pair-num">3</div>
+              <div class="pair-title">Call</div>
+            </div>
+            <div class="pair-body">
+              <p>Use the <strong>5-Step Conversation</strong>: Open, Discover, Bridge, Offer, Handle.</p>
+              <p style="margin-top: var(--space-2);">Can be a video call, voice call, or even a structured DM conversation.</p>
+              <div class="pair-key">
+                <div class="key-label">Goal</div>
+                <div class="key-text">Understand their problem deeply enough to make a specific offer</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pair-card" style="--pair-color: #FF4F00;">
+            <div class="pair-header">
+              <div class="pair-num">4</div>
+              <div class="pair-title">Propose</div>
+            </div>
+            <div class="pair-body">
+              <p><strong>Keep it simple.</strong> One page. Bullet points. Not a 20-page document.</p>
+              <p style="margin-top: var(--space-2);">The proposal confirms what you discussed -- it's not new information.</p>
+              <div class="pair-key">
+                <div class="key-label">Rule</div>
+                <div class="key-text">If the proposal surprises them, you didn't do Step 3 right</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 5: Steps 5-6: Price + Close -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="pair-section reveal stagger-1">
+          <div class="pair-card" style="--pair-color: #0099FF;">
+            <div class="pair-header">
+              <div class="pair-num">5</div>
+              <div class="pair-title">Price</div>
+            </div>
+            <div class="pair-body">
+              <p>State the price <strong>confidently</strong>. Tie it to the value, not the hours.</p>
+              <ul style="list-style: none; margin-top: var(--space-3);">
+                <li style="padding: var(--space-1) 0; display: flex; gap: var(--space-2);">
+                  <span style="color: var(--color-danger);">X</span>
+                  <span>"It'll be around $500... but we can negotiate"</span>
+                </li>
+                <li style="padding: var(--space-1) 0; display: flex; gap: var(--space-2);">
+                  <span style="color: var(--color-success);">&#10003;</span>
+                  <span>"The investment is $500. Here's what you get."</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="pair-card" style="--pair-color: #A855F7;">
+            <div class="pair-header">
+              <div class="pair-num">6</div>
+              <div class="pair-title">Close</div>
+            </div>
+            <div class="pair-body">
+              <p>Ask for the decision. <strong>Don't wait for them to volunteer.</strong></p>
+              <div class="pair-key">
+                <div class="key-label">Closing Line</div>
+                <div class="key-text">"Does this work for you? If so, I can send the invoice and we can start this week."</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 6: Step 7 - Onboard -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="onboard-card reveal stagger-1">
+          <div class="onboard-num">7</div>
+          <div class="onboard-title">Onboard</div>
+          <p style="color: var(--color-text-secondary); margin-bottom: var(--space-5);">The first 48 hours define the entire relationship. Start strong.</p>
+
+          <ul class="onboard-checklist">
+            <li><span class="check">&#10003;</span> Send welcome message + recap of what was agreed</li>
+            <li><span class="check">&#10003;</span> Collect everything you need (access, assets, info)</li>
+            <li><span class="check">&#10003;</span> Set clear timeline and expectations</li>
+            <li><span class="check">&#10003;</span> Deliver a quick win in the first 48 hours</li>
+            <li><span class="check">&#10003;</span> Schedule the first check-in</li>
+          </ul>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-6);">
+          A great onboarding = <strong style="color: var(--color-success);">referrals + retention</strong>.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 7: The Qualify Questions -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">The <span class="highlight" style="color: #FFB800;">Qualify</span> Questions</h2>
+        <p class="slide-subtitle reveal stagger-1">Ask these before investing time in a call</p>
+
+        <div class="qualify-grid reveal stagger-2" style="margin-top: var(--space-6);">
+          <div class="qualify-item">
+            <div class="q-label">Problem</div>
+            <div class="q-question">"What's the main challenge you're facing?"</div>
+            <div class="q-why">Do they have a problem you can solve?</div>
+          </div>
+          <div class="qualify-item">
+            <div class="q-label">Urgency</div>
+            <div class="q-question">"How soon do you need this fixed?"</div>
+            <div class="q-why">Are they ready to act NOW or "someday"?</div>
+          </div>
+          <div class="qualify-item">
+            <div class="q-label">Budget</div>
+            <div class="q-question">"Do you have a budget in mind for this?"</div>
+            <div class="q-why">Can they actually afford to pay you?</div>
+          </div>
+          <div class="qualify-item">
+            <div class="q-label">Authority</div>
+            <div class="q-question">"Are you the decision maker on this?"</div>
+            <div class="q-why">Are you talking to the right person?</div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-6);">
+          If they fail 2+ of these, <strong style="color: #FFB800;">move on</strong>. Your time is valuable.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 8: Simple Proposal Template -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">The <span class="highlight">Simple</span> Proposal</h2>
+        <p class="slide-subtitle reveal stagger-1">One page. That's it.</p>
+
+        <div class="proposal-template reveal stagger-2" style="margin-top: var(--space-6);">
+          <div class="template-title">Proposal Template</div>
+
+          <div class="proposal-section">
+            <div class="ps-label">1. The Problem</div>
+            <div class="ps-content">"You told me [their problem in their words]..."</div>
+          </div>
+          <div class="proposal-section">
+            <div class="ps-label">2. The Solution</div>
+            <div class="ps-content">"Here's what I'll do to fix it: [3-5 bullet points]"</div>
+          </div>
+          <div class="proposal-section">
+            <div class="ps-label">3. The Timeline</div>
+            <div class="ps-content">"This will take [X days/weeks] to complete"</div>
+          </div>
+          <div class="proposal-section">
+            <div class="ps-label">4. The Investment</div>
+            <div class="ps-content">"The total investment is [price]"</div>
+          </div>
+          <div class="proposal-section">
+            <div class="ps-label">5. Next Step</div>
+            <div class="ps-content">"If this works for you, I'll send the invoice and we start [date]"</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 9: Summary -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">The <span class="highlight">Funnel</span> in Action</h2>
+
+        <div class="summary-funnel reveal stagger-1" style="margin-top: var(--space-8);">
+          <span class="sf-step">1. Contact</span>
+          <span class="sf-arrow">&rarr;</span>
+          <span class="sf-step">2. Qualify</span>
+          <span class="sf-arrow">&rarr;</span>
+          <span class="sf-step">3. Call</span>
+          <span class="sf-arrow">&rarr;</span>
+          <span class="sf-step">4. Propose</span>
+          <span class="sf-arrow">&rarr;</span>
+          <span class="sf-step">5. Price</span>
+          <span class="sf-arrow">&rarr;</span>
+          <span class="sf-step">6. Close</span>
+          <span class="sf-arrow">&rarr;</span>
+          <span class="sf-step" style="border-color: var(--color-success); color: var(--color-success);">7. Onboard</span>
+        </div>
+
+        <div class="card reveal stagger-2" style="margin-top: var(--space-8); padding: var(--space-6); max-width: 600px; text-align: center;">
+          <p style="color: var(--color-text); font-size: var(--text-lg); margin-bottom: var(--space-3);">
+            Every step has <strong>one job</strong>: get them to the next step.
+          </p>
+          <p style="color: var(--color-text-secondary);">
+            Don't try to close on the first message. Don't propose before the call. <strong style="color: var(--color-primary);">Follow the funnel.</strong>
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="../../shared/js/slides.js"></script>
+</body>
+</html>

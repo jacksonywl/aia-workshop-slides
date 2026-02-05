@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module 8: The Conversation | AIA Workshop</title>
+  <link rel="stylesheet" href="../../shared/css/base.css">
+  <link rel="stylesheet" href="../../shared/css/slides.css">
+  <link rel="stylesheet" href="../../shared/css/animations.css">
+  <link rel="stylesheet" href="../../shared/css/components.css">
+  <style>
+    .conversation-steps {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      max-width: 600px;
+    }
+
+    .convo-step {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      padding: var(--space-4) var(--space-5);
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      transition: all 0.3s ease;
+    }
+
+    .convo-step:hover {
+      border-color: var(--color-primary);
+      transform: translateX(4px);
+    }
+
+    .convo-step .num {
+      width: 40px;
+      height: 40px;
+      background: var(--color-primary);
+      color: var(--color-bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: var(--text-lg);
+      flex-shrink: 0;
+    }
+
+    .convo-step .name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--color-text);
+    }
+
+    .convo-step .timing {
+      font-size: var(--text-xs);
+      color: var(--color-primary);
+    }
+
+    .questions-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      max-width: 600px;
+    }
+
+    .question-item {
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      color: var(--color-text-secondary);
+      font-size: var(--text-sm);
+      line-height: 1.5;
+      display: flex;
+      gap: var(--space-3);
+      align-items: flex-start;
+    }
+
+    .question-item .q-num {
+      width: 24px;
+      height: 24px;
+      background: var(--color-primary);
+      color: var(--color-bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: var(--text-xs);
+      flex-shrink: 0;
+    }
+
+    .doctor-comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+      max-width: 800px;
+    }
+
+    .doctor-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-5);
+    }
+
+    .doctor-card .icon {
+      font-size: var(--text-4xl);
+      margin-bottom: var(--space-3);
+    }
+
+    .doctor-card .role {
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-3);
+    }
+
+    .doctor-card .flow {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .doctor-card .flow-item {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      padding-left: var(--space-3);
+      border-left: 2px solid var(--color-primary);
+    }
+
+    .walkthrough-box {
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-6);
+      max-width: 600px;
+    }
+
+    .walkthrough-box .scenario {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .walkthrough-box .exchange {
+      margin-bottom: var(--space-4);
+    }
+
+    .walkthrough-box .exchange:last-child {
+      margin-bottom: 0;
+    }
+
+    .walkthrough-box .step-label {
+      font-size: var(--text-xs);
+      font-weight: 600;
+      color: var(--color-primary);
+      margin-bottom: var(--space-1);
+    }
+
+    .walkthrough-box .dialogue {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    .plan-90-day {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+      max-width: 800px;
+    }
+
+    .plan-segment {
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-5);
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .plan-segment:hover {
+      border-color: var(--color-primary);
+      transform: translateY(-2px);
+    }
+
+    .plan-segment .period {
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .plan-segment .title {
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+    }
+
+    .plan-segment .details {
+      font-size: var(--text-xs);
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+
+    .scenario-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-4);
+      max-width: 800px;
+    }
+
+    .scenario-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-5);
+    }
+
+    .scenario-card .client-type {
+      font-size: var(--text-xs);
+      font-weight: 600;
+      color: var(--color-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .scenario-card .client-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+    }
+
+    .scenario-card .brief {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+    }
+
+    .feedback-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      max-width: 500px;
+    }
+
+    .feedback-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .feedback-item .icon {
+      font-size: var(--text-lg);
+    }
+
+    .flip-table {
+      width: 100%;
+      max-width: 700px;
+      border-collapse: collapse;
+    }
+
+    .flip-table th,
+    .flip-table td {
+      padding: var(--space-3);
+      text-align: left;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .flip-table th {
+      font-weight: 600;
+      color: var(--color-text);
+      background: var(--color-bg-card);
+      font-size: var(--text-sm);
+    }
+
+    .flip-table td {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+    }
+
+    @media (max-width: 768px) {
+      .doctor-comparison,
+      .scenario-cards {
+        grid-template-columns: 1fr;
+      }
+      .plan-90-day {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="slides-container">
+
+    <!-- Slide 1: Title -->
+    <section class="slide title-slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Day 3 | 1:00 - 3:00</span>
+        <h1 class="slide-title reveal stagger-1">Module 8: <span class="highlight">The Conversation</span></h1>
+        <p class="slide-subtitle reveal stagger-2">How do I handle a client call or job interview with confidence?</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: Opening Statement -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">The conversation isn't about <span class="highlight">convincing</span>.</h2>
+        <h2 class="slide-title size-lg reveal stagger-1">It's about <span class="highlight">understanding</span>.</h2>
+
+        <div class="card reveal stagger-2" style="margin-top: var(--space-8); padding: var(--space-6); max-width: 500px;">
+          <p style="color: var(--color-text); text-align: center;">
+            The best salespeople don't talk the most.<br>
+            They <strong style="color: var(--color-success);">listen</strong> the most.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 3: Why People Freeze -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Why People <span class="highlight">Freeze</span></h2>
+
+        <div class="quote-box reveal stagger-1" style="margin-top: var(--space-8); max-width: 600px;">
+          <p class="quote-text" style="font-size: var(--text-xl);">
+            They think it's about <strong style="color: var(--color-danger);">SELLING</strong>.
+          </p>
+          <p style="text-align: center; margin-top: var(--space-4); color: var(--color-text-secondary);">
+            Selling feels pushy. Selling feels sleazy. Selling feels fake.
+          </p>
+        </div>
+
+        <div class="card reveal stagger-2" style="margin-top: var(--space-6); padding: var(--space-5); max-width: 500px;">
+          <p style="color: var(--color-success); font-weight: 600; text-align: center; margin-bottom: var(--space-2);">The truth:</p>
+          <p style="color: var(--color-text); text-align: center;">
+            It's not about selling. It's about finding out if you can <strong style="color: var(--color-primary);">HELP</strong>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 4: The 5-Step Conversation -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Framework</span>
+        <h2 class="slide-title size-lg reveal stagger-1">The <span class="highlight">5-Step</span> Conversation</h2>
+
+        <div class="conversation-steps reveal stagger-2" style="margin-top: var(--space-8);">
+          <div class="convo-step">
+            <div class="num">1</div>
+            <div>
+              <div class="name">OPEN</div>
+              <div class="timing">2-3 min</div>
+            </div>
+          </div>
+          <div class="convo-step">
+            <div class="num">2</div>
+            <div>
+              <div class="name">DISCOVER</div>
+              <div class="timing">10-15 min</div>
+            </div>
+          </div>
+          <div class="convo-step">
+            <div class="num">3</div>
+            <div>
+              <div class="name">BRIDGE</div>
+              <div class="timing">3-5 min</div>
+            </div>
+          </div>
+          <div class="convo-step">
+            <div class="num">4</div>
+            <div>
+              <div class="name">OFFER</div>
+              <div class="timing">5-10 min</div>
+            </div>
+          </div>
+          <div class="convo-step">
+            <div class="num">5</div>
+            <div>
+              <div class="name">HANDLE</div>
+              <div class="timing">5-10 min</div>
+            </div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-4);">
+          Works for client calls. Works for job interviews. <strong style="color: var(--color-text);">Same structure.</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 5: Step 1 - OPEN -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Step 1</span>
+        <h2 class="slide-title size-lg reveal stagger-1"><span class="highlight">OPEN</span> -- Build Rapport</h2>
+
+        <div class="card reveal stagger-2" style="margin-top: var(--space-8); padding: var(--space-6); max-width: 600px;">
+          <p style="color: var(--color-text); font-size: var(--text-lg); margin-bottom: var(--space-4);">
+            Be human. Not a robot.
+          </p>
+          <ul style="color: var(--color-text-secondary); margin-left: var(--space-4);">
+            <li style="margin-bottom: var(--space-2);">Thank them for their time</li>
+            <li style="margin-bottom: var(--space-2);">Make a genuine observation (about their business, content, etc.)</li>
+            <li style="margin-bottom: var(--space-2);">Set the agenda: "Here's what I was thinking for this call..."</li>
+            <li>Ask a simple question to get them talking</li>
+          </ul>
+        </div>
+
+        <div class="reveal stagger-3" style="margin-top: var(--space-4); padding: var(--space-3); background: rgba(0, 217, 163, 0.1); border-radius: var(--radius-lg); max-width: 400px;">
+          <p style="text-align: center; color: var(--color-success); font-weight: 600; font-size: var(--text-sm);">
+            2-3 minutes. That's it. Then move to DISCOVER.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 6: Step 2 - DISCOVER -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Step 2</span>
+        <h2 class="slide-title size-lg reveal stagger-1"><span class="highlight">DISCOVER</span> -- Ask & Listen</h2>
+
+        <div class="card reveal stagger-2" style="margin-top: var(--space-6); padding: var(--space-6); max-width: 600px;">
+          <p style="color: var(--color-text); font-size: var(--text-lg); margin-bottom: var(--space-4);">
+            This is the MOST important step.
+          </p>
+          <p style="color: var(--color-text-secondary); margin-bottom: var(--space-4);">
+            Ask questions. LISTEN to the answers. Take notes. Don't pitch yet.
+          </p>
+          <div style="padding: var(--space-4); background: rgba(255, 79, 0, 0.1); border-radius: var(--radius-lg); text-align: center;">
+            <p style="font-family: var(--font-display); font-weight: 700; color: var(--color-primary); font-size: var(--text-xl);">
+              Whoever talks most LOSES.
+            </p>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-4);">
+          Your goal: understand their <strong style="color: var(--color-text);">problem</strong>, their <strong style="color: var(--color-text);">situation</strong>, and their <strong style="color: var(--color-text);">desired outcome</strong>.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 7: Discovery Questions for Clients -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Discovery Questions: <span class="highlight">Clients</span></h2>
+
+        <div class="questions-list reveal stagger-1" style="margin-top: var(--space-8);">
+          <div class="question-item">
+            <div class="q-num">1</div>
+            <span>"Tell me about your business -- what do you do?"</span>
+          </div>
+          <div class="question-item">
+            <div class="q-num">2</div>
+            <span>"How are you currently getting customers?"</span>
+          </div>
+          <div class="question-item">
+            <div class="q-num">3</div>
+            <span>"What's working? What's not?"</span>
+          </div>
+          <div class="question-item">
+            <div class="q-num">4</div>
+            <span>"If we could fix ONE thing, what would make the biggest difference?"</span>
+          </div>
+          <div class="question-item">
+            <div class="q-num">5</div>
+            <span>"Have you tried anything before? What happened?"</span>
+          </div>
+          <div class="question-item">
+            <div class="q-num">6</div>
+            <span>"What would success look like for you in the next 90 days?"</span>
+          </div>
+          <div class="question-item">
+            <div class="q-num">7</div>
+            <span>"Is there a budget or timeline you're working with?"</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 8: Discovery Questions for Job Interviews -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Discovery Questions: <span class="highlight">Interviews</span></h2>
+
+        <div class="questions-list reveal stagger-1" style="margin-top: var(--space-8);">
+          <div class="question-item">
+            <div class="q-num">1</div>
+            <span>"What does success look like for someone in this role in the first 90 days?"</span>
+          </div>
+          <div class="question-item">
+            <div class="q-num">2</div>
+            <span>"What's the biggest marketing challenge the team is facing right now?"</span>
+          </div>
+          <div class="question-item">
+            <div class="q-num">3</div>
+            <span>"What tools and platforms does the team currently use?"</span>
+          </div>
+          <div class="question-item">
+            <div class="q-num">4</div>
+            <span>"Who would I be working with most closely?"</span>
+          </div>
+          <div class="question-item">
+            <div class="q-num">5</div>
+            <span>"What made you decide to hire for this role now?"</span>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-4);">
+          These questions show you're <strong style="color: var(--color-success);">serious, prepared, and thinking like an owner</strong>.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 9: Step 3 - BRIDGE -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Step 3</span>
+        <h2 class="slide-title size-lg reveal stagger-1"><span class="highlight">BRIDGE</span> -- Connect Their Problem to Your Solution</h2>
+
+        <div class="card reveal stagger-2" style="margin-top: var(--space-8); padding: var(--space-6); max-width: 600px;">
+          <p style="color: var(--color-text-muted); font-size: var(--text-sm); margin-bottom: var(--space-3);">The magic phrase:</p>
+          <div style="padding: var(--space-4); background: var(--color-bg-elevated, rgba(255,255,255,0.03)); border-radius: var(--radius-lg); border-left: 3px solid var(--color-primary);">
+            <p style="color: var(--color-text); font-size: var(--text-lg); font-style: italic;">
+              "Based on what you told me, here's what I think would help..."
+            </p>
+          </div>
+          <p style="color: var(--color-text-secondary); margin-top: var(--space-4); font-size: var(--text-sm);">
+            Summarize what they said. Show you listened. Then transition to what you can do about it.
+          </p>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-4);">
+          3-5 minutes. This is the <strong style="color: var(--color-text);">turning point</strong> of the conversation.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 10: Step 4 - OFFER -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Step 4</span>
+        <h2 class="slide-title size-lg reveal stagger-1"><span class="highlight">OFFER</span> -- Present Your Solution</h2>
+
+        <div class="card reveal stagger-2" style="margin-top: var(--space-8); padding: var(--space-6); max-width: 600px;">
+          <p style="color: var(--color-text); font-size: var(--text-lg); margin-bottom: var(--space-4);">
+            Be <strong style="color: var(--color-primary);">specific</strong>. Not vague.
+          </p>
+          <div class="grid-2" style="gap: var(--space-4);">
+            <div style="padding: var(--space-3); border-top: 3px solid var(--color-danger);">
+              <p style="color: var(--color-danger); font-weight: 600; font-size: var(--text-sm); margin-bottom: var(--space-2);">VAGUE</p>
+              <p style="color: var(--color-text-secondary); font-size: var(--text-sm); font-style: italic;">"I can help with your marketing"</p>
+            </div>
+            <div style="padding: var(--space-3); border-top: 3px solid var(--color-success);">
+              <p style="color: var(--color-success); font-weight: 600; font-size: var(--text-sm); margin-bottom: var(--space-2);">SPECIFIC</p>
+              <p style="color: var(--color-text-secondary); font-size: var(--text-sm); font-style: italic;">"I'll build you a landing page for your whitening service, set up a Google review system, and create 4 social posts -- all in 2 weeks."</p>
+            </div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-4);">
+          Specific offer + specific timeline = <strong style="color: var(--color-success);">trust</strong>.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 11: Step 5 - HANDLE -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Step 5</span>
+        <h2 class="slide-title size-lg reveal stagger-1"><span class="highlight">HANDLE</span> -- Answer Honestly</h2>
+
+        <div class="card reveal stagger-2" style="margin-top: var(--space-8); padding: var(--space-6); max-width: 600px;">
+          <p style="color: var(--color-text); font-size: var(--text-lg); margin-bottom: var(--space-4);">
+            They WILL have concerns. That's normal.
+          </p>
+          <ul style="color: var(--color-text-secondary); margin-left: var(--space-4);">
+            <li style="margin-bottom: var(--space-3);">
+              <strong style="color: var(--color-text);">"How much experience do you have?"</strong><br>
+              <span style="font-size: var(--text-sm);">Be honest. Show your portfolio. Let the work speak.</span>
+            </li>
+            <li style="margin-bottom: var(--space-3);">
+              <strong style="color: var(--color-text);">"What if it doesn't work?"</strong><br>
+              <span style="font-size: var(--text-sm);">Offer a small starter project first. Reduce their risk.</span>
+            </li>
+            <li>
+              <strong style="color: var(--color-text);">"Can I think about it?"</strong><br>
+              <span style="font-size: var(--text-sm);">Of course. Set a follow-up date. Don't pressure.</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="reveal stagger-3" style="margin-top: var(--space-4); padding: var(--space-3); background: rgba(0, 217, 163, 0.1); border-radius: var(--radius-lg); max-width: 500px;">
+          <p style="text-align: center; color: var(--color-success); font-weight: 600;">
+            Trust beats bluffing. Every time.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 12: The Doctor Analogy -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">The Doctor Analogy</span>
+
+        <div class="doctor-comparison reveal stagger-1" style="margin-top: var(--space-8);">
+          <div class="doctor-card">
+            <div class="icon">&#129658;</div>
+            <div class="role">Doctor</div>
+            <div class="flow">
+              <div class="flow-item">1. "What's wrong?" (symptoms)</div>
+              <div class="flow-item">2. "How long?" (history)</div>
+              <div class="flow-item">3. "Here's what I think" (diagnosis)</div>
+              <div class="flow-item">4. "Here's the plan" (treatment)</div>
+              <div class="flow-item">5. "Any questions?" (handle)</div>
+            </div>
+          </div>
+          <div class="doctor-card">
+            <div class="icon">&#128200;</div>
+            <div class="role">AI Marketer</div>
+            <div class="flow">
+              <div class="flow-item">1. "Tell me about your business" (symptoms)</div>
+              <div class="flow-item">2. "What have you tried?" (history)</div>
+              <div class="flow-item">3. "Based on what you said..." (diagnosis)</div>
+              <div class="flow-item">4. "Here's what I'd do" (treatment)</div>
+              <div class="flow-item">5. "What questions do you have?" (handle)</div>
+            </div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-6);">
+          A doctor never walks in and says <em style="color: var(--color-danger);">"You need surgery!"</em> before asking questions.<br>
+          <strong style="color: var(--color-text);">Neither should you.</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 13: Example Walkthrough -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Example Walkthrough</span>
+
+        <div class="walkthrough-box reveal stagger-1" style="margin-top: var(--space-6);">
+          <div class="scenario">Client: Coach Danny -- fitness coach, 8K followers, no landing page, getting 2 clients/month</div>
+
+          <div class="exchange">
+            <div class="step-label">1. OPEN</div>
+            <div class="dialogue">"Thanks for jumping on, Danny. I loved that transformation post you did last week -- really powerful stuff."</div>
+          </div>
+          <div class="exchange">
+            <div class="step-label">2. DISCOVER</div>
+            <div class="dialogue">"So tell me -- how are you currently getting clients? ... What's been your biggest frustration?"</div>
+          </div>
+          <div class="exchange">
+            <div class="step-label">3. BRIDGE</div>
+            <div class="dialogue">"So it sounds like you're getting attention but losing people because there's no clear next step after they find you..."</div>
+          </div>
+          <div class="exchange">
+            <div class="step-label">4. OFFER</div>
+            <div class="dialogue">"Here's what I'd do: build you a landing page for your 12-week program, set up an email sequence for leads, and create 4 posts. Two weeks, done."</div>
+          </div>
+          <div class="exchange">
+            <div class="step-label">5. HANDLE</div>
+            <div class="dialogue">"Want to start with just the landing page? If you like it, we do the rest."</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 14: The Job Interview Flip -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">The Job Interview <span class="highlight">Flip</span></h2>
+        <p class="slide-subtitle reveal stagger-1">Same 5 steps. Reframed for interviews.</p>
+
+        <table class="flip-table reveal stagger-2" style="margin-top: var(--space-8);">
+          <thead>
+            <tr>
+              <th>Step</th>
+              <th>Client Call</th>
+              <th>Job Interview</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong style="color: var(--color-primary);">OPEN</strong></td>
+              <td>Build rapport</td>
+              <td>Thank them, show enthusiasm</td>
+            </tr>
+            <tr>
+              <td><strong style="color: var(--color-primary);">DISCOVER</strong></td>
+              <td>Ask about their problem</td>
+              <td>Ask about the role's challenges</td>
+            </tr>
+            <tr>
+              <td><strong style="color: var(--color-primary);">BRIDGE</strong></td>
+              <td>"Based on what you said..."</td>
+              <td>"Based on what you need..."</td>
+            </tr>
+            <tr>
+              <td><strong style="color: var(--color-primary);">OFFER</strong></td>
+              <td>Present your solution</td>
+              <td>Show how you'd solve it (with examples)</td>
+            </tr>
+            <tr>
+              <td><strong style="color: var(--color-primary);">HANDLE</strong></td>
+              <td>Answer objections</td>
+              <td>Address experience gaps honestly</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Slide 15: The 30/60/90 Day Plan -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Job Track Secret Weapon</span>
+        <h2 class="slide-title size-lg reveal stagger-1">The <span class="highlight">30/60/90</span> Day Plan</h2>
+
+        <div class="plan-90-day reveal stagger-2" style="margin-top: var(--space-8);">
+          <div class="plan-segment">
+            <div class="period">Day 1-30</div>
+            <div class="title">Learn & Audit</div>
+            <div class="details">
+              Understand the business<br>
+              Audit current marketing<br>
+              Identify quick wins<br>
+              Deliver 2-3 small wins
+            </div>
+          </div>
+          <div class="plan-segment">
+            <div class="period">Day 31-60</div>
+            <div class="title">Build & Launch</div>
+            <div class="details">
+              Implement top priorities<br>
+              Set up systems<br>
+              Start content calendar<br>
+              Show first results
+            </div>
+          </div>
+          <div class="plan-segment">
+            <div class="period">Day 61-90</div>
+            <div class="title">Scale & Optimize</div>
+            <div class="details">
+              Double down on what works<br>
+              Cut what doesn't<br>
+              Present results report<br>
+              Propose next quarter plan
+            </div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-4);">
+          Bring this to the interview. <strong style="color: var(--color-success);">99% of candidates won't.</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 16: Exercise - Role-Play Round 1 -->
+    <section class="slide exercise-slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Exercise</span>
+        <h2 class="slide-title size-lg reveal stagger-1">Role-Play Round 1: Client Pitch</h2>
+        <p class="slide-subtitle reveal stagger-2">Pair up. One person is the client, the other is the marketer.</p>
+
+        <div style="max-width: 600px; margin-top: var(--space-6);">
+          <div class="step-card reveal stagger-3" style="margin-bottom: var(--space-3);">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <div class="step-title">Pick a scenario card (next slide)</div>
+              <div class="step-description">Client reads the card. Marketer doesn't see it.</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-4" style="margin-bottom: var(--space-3);">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <div class="step-title">Run the 5-Step Conversation</div>
+              <div class="step-description">OPEN, DISCOVER, BRIDGE, OFFER, HANDLE -- 10 min per round</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-5">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <div class="step-title">Switch roles and repeat</div>
+              <div class="step-description">Both people practice being the marketer</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="timer-box reveal stagger-6">20 minutes</div>
+      </div>
+    </section>
+
+    <!-- Slide 17: Client Scenario Cards -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Scenario Cards: Clients</span>
+
+        <div class="scenario-cards reveal stagger-1" style="margin-top: var(--space-6);">
+          <div class="scenario-card">
+            <div class="client-type">CARD A</div>
+            <div class="client-name">Coach Sarah</div>
+            <div class="brief">Fitness coach, 5K followers, no landing page. Gets 1-2 clients/month from referrals. Wants to double her income but doesn't know how. Budget: "not much."</div>
+          </div>
+          <div class="scenario-card">
+            <div class="client-type">CARD B</div>
+            <div class="client-name">Dr. Lim</div>
+            <div class="brief">Dental clinic owner. Has a website from 2018. Only 23 Google reviews. Competitors are outranking him. Doesn't understand social media.</div>
+          </div>
+          <div class="scenario-card">
+            <div class="client-type">CARD C</div>
+            <div class="client-name">Aunty Mei</div>
+            <div class="brief">Runs a home bakery. Only sells through WhatsApp. Wants to get more orders but doesn't have any online presence. Very budget-conscious.</div>
+          </div>
+          <div class="scenario-card">
+            <div class="client-type">CARD D</div>
+            <div class="client-name">Raj</div>
+            <div class="brief">Business coach, 12K followers, posts consistently but gets zero leads. Has a Carrd page. Tried running ads but lost money. Frustrated.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 18: Exercise - Role-Play Round 2 -->
+    <section class="slide exercise-slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Exercise</span>
+        <h2 class="slide-title size-lg reveal stagger-1">Role-Play Round 2: Job Interview</h2>
+        <p class="slide-subtitle reveal stagger-2">Same format. Now one person is the hiring manager.</p>
+
+        <div style="max-width: 600px; margin-top: var(--space-6);">
+          <div class="step-card reveal stagger-3" style="margin-bottom: var(--space-3);">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <div class="step-title">Pick an interview scenario card</div>
+              <div class="step-description">Hiring manager reads the card</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-4" style="margin-bottom: var(--space-3);">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <div class="step-title">Run the 5-Step Conversation (Interview version)</div>
+              <div class="step-description">Use your portfolio + 30/60/90 plan -- 10 min per round</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-5">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <div class="step-title">Switch roles and repeat</div>
+              <div class="step-description">Both people practice being the candidate</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="timer-box reveal stagger-6">20 minutes</div>
+      </div>
+    </section>
+
+    <!-- Slide 19: Interview Scenario Cards -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Scenario Cards: Interviews</span>
+
+        <div class="scenario-cards reveal stagger-1" style="margin-top: var(--space-6);">
+          <div class="scenario-card">
+            <div class="client-type">CARD A</div>
+            <div class="client-name">Startup Marketing Role</div>
+            <div class="brief">Early-stage e-commerce startup. Needs someone to run social media, build landing pages, and manage email campaigns. Small team, fast-paced.</div>
+          </div>
+          <div class="scenario-card">
+            <div class="client-type">CARD B</div>
+            <div class="client-name">Agency Junior Role</div>
+            <div class="brief">Digital marketing agency hiring a junior marketer. Will work on multiple client accounts. Need someone who can create content and manage campaigns.</div>
+          </div>
+          <div class="scenario-card">
+            <div class="client-type">CARD C</div>
+            <div class="client-name">Local Business Manager</div>
+            <div class="brief">Restaurant chain hiring a Marketing Manager. Need someone to grow their social media, improve Google reviews, and drive foot traffic to 3 locations.</div>
+          </div>
+          <div class="scenario-card">
+            <div class="client-type">CARD D</div>
+            <div class="client-name">Remote Content Role</div>
+            <div class="brief">SaaS company hiring a remote Content Specialist. Need blog posts, social media content, and email newsletters. Must be self-directed.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 20: Feedback Questions -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">After Each Round, <span class="highlight">Ask</span></h2>
+
+        <div class="feedback-list reveal stagger-1" style="margin-top: var(--space-8);">
+          <div class="feedback-item">
+            <div class="icon">&#129300;</div>
+            <span>"Did I ask enough questions before offering?"</span>
+          </div>
+          <div class="feedback-item">
+            <div class="icon">&#128172;</div>
+            <span>"Was my offer specific or vague?"</span>
+          </div>
+          <div class="feedback-item">
+            <div class="icon">&#128170;</div>
+            <span>"Did I handle objections honestly or did I bluff?"</span>
+          </div>
+          <div class="feedback-item">
+            <div class="icon">&#129309;</div>
+            <span>"Would you actually hire me / buy from me?"</span>
+          </div>
+          <div class="feedback-item">
+            <div class="icon">&#128161;</div>
+            <span>"What's ONE thing I should improve?"</span>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-4);">
+          Honest feedback now saves <strong style="color: var(--color-text);">embarrassing mistakes later</strong>.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 21: Checkpoint -->
+    <section class="slide checkpoint-slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Module 8 Checkpoint</span>
+        <h2 class="slide-title size-lg reveal stagger-1">Can you say yes to all of these?</h2>
+
+        <div class="checklist reveal stagger-2" style="margin-top: var(--space-6);">
+          <div class="checklist-item">
+            <div class="checklist-icon">&#10003;</div>
+            <div class="checklist-text">I can name the 5 steps of The Conversation</div>
+          </div>
+          <div class="checklist-item">
+            <div class="checklist-icon">&#10003;</div>
+            <div class="checklist-text">I know at least 5 discovery questions for clients</div>
+          </div>
+          <div class="checklist-item">
+            <div class="checklist-icon">&#10003;</div>
+            <div class="checklist-text">I've role-played a client pitch and received feedback</div>
+          </div>
+          <div class="checklist-item">
+            <div class="checklist-icon">&#10003;</div>
+            <div class="checklist-text">I've role-played a job interview and received feedback</div>
+          </div>
+          <div class="checklist-item">
+            <div class="checklist-icon">&#10003;</div>
+            <div class="checklist-text">I understand the BRIDGE -- "Based on what you told me..."</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 22: Transition to Module 9 -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Next Up</span>
+        <h2 class="slide-title size-lg reveal stagger-1">Module 9: <span class="highlight">Closing & Graduation</span></h2>
+
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-6);">
+          You can find people. You can talk to them.<br>
+          Now: how do you turn a conversation into <strong style="color: var(--color-primary);">$1,000</strong>?
+        </p>
+
+        <div class="card reveal stagger-3" style="margin-top: var(--space-6); padding: var(--space-6); max-width: 500px;">
+          <p style="color: var(--color-text); text-align: center;">
+            Module 9 is the <strong style="color: var(--color-primary);">final module</strong>.<br>
+            Pricing, proposals, closing, and your $1K Sprint plan.
+          </p>
+          <p style="color: var(--color-text-secondary); text-align: center; margin-top: var(--space-4);">
+            <strong>After this, you graduate.</strong>
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="../../shared/js/slides.js"></script>
+</body>
+</html>
