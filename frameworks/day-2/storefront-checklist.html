@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Storefront Checklist | AIA Workshop</title>
+  <link rel="stylesheet" href="../../shared/css/base.css">
+  <link rel="stylesheet" href="../../shared/css/slides.css">
+  <link rel="stylesheet" href="../../shared/css/animations.css">
+  <link rel="stylesheet" href="../../shared/css/components.css">
+  <style>
+    .shop-comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-8);
+      max-width: 800px;
+    }
+
+    .shop-card {
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-8);
+      text-align: center;
+      transition: all 0.4s var(--ease-out-expo);
+    }
+
+    .shop-card.bad {
+      opacity: 0.6;
+      border-color: var(--color-danger);
+    }
+
+    .shop-card.good {
+      border-color: var(--color-success);
+    }
+
+    .shop-card .icon {
+      font-size: var(--text-5xl);
+      margin-bottom: var(--space-4);
+    }
+
+    .shop-card .label {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 700;
+      margin-bottom: var(--space-3);
+    }
+
+    .shop-card.bad .label { color: var(--color-danger); }
+    .shop-card.good .label { color: var(--color-success); }
+
+    .shop-card .description {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+
+    .checklist-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: var(--space-4);
+      max-width: 1000px;
+    }
+
+    .checklist-item {
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-5);
+      text-align: center;
+      transition: all 0.4s var(--ease-out-expo);
+    }
+
+    .checklist-item:hover {
+      border-color: var(--color-primary);
+      transform: translateY(-4px);
+    }
+
+    .checklist-item .number {
+      width: 32px;
+      height: 32px;
+      background: var(--color-primary);
+      color: var(--color-bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: var(--text-sm);
+      margin: 0 auto var(--space-3);
+    }
+
+    .checklist-item .icon {
+      font-size: var(--text-2xl);
+      margin-bottom: var(--space-2);
+    }
+
+    .checklist-item .title {
+      font-family: var(--font-display);
+      font-size: var(--text-base);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+    }
+
+    .checklist-item .test {
+      font-size: var(--text-xs);
+      color: var(--color-text-secondary);
+      font-style: italic;
+    }
+
+    .five-second-test {
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-primary);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-8);
+      max-width: 600px;
+      text-align: center;
+    }
+
+    .five-second-test .title {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: var(--space-6);
+    }
+
+    .five-second-test .questions {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .five-second-test .question {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-bg-elevated);
+      border-radius: var(--radius-lg);
+    }
+
+    .five-second-test .question .num {
+      width: 28px;
+      height: 28px;
+      background: var(--color-primary);
+      color: var(--color-bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: var(--text-sm);
+      flex-shrink: 0;
+    }
+
+    .five-second-test .question .text {
+      color: var(--color-text);
+      font-size: var(--text-base);
+    }
+
+    .result-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+      margin-top: var(--space-6);
+      max-width: 500px;
+    }
+
+    .result-box .result {
+      padding: var(--space-4);
+      border-radius: var(--radius-lg);
+      text-align: center;
+    }
+
+    .result-box .result.yes {
+      background: rgba(0, 217, 163, 0.1);
+      border: 1px solid var(--color-success);
+    }
+
+    .result-box .result.no {
+      background: rgba(255, 71, 87, 0.1);
+      border: 1px solid var(--color-danger);
+    }
+
+    .result-box .result .label {
+      font-weight: 600;
+      margin-bottom: var(--space-1);
+    }
+
+    .result-box .result.yes .label { color: var(--color-success); }
+    .result-box .result.no .label { color: var(--color-danger); }
+
+    .result-box .result .text {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .profile-example {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      max-width: 500px;
+    }
+
+    .profile-example .header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .profile-example .avatar {
+      width: 60px;
+      height: 60px;
+      background: var(--color-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-2xl);
+    }
+
+    .profile-example .name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--color-text);
+    }
+
+    .profile-example .bio {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .profile-example .cta {
+      margin-top: var(--space-2);
+      font-size: var(--text-sm);
+      color: var(--color-primary);
+      font-weight: 500;
+    }
+
+    @media (max-width: 900px) {
+      .checklist-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .shop-comparison {
+        grid-template-columns: 1fr;
+      }
+      .checklist-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="slides-container">
+
+    <!-- Slide 1: Title -->
+    <section class="slide title-slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Module 6 Framework</span>
+        <h1 class="slide-title reveal stagger-1">The <span class="highlight">Storefront</span> Checklist</h1>
+        <p class="slide-subtitle reveal stagger-2">Your content brings people to your door. This checklist makes sure the door actually looks good — and there's somewhere to walk in.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: Two Shops -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Which shop do you walk into?</span>
+
+        <div class="shop-comparison reveal stagger-1" style="margin-top: var(--space-8);">
+          <div class="shop-card bad">
+            <div class="icon">🏚️</div>
+            <div class="label">Shop A</div>
+            <div class="description">
+              Dirty windows, no sign, lights off, you can't see inside.
+            </div>
+          </div>
+
+          <div class="shop-card good">
+            <div class="icon">🏪</div>
+            <div class="label">Shop B</div>
+            <div class="description">
+              Clean windows, bright sign, products displayed, "OPEN" sign, happy customers inside.
+            </div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-6);">
+          Your online profile is your shop window.<br>
+          In <strong style="color: var(--color-primary);">5 seconds</strong> they decide: "Is this someone I want to talk to?"
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 3: The 5 Elements -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">The 5 Elements</span>
+
+        <div class="checklist-grid" style="margin-top: var(--space-8);">
+          <div class="checklist-item framework-box">
+            <div class="number">1</div>
+            <div class="icon">📸</div>
+            <div class="title">Profile Photo</div>
+            <div class="test">"Do I look professional and approachable?"</div>
+          </div>
+
+          <div class="checklist-item framework-box">
+            <div class="number">2</div>
+            <div class="icon">✍️</div>
+            <div class="title">Bio / Headline</div>
+            <div class="test">"In one sentence, do I know what this person offers?"</div>
+          </div>
+
+          <div class="checklist-item framework-box">
+            <div class="number">3</div>
+            <div class="icon">🖼️</div>
+            <div class="title">Banner / Cover</div>
+            <div class="test">"Does this look like someone who knows what they're doing?"</div>
+          </div>
+
+          <div class="checklist-item framework-box">
+            <div class="number">4</div>
+            <div class="icon">📌</div>
+            <div class="title">Featured / Pinned</div>
+            <div class="test">"Can I see proof of their skills without scrolling?"</div>
+          </div>
+
+          <div class="checklist-item framework-box">
+            <div class="number">5</div>
+            <div class="icon">🔗</div>
+            <div class="title">Portfolio Link</div>
+            <div class="test">"Is there a next step if I'm interested?"</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 4: The 5-Second Test -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="five-second-test reveal stagger-1">
+          <div class="title">The 5-Second Test</div>
+          <p style="color: var(--color-text-secondary); margin-bottom: var(--space-4);">A stranger lands on your profile. In 5 seconds, can they tell:</p>
+
+          <div class="questions">
+            <div class="question">
+              <span class="num">1</span>
+              <span class="text">What do you do?</span>
+            </div>
+            <div class="question">
+              <span class="num">2</span>
+              <span class="text">Who do you help?</span>
+            </div>
+            <div class="question">
+              <span class="num">3</span>
+              <span class="text">That you're good at it?</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="result-box reveal stagger-2" style="margin: var(--space-6) auto 0;">
+          <div class="result yes">
+            <div class="label">If YES</div>
+            <div class="text">They stay, explore, maybe reach out</div>
+          </div>
+          <div class="result no">
+            <div class="label">If NO</div>
+            <div class="text">They leave. You never hear from them.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 5: Example Profile -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Example: Marketing to Coaches</span>
+
+        <div class="profile-example reveal stagger-1" style="margin-top: var(--space-8);">
+          <div class="header">
+            <div class="avatar">👤</div>
+            <div>
+              <div class="name">Your Name</div>
+              <div class="bio">AI Marketer | I help fitness coaches get more clients through landing pages & content.</div>
+              <div class="cta">DM me "AUDIT" for a free website review.</div>
+            </div>
+          </div>
+          <div style="padding: var(--space-4); background: var(--color-bg-elevated); border-radius: var(--radius-lg); margin-bottom: var(--space-3);">
+            <p style="font-size: var(--text-sm); color: var(--color-text-muted);">Banner:</p>
+            <p style="color: var(--color-text);">"Helping coaches convert followers into clients"</p>
+          </div>
+          <div style="padding: var(--space-4); background: var(--color-bg-elevated); border-radius: var(--radius-lg);">
+            <p style="font-size: var(--text-sm); color: var(--color-text-muted);">Pinned post:</p>
+            <p style="color: var(--color-text);">"I rebuilt a coach's landing page and sign-ups tripled."</p>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-4);">
+          Passes the 5-second test. <strong style="color: var(--color-success);">Clear. Professional. Actionable.</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 6: Element Deep Dive - Photo & Bio -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Elements <span class="highlight">1 & 2</span></h2>
+
+        <div class="grid-2 reveal stagger-1" style="margin-top: var(--space-8); max-width: 800px; gap: var(--space-6);">
+          <div class="card" style="padding: var(--space-6);">
+            <div style="font-size: var(--text-3xl); margin-bottom: var(--space-3);">📸</div>
+            <h3 style="color: var(--color-text); margin-bottom: var(--space-2);">Profile Photo</h3>
+            <ul style="font-size: var(--text-sm); color: var(--color-text-secondary); margin-left: var(--space-4);">
+              <li style="margin-bottom: var(--space-2);">Professional headshot</li>
+              <li style="margin-bottom: var(--space-2);">Smiling</li>
+              <li style="margin-bottom: var(--space-2);">Good lighting</li>
+              <li>Face clearly visible</li>
+            </ul>
+          </div>
+
+          <div class="card" style="padding: var(--space-6);">
+            <div style="font-size: var(--text-3xl); margin-bottom: var(--space-3);">✍️</div>
+            <h3 style="color: var(--color-text); margin-bottom: var(--space-2);">Bio / Headline</h3>
+            <ul style="font-size: var(--text-sm); color: var(--color-text-secondary); margin-left: var(--space-4);">
+              <li style="margin-bottom: var(--space-2);">Use your Mirror Test statement</li>
+              <li style="margin-bottom: var(--space-2);">Who you help</li>
+              <li style="margin-bottom: var(--space-2);">What result you deliver</li>
+              <li>Clear CTA (DM, link, etc.)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 7: Element Deep Dive - Banner & Featured -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Elements <span class="highlight">3 & 4</span></h2>
+
+        <div class="grid-2 reveal stagger-1" style="margin-top: var(--space-8); max-width: 800px; gap: var(--space-6);">
+          <div class="card" style="padding: var(--space-6);">
+            <div style="font-size: var(--text-3xl); margin-bottom: var(--space-3);">🖼️</div>
+            <h3 style="color: var(--color-text); margin-bottom: var(--space-2);">Banner / Cover</h3>
+            <ul style="font-size: var(--text-sm); color: var(--color-text-secondary); margin-left: var(--space-4);">
+              <li style="margin-bottom: var(--space-2);">Clean design</li>
+              <li style="margin-bottom: var(--space-2);">Your name + title</li>
+              <li style="margin-bottom: var(--space-2);">One-liner benefit</li>
+              <li>Use AI design tools</li>
+            </ul>
+          </div>
+
+          <div class="card" style="padding: var(--space-6);">
+            <div style="font-size: var(--text-3xl); margin-bottom: var(--space-3);">📌</div>
+            <h3 style="color: var(--color-text); margin-bottom: var(--space-2);">Featured / Pinned</h3>
+            <ul style="font-size: var(--text-sm); color: var(--color-text-secondary); margin-left: var(--space-4);">
+              <li style="margin-bottom: var(--space-2);">Your best Proof content</li>
+              <li style="margin-bottom: var(--space-2);">Case study or result</li>
+              <li style="margin-bottom: var(--space-2);">Before/after if available</li>
+              <li>First thing people see</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 8: Element 5 - Portfolio Link -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Element <span class="highlight">5</span>: Portfolio Link</h2>
+        <p class="slide-subtitle reveal stagger-1">A place to see more work + contact you</p>
+
+        <div class="card reveal stagger-2" style="margin-top: var(--space-8); padding: var(--space-6); max-width: 500px;">
+          <p style="color: var(--color-text); font-size: var(--text-lg); margin-bottom: var(--space-4);">
+            Your portfolio doesn't need to be fancy. It needs to be <strong style="color: var(--color-primary);">CLEAR</strong>.
+          </p>
+          <ul style="color: var(--color-text-secondary); margin-left: var(--space-4);">
+            <li style="margin-bottom: var(--space-2);">Who you are</li>
+            <li style="margin-bottom: var(--space-2);">What you do</li>
+            <li style="margin-bottom: var(--space-2);">Proof of your work</li>
+            <li>How to contact you</li>
+          </ul>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-4);">
+          We build this in the next framework: <strong style="color: var(--color-text);">The Portfolio Formula</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 9: Summary -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">The <span class="highlight">Storefront</span> Checklist</h2>
+
+        <div class="flow-horizontal reveal stagger-1" style="margin-top: var(--space-8); gap: var(--space-4);">
+          <div style="text-align: center;">
+            <div style="font-size: var(--text-2xl);">📸</div>
+            <div style="font-size: var(--text-xs); color: var(--color-text-muted);">Photo</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: var(--text-2xl);">✍️</div>
+            <div style="font-size: var(--text-xs); color: var(--color-text-muted);">Bio</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: var(--text-2xl);">🖼️</div>
+            <div style="font-size: var(--text-xs); color: var(--color-text-muted);">Banner</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: var(--text-2xl);">📌</div>
+            <div style="font-size: var(--text-xs); color: var(--color-text-muted);">Pinned</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: var(--text-2xl);">🔗</div>
+            <div style="font-size: var(--text-xs); color: var(--color-text-muted);">Link</div>
+          </div>
+        </div>
+
+        <div class="reveal stagger-2" style="margin-top: var(--space-8); padding: var(--space-4) var(--space-6); background: var(--color-bg-card); border-radius: var(--radius-lg); max-width: 500px;">
+          <p style="text-align: center; color: var(--color-text);">
+            <strong>5 seconds.</strong> That's all you get.<br>
+            Make your storefront count.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="../../shared/js/slides.js"></script>
+</body>
+</html>

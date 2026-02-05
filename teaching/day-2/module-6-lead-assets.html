@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module 6: Lead Assets & Platforms | AIA Workshop</title>
+  <link rel="stylesheet" href="../../shared/css/base.css">
+  <link rel="stylesheet" href="../../shared/css/slides.css">
+  <link rel="stylesheet" href="../../shared/css/animations.css">
+  <link rel="stylesheet" href="../../shared/css/components.css">
+  <style>
+    .shop-comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+      max-width: 700px;
+    }
+
+    .shop-card {
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-6);
+      text-align: center;
+    }
+
+    .shop-card.bad {
+      opacity: 0.6;
+      border-color: var(--color-danger);
+    }
+
+    .shop-card.good {
+      border-color: var(--color-success);
+    }
+
+    .shop-card .icon {
+      font-size: var(--text-5xl);
+      margin-bottom: var(--space-3);
+    }
+
+    .shop-card .label {
+      font-family: var(--font-display);
+      font-weight: 700;
+      margin-bottom: var(--space-2);
+    }
+
+    .shop-card.bad .label { color: var(--color-danger); }
+    .shop-card.good .label { color: var(--color-success); }
+
+    .shop-card .description {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .checklist-elements {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: var(--space-3);
+      max-width: 800px;
+    }
+
+    .checklist-element {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .checklist-element:hover {
+      border-color: var(--color-primary);
+      transform: translateY(-2px);
+    }
+
+    .checklist-element .number {
+      width: 28px;
+      height: 28px;
+      background: var(--color-primary);
+      color: var(--color-bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: var(--text-sm);
+      margin: 0 auto var(--space-2);
+    }
+
+    .checklist-element .icon {
+      font-size: var(--text-xl);
+      margin-bottom: var(--space-1);
+    }
+
+    .checklist-element .title {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .five-second-box {
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-primary);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-6);
+      max-width: 500px;
+      text-align: center;
+    }
+
+    .five-second-box .title {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: var(--space-4);
+    }
+
+    .five-second-box .questions {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .five-second-box .question {
+      padding: var(--space-3);
+      background: var(--color-bg-elevated);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .five-second-box .question .num {
+      width: 24px;
+      height: 24px;
+      background: var(--color-primary);
+      color: var(--color-bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: var(--text-xs);
+    }
+
+    .portfolio-wireframe {
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-2xl);
+      max-width: 400px;
+      overflow: hidden;
+    }
+
+    .wireframe-section {
+      padding: var(--space-4);
+      border-bottom: 1px dashed var(--color-border);
+    }
+
+    .wireframe-section:last-child {
+      border-bottom: none;
+    }
+
+    .wireframe-section .title {
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: var(--space-1);
+    }
+
+    .wireframe-section .desc {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+
+    .landing-page-wireframe {
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-2xl);
+      max-width: 350px;
+      overflow: hidden;
+    }
+
+    .lp-section {
+      padding: var(--space-4);
+      border-bottom: 1px dashed var(--color-border);
+    }
+
+    .lp-section:last-child {
+      border-bottom: none;
+    }
+
+    .lp-section .number {
+      width: 24px;
+      height: 24px;
+      background: var(--color-primary);
+      color: var(--color-bg);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: var(--text-xs);
+      margin-right: var(--space-2);
+    }
+
+    .lp-section .title {
+      font-weight: 600;
+      color: var(--color-text);
+      display: inline;
+    }
+
+    .lp-section .hint {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      margin-top: var(--space-1);
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-3);
+      max-width: 600px;
+    }
+
+    .tool-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-3);
+      text-align: center;
+    }
+
+    .tool-card .name {
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: var(--space-1);
+    }
+
+    .tool-card .tag {
+      font-size: var(--text-xs);
+      color: var(--color-success);
+    }
+
+    .day-2-recap {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+      max-width: 800px;
+    }
+
+    .recap-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-5);
+      text-align: center;
+    }
+
+    .recap-card .module {
+      font-size: var(--text-xs);
+      color: var(--color-primary);
+      font-weight: 600;
+      margin-bottom: var(--space-2);
+    }
+
+    .recap-card .title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+    }
+
+    .recap-card .result {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .transformation-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+      max-width: 800px;
+    }
+
+    .transformation-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-5);
+    }
+
+    .transformation-card.before {
+      border-top: 4px solid var(--color-danger);
+    }
+
+    .transformation-card.after {
+      border-top: 4px solid var(--color-success);
+    }
+
+    .transformation-card .label {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      margin-bottom: var(--space-3);
+    }
+
+    .transformation-card.before .label { color: var(--color-danger); }
+    .transformation-card.after .label { color: var(--color-success); }
+
+    .transformation-card ul {
+      margin-left: var(--space-4);
+    }
+
+    .transformation-card li {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-2);
+    }
+
+    @media (max-width: 768px) {
+      .shop-comparison,
+      .transformation-grid {
+        grid-template-columns: 1fr;
+      }
+      .checklist-elements {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .tools-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .day-2-recap {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="slides-container">
+
+    <!-- Slide 1: Title -->
+    <section class="slide title-slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Day 2 | 3:30 - 5:30</span>
+        <h1 class="slide-title reveal stagger-1">Module 6: <span class="highlight">Lead Assets & Platforms</span></h1>
+        <p class="slide-subtitle reveal stagger-2">Do I have a profile, portfolio, and landing page that converts?</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: The Problem -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Your content brings people to <span class="highlight">your door</span>.</h2>
+
+        <div class="card reveal stagger-1" style="margin-top: var(--space-8); padding: var(--space-6); max-width: 600px;">
+          <p style="color: var(--color-text); font-size: var(--text-lg);">
+            When someone sees your content and thinks<br>
+            <em style="color: var(--color-primary);">"Who IS this person?"</em><br>
+            — they click on your profile.
+          </p>
+          <p style="color: var(--color-text-secondary); margin-top: var(--space-4);">
+            If that profile is empty, has no portfolio, and gives no way to learn more...
+          </p>
+          <p style="color: var(--color-danger); font-weight: 700; margin-top: var(--space-2);">
+            They leave. Gone forever.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 3: Two Shops -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Which shop do you walk into?</span>
+
+        <div class="shop-comparison reveal stagger-1" style="margin-top: var(--space-8);">
+          <div class="shop-card bad">
+            <div class="icon">🏚️</div>
+            <div class="label">Shop A</div>
+            <div class="description">Dirty windows, no sign, lights off, you can't see inside.</div>
+          </div>
+          <div class="shop-card good">
+            <div class="icon">🏪</div>
+            <div class="label">Shop B</div>
+            <div class="description">Clean windows, bright sign, products displayed, "OPEN" sign, happy customers inside.</div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-6);">
+          Your online profile is your <strong style="color: var(--color-text);">shop window</strong>.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 4: The Storefront Checklist -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Framework</span>
+        <h2 class="slide-title size-lg reveal stagger-1">The <span class="highlight">Storefront</span> Checklist</h2>
+
+        <div class="checklist-elements reveal stagger-2" style="margin-top: var(--space-8);">
+          <div class="checklist-element">
+            <div class="number">1</div>
+            <div class="icon">📸</div>
+            <div class="title">Photo</div>
+          </div>
+          <div class="checklist-element">
+            <div class="number">2</div>
+            <div class="icon">✍️</div>
+            <div class="title">Bio</div>
+          </div>
+          <div class="checklist-element">
+            <div class="number">3</div>
+            <div class="icon">🖼️</div>
+            <div class="title">Banner</div>
+          </div>
+          <div class="checklist-element">
+            <div class="number">4</div>
+            <div class="icon">📌</div>
+            <div class="title">Featured</div>
+          </div>
+          <div class="checklist-element">
+            <div class="number">5</div>
+            <div class="icon">🔗</div>
+            <div class="title">Link</div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-6);">
+          All 5 need to be done. In <strong style="color: var(--color-primary);">5 seconds</strong> they decide: "Is this someone I want to talk to?"
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 5: The 5-Second Test -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="five-second-box reveal stagger-1">
+          <div class="title">The 5-Second Test</div>
+          <p style="color: var(--color-text-secondary); margin-bottom: var(--space-4);">A stranger lands on your profile. In 5 seconds, can they tell:</p>
+          <div class="questions">
+            <div class="question">
+              <span class="num">1</span>
+              <span style="color: var(--color-text);">What do you do?</span>
+            </div>
+            <div class="question">
+              <span class="num">2</span>
+              <span style="color: var(--color-text);">Who do you help?</span>
+            </div>
+            <div class="question">
+              <span class="num">3</span>
+              <span style="color: var(--color-text);">That you're good at it?</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2 reveal stagger-2" style="margin-top: var(--space-6); max-width: 500px; gap: var(--space-4);">
+          <div class="card" style="padding: var(--space-4); text-align: center; border-top: 3px solid var(--color-success);">
+            <p style="color: var(--color-success); font-weight: 600;">If YES</p>
+            <p style="color: var(--color-text-secondary); font-size: var(--text-sm);">Stay, explore, maybe reach out</p>
+          </div>
+          <div class="card" style="padding: var(--space-4); text-align: center; border-top: 3px solid var(--color-danger);">
+            <p style="color: var(--color-danger); font-weight: 600;">If NO</p>
+            <p style="color: var(--color-text-secondary); font-size: var(--text-sm);">Leave. Never hear from them.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 6: Checklist Element 1 & 2 -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Elements <span class="highlight">1 & 2</span></h2>
+
+        <div class="grid-2 reveal stagger-1" style="margin-top: var(--space-8); max-width: 700px; gap: var(--space-6);">
+          <div class="card" style="padding: var(--space-5);">
+            <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+              <span style="font-size: var(--text-2xl);">📸</span>
+              <span style="font-weight: 700; color: var(--color-text);">Profile Photo</span>
+            </div>
+            <ul style="font-size: var(--text-sm); color: var(--color-text-secondary); margin-left: var(--space-4);">
+              <li style="margin-bottom: var(--space-1);">Professional headshot</li>
+              <li style="margin-bottom: var(--space-1);">Smiling</li>
+              <li style="margin-bottom: var(--space-1);">Good lighting</li>
+              <li>Face clearly visible</li>
+            </ul>
+          </div>
+
+          <div class="card" style="padding: var(--space-5);">
+            <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+              <span style="font-size: var(--text-2xl);">✍️</span>
+              <span style="font-weight: 700; color: var(--color-text);">Bio / Headline</span>
+            </div>
+            <ul style="font-size: var(--text-sm); color: var(--color-text-secondary); margin-left: var(--space-4);">
+              <li style="margin-bottom: var(--space-1);">Your Mirror Test statement</li>
+              <li style="margin-bottom: var(--space-1);">Who you help</li>
+              <li style="margin-bottom: var(--space-1);">What result you deliver</li>
+              <li>Clear CTA</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 7: Checklist Element 3 & 4 -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Elements <span class="highlight">3 & 4</span></h2>
+
+        <div class="grid-2 reveal stagger-1" style="margin-top: var(--space-8); max-width: 700px; gap: var(--space-6);">
+          <div class="card" style="padding: var(--space-5);">
+            <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+              <span style="font-size: var(--text-2xl);">🖼️</span>
+              <span style="font-weight: 700; color: var(--color-text);">Banner / Cover</span>
+            </div>
+            <ul style="font-size: var(--text-sm); color: var(--color-text-secondary); margin-left: var(--space-4);">
+              <li style="margin-bottom: var(--space-1);">Clean design</li>
+              <li style="margin-bottom: var(--space-1);">Your name + title</li>
+              <li style="margin-bottom: var(--space-1);">One-liner benefit</li>
+              <li>Use AI design tools</li>
+            </ul>
+          </div>
+
+          <div class="card" style="padding: var(--space-5);">
+            <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+              <span style="font-size: var(--text-2xl);">📌</span>
+              <span style="font-weight: 700; color: var(--color-text);">Featured / Pinned</span>
+            </div>
+            <ul style="font-size: var(--text-sm); color: var(--color-text-secondary); margin-left: var(--space-4);">
+              <li style="margin-bottom: var(--space-1);">Your best Proof content</li>
+              <li style="margin-bottom: var(--space-1);">From Module 5</li>
+              <li style="margin-bottom: var(--space-1);">First thing people see</li>
+              <li>Shows credibility immediately</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 8: Profile Example -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Example Profile</span>
+
+        <div class="card reveal stagger-1" style="margin-top: var(--space-8); padding: var(--space-6); max-width: 500px;">
+          <div style="display: flex; gap: var(--space-4); align-items: flex-start; margin-bottom: var(--space-4); padding-bottom: var(--space-4); border-bottom: 1px solid var(--color-border);">
+            <div style="width: 60px; height: 60px; background: var(--color-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: var(--text-2xl);">👤</div>
+            <div>
+              <p style="font-weight: 700; color: var(--color-text);">Your Name</p>
+              <p style="font-size: var(--text-sm); color: var(--color-text-secondary);">AI Marketer | I help fitness coaches get more clients through landing pages & content.</p>
+              <p style="font-size: var(--text-sm); color: var(--color-primary); margin-top: var(--space-1);">DM me "AUDIT" for a free website review.</p>
+            </div>
+          </div>
+          <div style="padding: var(--space-3); background: var(--color-bg-elevated); border-radius: var(--radius-lg); margin-bottom: var(--space-3);">
+            <p style="font-size: var(--text-xs); color: var(--color-text-muted);">Banner:</p>
+            <p style="font-size: var(--text-sm); color: var(--color-text);">"Helping coaches convert followers into clients"</p>
+          </div>
+          <div style="padding: var(--space-3); background: var(--color-bg-elevated); border-radius: var(--radius-lg);">
+            <p style="font-size: var(--text-xs); color: var(--color-text-muted);">Pinned:</p>
+            <p style="font-size: var(--text-sm); color: var(--color-text);">"I rebuilt a coach's landing page and sign-ups tripled."</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 9: Exercise - Build Profile -->
+    <section class="slide exercise-slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Exercise</span>
+        <h2 class="slide-title size-lg reveal stagger-1">Build Your Profile</h2>
+
+        <div style="max-width: 600px; margin-top: var(--space-6);">
+          <div class="step-card reveal stagger-2" style="margin-bottom: var(--space-3);">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <div class="step-title">Open your Facebook profile</div>
+              <div class="step-description">Or primary platform</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-3" style="margin-bottom: var(--space-3);">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <div class="step-title">Work through the Checklist</div>
+              <div class="step-description">Photo, Bio (Mirror Test), Banner, Pin content</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-4">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <div class="step-title">Partner does The 5-Second Test</div>
+              <div class="step-description">"What do you do? Who do you help? Do you look legit?"</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="timer-box reveal stagger-5">25 minutes</div>
+      </div>
+    </section>
+
+    <!-- Slide 10: The Portfolio Page -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Framework</span>
+        <h2 class="slide-title size-lg reveal stagger-1">The <span class="highlight">Portfolio</span> Formula</h2>
+
+        <div class="portfolio-wireframe reveal stagger-2" style="margin-top: var(--space-8);">
+          <div class="wireframe-section">
+            <div class="title">1. HEADLINE</div>
+            <div class="desc">"I'm [Name], an AI Marketer who helps [X] with [Y]"</div>
+          </div>
+          <div class="wireframe-section">
+            <div class="title">2. WHAT I DO</div>
+            <div class="desc">3-4 bullet points of services</div>
+          </div>
+          <div class="wireframe-section">
+            <div class="title">3. MY WORK</div>
+            <div class="desc">Content pieces + mock-ups</div>
+          </div>
+          <div class="wireframe-section">
+            <div class="title">4. ABOUT ME</div>
+            <div class="desc">Short paragraph + photo</div>
+          </div>
+          <div class="wireframe-section">
+            <div class="title">5. CONTACT</div>
+            <div class="desc">DM link, email, or booking</div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-4);">
+          Your portfolio doesn't need to be fancy. It needs to be <strong style="color: var(--color-primary);">CLEAR</strong>.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 11: Tools for Portfolio -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Pick <span class="highlight">ONE</span> Tool</h2>
+
+        <div class="tools-grid reveal stagger-1" style="margin-top: var(--space-8);">
+          <div class="tool-card">
+            <div class="name">Canva Website</div>
+            <div class="tag">Free tier</div>
+          </div>
+          <div class="tool-card">
+            <div class="name">Carrd</div>
+            <div class="tag">Free (1 site)</div>
+          </div>
+          <div class="tool-card">
+            <div class="name">Notion</div>
+            <div class="tag">Free</div>
+          </div>
+          <div class="tool-card">
+            <div class="name">Google Sites</div>
+            <div class="tag">Free</div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-6);">
+          The tool doesn't matter. <strong style="color: var(--color-text);">Done beats perfect.</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 12: The Objection -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">"But I don't have <span class="highlight">real client work</span> yet"</h2>
+
+        <div class="card reveal stagger-1" style="margin-top: var(--space-8); padding: var(--space-6); max-width: 600px;">
+          <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+              <tr>
+                <th style="text-align: left; padding: var(--space-2); color: var(--color-danger); font-size: var(--text-sm);">What you DON'T have</th>
+                <th style="text-align: left; padding: var(--space-2); color: var(--color-success); font-size: var(--text-sm);">What you DO have</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: var(--space-2); color: var(--color-text-secondary); font-size: var(--text-sm);">Client case studies</td>
+                <td style="padding: var(--space-2); color: var(--color-text-secondary); font-size: var(--text-sm);">Module 5 content = real work</td>
+              </tr>
+              <tr>
+                <td style="padding: var(--space-2); color: var(--color-text-secondary); font-size: var(--text-sm);">Before/after results</td>
+                <td style="padding: var(--space-2); color: var(--color-text-secondary); font-size: var(--text-sm);">Mock-ups for fictional clients</td>
+              </tr>
+              <tr>
+                <td style="padding: var(--space-2); color: var(--color-text-secondary); font-size: var(--text-sm);">Testimonials</td>
+                <td style="padding: var(--space-2); color: var(--color-text-secondary); font-size: var(--text-sm);">Your work speaks for itself</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-4);">
+          Nobody starts with a full portfolio. <strong style="color: var(--color-text);">Start with what you have.</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 13: Exercise - Build Portfolio -->
+    <section class="slide exercise-slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Exercise</span>
+        <h2 class="slide-title size-lg reveal stagger-1">Build Your Portfolio Page</h2>
+
+        <div style="max-width: 600px; margin-top: var(--space-6);">
+          <div class="step-card reveal stagger-2" style="margin-bottom: var(--space-3);">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <div class="step-title">Pick a tool (instructor recommends ONE)</div>
+              <div class="step-description">Canva, Carrd, Notion, or Google Sites</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-3" style="margin-bottom: var(--space-3);">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <div class="step-title">Follow The Portfolio Formula</div>
+              <div class="step-description">Headline → Services → Work → About → Contact</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-4" style="margin-bottom: var(--space-3);">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <div class="step-title">Publish it. Get the link.</div>
+              <div class="step-description">Add it to your profile bio</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-5">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <div class="step-title">Partner reviews</div>
+              <div class="step-description">"If I were a business owner, would I reach out?"</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="timer-box reveal stagger-6">30 minutes</div>
+      </div>
+    </section>
+
+    <!-- Slide 14: The Landing Page Recipe -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Framework</span>
+        <h2 class="slide-title size-lg reveal stagger-1">The <span class="highlight">Landing Page</span> Recipe</h2>
+
+        <div class="landing-page-wireframe reveal stagger-2" style="margin-top: var(--space-8);">
+          <div class="lp-section">
+            <span class="number">1</span>
+            <span class="title">HEADLINE</span>
+            <p class="hint">The big promise</p>
+          </div>
+          <div class="lp-section">
+            <span class="number">2</span>
+            <span class="title">PROBLEM</span>
+            <p class="hint">Name the pain they feel</p>
+          </div>
+          <div class="lp-section">
+            <span class="number">3</span>
+            <span class="title">SOLUTION</span>
+            <p class="hint">What you/product does</p>
+          </div>
+          <div class="lp-section">
+            <span class="number">4</span>
+            <span class="title">PROOF</span>
+            <p class="hint">Results, testimonials, numbers</p>
+          </div>
+          <div class="lp-section">
+            <span class="number">5</span>
+            <span class="title">CTA</span>
+            <p class="hint">ONE clear next step</p>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-4);">
+          This is a <strong style="color: var(--color-success);">sellable skill</strong>. Businesses pay $500-$2,000 for this.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 15: Landing Page Example -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Example: Fitness Coach</span>
+
+        <div class="card reveal stagger-1" style="margin-top: var(--space-6); padding: var(--space-5); max-width: 550px;">
+          <p style="color: var(--color-primary); font-size: var(--text-xs); font-weight: 600;">1. HEADLINE</p>
+          <p style="color: var(--color-text); font-weight: 700; margin-bottom: var(--space-3);">"Get Lean in 12 Weeks — Without Starving Yourself"</p>
+
+          <p style="color: var(--color-primary); font-size: var(--text-xs); font-weight: 600;">2. PROBLEM</p>
+          <p style="color: var(--color-text-secondary); font-size: var(--text-sm); margin-bottom: var(--space-3);">"You've tried diets. Nothing sticks. You're frustrated because you KNOW you can do it."</p>
+
+          <p style="color: var(--color-primary); font-size: var(--text-xs); font-weight: 600;">3. SOLUTION</p>
+          <p style="color: var(--color-text-secondary); font-size: var(--text-sm); margin-bottom: var(--space-3);">"The 12-Week Transformation: custom workouts, meal plans, weekly coaching calls."</p>
+
+          <p style="color: var(--color-primary); font-size: var(--text-xs); font-weight: 600;">4. PROOF</p>
+          <p style="color: var(--color-text-secondary); font-size: var(--text-sm); margin-bottom: var(--space-3);">"500+ transformations. Average client loses 8kg. 4.9/5 rating."</p>
+
+          <p style="color: var(--color-primary); font-size: var(--text-xs); font-weight: 600;">5. CTA</p>
+          <span style="display: inline-block; padding: var(--space-2) var(--space-4); background: var(--color-primary); color: var(--color-bg); border-radius: var(--radius-lg); font-weight: 600; font-size: var(--text-sm);">Book Your Free Strategy Call</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 16: Exercise - Landing Page Mock-up -->
+    <section class="slide exercise-slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Exercise</span>
+        <h2 class="slide-title size-lg reveal stagger-1">Build a Landing Page Mock-up</h2>
+
+        <div style="max-width: 600px; margin-top: var(--space-6);">
+          <div class="step-card reveal stagger-2" style="margin-bottom: var(--space-3);">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <div class="step-title">Pick ONE example business</div>
+              <div class="step-description">Or your target industry client</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-3" style="margin-bottom: var(--space-3);">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <div class="step-title">Write The Landing Page Recipe</div>
+              <div class="step-description">Fill in all 5 sections (text only) — 10 min</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-4" style="margin-bottom: var(--space-3);">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <div class="step-title">Build it using AI/Canva/Figma</div>
+              <div class="step-description">Design the mock-up — 20 min</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-5">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <div class="step-title">Add to your portfolio</div>
+              <div class="step-description">Screenshot → Portfolio page</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="timer-box reveal stagger-6">30 minutes</div>
+      </div>
+    </section>
+
+    <!-- Slide 17: Day 2 Recap -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Day 2 Recap</span>
+        <h2 class="slide-title size-lg reveal stagger-1">What You <span class="highlight">Built</span> Today</h2>
+
+        <div class="day-2-recap reveal stagger-2" style="margin-top: var(--space-8);">
+          <div class="recap-card">
+            <div class="module">Module 4</div>
+            <div class="title">Skills & Leads</div>
+            <div class="result">Learned AI skills, chose your 3 Doors, 30-day plan</div>
+          </div>
+          <div class="recap-card">
+            <div class="module">Module 5</div>
+            <div class="title">Content</div>
+            <div class="result">Created 3 content pieces ready to post</div>
+          </div>
+          <div class="recap-card">
+            <div class="module">Module 6</div>
+            <div class="title">Assets</div>
+            <div class="result">Profile, portfolio, landing page mock-up</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 18: What You Now Have -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">What You Now Have <span class="highlight">(LIVE)</span></h2>
+
+        <div class="card reveal stagger-1" style="margin-top: var(--space-8); padding: var(--space-6); max-width: 500px;">
+          <div class="checklist">
+            <div class="checklist-item">
+              <div class="checklist-icon">✓</div>
+              <div class="checklist-text">Optimized profile (passes 5-second test)</div>
+            </div>
+            <div class="checklist-item">
+              <div class="checklist-icon">✓</div>
+              <div class="checklist-text">3 content pieces (ready to post)</div>
+            </div>
+            <div class="checklist-item">
+              <div class="checklist-icon">✓</div>
+              <div class="checklist-text">Portfolio page (published, link in bio)</div>
+            </div>
+            <div class="checklist-item">
+              <div class="checklist-icon">✓</div>
+              <div class="checklist-text">Landing page mock-up (in portfolio)</div>
+            </div>
+            <div class="checklist-item">
+              <div class="checklist-icon">✓</div>
+              <div class="checklist-text">30-Day Lead Sprint plan (written)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 19: The Day 2 Transformation -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">The Day 2 <span class="highlight">Transformation</span></h2>
+
+        <div class="transformation-grid reveal stagger-1" style="margin-top: var(--space-6);">
+          <div class="transformation-card before">
+            <div class="label">Before Day 2</div>
+            <ul>
+              <li>"I don't know what to post"</li>
+              <li>"I don't have a portfolio"</li>
+              <li>"Nobody knows I exist"</li>
+              <li>"I can't build a landing page"</li>
+            </ul>
+          </div>
+          <div class="transformation-card after">
+            <div class="label">After Day 2</div>
+            <ul>
+              <li>"I have 3 pieces and a schedule"</li>
+              <li>"My portfolio is live — here's the link"</li>
+              <li>"My profile is optimized, content ready"</li>
+              <li>"I just built one in 30 minutes"</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 20: Checkpoint -->
+    <section class="slide checkpoint-slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Module 6 Checkpoint</span>
+        <h2 class="slide-title size-lg reveal stagger-1">Can you say yes to all of these?</h2>
+
+        <div class="checklist reveal stagger-2" style="margin-top: var(--space-6);">
+          <div class="checklist-item">
+            <div class="checklist-icon">✓</div>
+            <div class="checklist-text">My profile passes The 5-Second Test (partner-verified)</div>
+          </div>
+          <div class="checklist-item">
+            <div class="checklist-icon">✓</div>
+            <div class="checklist-text">My portfolio page is LIVE (published, link in bio)</div>
+          </div>
+          <div class="checklist-item">
+            <div class="checklist-icon">✓</div>
+            <div class="checklist-text">I built a landing page mock-up using The Recipe</div>
+          </div>
+          <div class="checklist-item">
+            <div class="checklist-icon">✓</div>
+            <div class="checklist-text">I know the 5 elements of The Storefront Checklist</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 21: Day 3 Preview -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Tomorrow</span>
+        <h2 class="slide-title size-lg reveal stagger-1">Day 3: <span class="highlight">HOW</span> — Closing</h2>
+
+        <div class="card reveal stagger-2" style="margin-top: var(--space-8); padding: var(--space-6); max-width: 600px;">
+          <p style="color: var(--color-text); font-size: var(--text-lg); margin-bottom: var(--space-4);">
+            You have everything you need:
+          </p>
+          <ul style="color: var(--color-text-secondary); margin-left: var(--space-4);">
+            <li style="margin-bottom: var(--space-2);">An identity</li>
+            <li style="margin-bottom: var(--space-2);">Content</li>
+            <li style="margin-bottom: var(--space-2);">A portfolio</li>
+            <li style="margin-bottom: var(--space-2);">A lead plan</li>
+          </ul>
+          <p style="color: var(--color-text); margin-top: var(--space-4);">
+            Now the question is: <strong style="color: var(--color-primary);">will you actually DO something with all this?</strong>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 22: Day 3 Teaser -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Tomorrow is about <span class="highlight">DOING</span>.</h2>
+
+        <div style="max-width: 600px; margin-top: var(--space-8);">
+          <div class="step-card reveal stagger-1" style="margin-bottom: var(--space-4);">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <div class="step-title">REAL messages to REAL people</div>
+              <div class="step-description">You will send actual outreach</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-2" style="margin-bottom: var(--space-4);">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <div class="step-title">REAL conversation practice</div>
+              <div class="step-description">Role-play sales conversations</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-3">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <div class="step-title">Complete $1K Sprint plan</div>
+              <div class="step-description">Everything you need to earn your first $1,000</div>
+            </div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-4" style="margin-top: var(--space-6);">
+          This is where <strong style="color: var(--color-danger);">fear dies</strong>.<br>
+          See you at 10am.
+        </p>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="../../shared/js/slides.js"></script>
+</body>
+</html>

@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module 5: Lead Content & Graphics | AIA Workshop</title>
+  <link rel="stylesheet" href="../../shared/css/base.css">
+  <link rel="stylesheet" href="../../shared/css/slides.css">
+  <link rel="stylesheet" href="../../shared/css/animations.css">
+  <link rel="stylesheet" href="../../shared/css/components.css">
+  <style>
+    .content-type-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-5);
+      max-width: 800px;
+    }
+
+    .content-type-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-5);
+      transition: all 0.3s ease;
+    }
+
+    .content-type-card:hover {
+      border-color: var(--color-primary);
+      transform: translateY(-2px);
+    }
+
+    .content-type-card .icon {
+      font-size: var(--text-2xl);
+      margin-bottom: var(--space-2);
+    }
+
+    .content-type-card .name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-1);
+    }
+
+    .content-type-card .purpose {
+      font-size: var(--text-sm);
+      color: var(--color-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .content-type-card .example {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      font-style: italic;
+    }
+
+    .pipeline-visual {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .pipeline-step {
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-4) var(--space-5);
+      text-align: center;
+      min-width: 140px;
+    }
+
+    .pipeline-step .number {
+      width: 32px;
+      height: 32px;
+      background: var(--color-primary);
+      color: var(--color-bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      margin: 0 auto var(--space-2);
+    }
+
+    .pipeline-step .name {
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-1);
+    }
+
+    .pipeline-step .time {
+      font-size: var(--text-xs);
+      color: var(--color-primary);
+    }
+
+    .pipeline-arrow {
+      color: var(--color-primary);
+      font-size: var(--text-xl);
+    }
+
+    .before-after-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+      max-width: 800px;
+    }
+
+    .before-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-5);
+      border-top: 4px solid var(--color-danger);
+    }
+
+    .after-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-5);
+      border-top: 4px solid var(--color-success);
+    }
+
+    .before-card .label { color: var(--color-danger); }
+    .after-card .label { color: var(--color-success); }
+
+    .before-card .label,
+    .after-card .label {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      margin-bottom: var(--space-3);
+    }
+
+    .before-card .text,
+    .after-card .text {
+      color: var(--color-text-secondary);
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    .editing-rules {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+      max-width: 800px;
+    }
+
+    .editing-rule {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+    }
+
+    .editing-rule .problem {
+      color: var(--color-danger);
+      font-weight: 600;
+      font-size: var(--text-sm);
+      margin-bottom: var(--space-2);
+    }
+
+    .editing-rule .fix {
+      color: var(--color-text-secondary);
+      font-size: var(--text-sm);
+    }
+
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+      max-width: 600px;
+    }
+
+    .schedule-day {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-4);
+      text-align: center;
+    }
+
+    .schedule-day .day {
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+    }
+
+    .schedule-day .type {
+      font-size: var(--text-sm);
+      color: var(--color-primary);
+      margin-bottom: var(--space-1);
+    }
+
+    .schedule-day .example {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+
+    @media (max-width: 768px) {
+      .content-type-grid,
+      .before-after-grid,
+      .editing-rules {
+        grid-template-columns: 1fr;
+      }
+      .pipeline-visual {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="slides-container">
+
+    <!-- Slide 1: Title -->
+    <section class="slide title-slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Day 2 | 1:00 - 3:00</span>
+        <h1 class="slide-title reveal stagger-1">Module 5: <span class="highlight">Lead Content & Graphics</span></h1>
+        <p class="slide-subtitle reveal stagger-2">Can I create content that attracts real leads using AI?</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: The Big Shift -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Stop <span class="highlight">consuming</span>.</h2>
+        <h2 class="slide-title size-lg reveal stagger-1">Start <span class="highlight">creating</span>.</h2>
+
+        <div class="card reveal stagger-2" style="margin-top: var(--space-8); padding: var(--space-6); max-width: 500px;">
+          <p style="color: var(--color-text); text-align: center;">
+            By the end of this module, you'll have <strong style="color: var(--color-success);">3 pieces</strong> ready to post — and they'll be <strong style="color: var(--color-success);">GOOD</strong>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 3: Why Content Matters -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Why <span class="highlight">Content</span>?</h2>
+
+        <div class="card reveal stagger-1" style="margin-top: var(--space-8); padding: var(--space-6); max-width: 600px;">
+          <p style="color: var(--color-text); font-size: var(--text-lg); margin-bottom: var(--space-4);">
+            Content is the ONLY method that works for <strong style="color: var(--color-primary);">both</strong>:
+          </p>
+          <ul style="color: var(--color-text-secondary); margin-left: var(--space-4);">
+            <li style="margin-bottom: var(--space-2);"><strong style="color: var(--color-text);">Attention</strong> — gets seen by many people</li>
+            <li><strong style="color: var(--color-text);">Trust</strong> — proves you know what you're doing</li>
+          </ul>
+          <p style="color: var(--color-text-secondary); margin-top: var(--space-4);">
+            One good post can get seen by thousands AND prove you're the real deal.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 4: The 4 Content Types -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Framework</span>
+        <h2 class="slide-title size-lg reveal stagger-1">The <span class="highlight">4 Content Types</span></h2>
+
+        <div class="content-type-grid reveal stagger-2" style="margin-top: var(--space-6);">
+          <div class="content-type-card">
+            <div class="icon">💡</div>
+            <div class="name">VALUE</div>
+            <div class="purpose">Teach something useful</div>
+            <div class="example">"3 things every coach's landing page needs"</div>
+          </div>
+          <div class="content-type-card">
+            <div class="icon">✓</div>
+            <div class="name">PROOF</div>
+            <div class="purpose">Show results</div>
+            <div class="example">"I rebuilt this page. Sign-ups went 3→12/week"</div>
+          </div>
+          <div class="content-type-card">
+            <div class="icon">🎬</div>
+            <div class="name">BEHIND-THE-SCENES</div>
+            <div class="purpose">Show the process</div>
+            <div class="example">"Watch me create a brand kit in 30 min with AI"</div>
+          </div>
+          <div class="content-type-card">
+            <div class="icon">📣</div>
+            <div class="name">POINT OF VIEW</div>
+            <div class="purpose">Share an opinion</div>
+            <div class="example">"Most businesses don't have a marketing problem..."</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 5: How They Work Together -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">The <span class="highlight">Content Mix</span></h2>
+
+        <div class="grid-2 reveal stagger-1" style="margin-top: var(--space-8); max-width: 700px; gap: var(--space-6);">
+          <div class="card" style="padding: var(--space-5);">
+            <p style="color: #00D9A3; font-weight: 700; margin-bottom: var(--space-2);">VALUE — 40%</p>
+            <p style="color: var(--color-text-secondary); font-size: var(--text-sm);">Gets shared, builds authority</p>
+          </div>
+          <div class="card" style="padding: var(--space-5);">
+            <p style="color: #0099FF; font-weight: 700; margin-bottom: var(--space-2);">PROOF — 25%</p>
+            <p style="color: var(--color-text-secondary); font-size: var(--text-sm);">Gets clients, builds trust</p>
+          </div>
+          <div class="card" style="padding: var(--space-5);">
+            <p style="color: #A855F7; font-weight: 700; margin-bottom: var(--space-2);">BTS — 20%</p>
+            <p style="color: var(--color-text-secondary); font-size: var(--text-sm);">Gets engagement, builds relatability</p>
+          </div>
+          <div class="card" style="padding: var(--space-5);">
+            <p style="color: var(--color-primary); font-weight: 700; margin-bottom: var(--space-2);">POV — 15%</p>
+            <p style="color: var(--color-text-secondary); font-size: var(--text-sm);">Gets attention, builds differentiation</p>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-6);">
+          Not sure what to post? <strong style="color: var(--color-text);">Default to Value.</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 6: Restaurant Analogy -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">The Restaurant Analogy</span>
+
+        <div class="grid-2 reveal stagger-1" style="margin-top: var(--space-8); max-width: 800px; gap: var(--space-4);">
+          <div class="card" style="padding: var(--space-4); text-align: center;">
+            <div style="font-size: var(--text-3xl); margin-bottom: var(--space-2);">🍽️</div>
+            <p style="color: #00D9A3; font-weight: 600;">VALUE</p>
+            <p style="color: var(--color-text-secondary); font-size: var(--text-sm);">Free samples</p>
+          </div>
+          <div class="card" style="padding: var(--space-4); text-align: center;">
+            <div style="font-size: var(--text-3xl); margin-bottom: var(--space-2);">📸</div>
+            <p style="color: #0099FF; font-weight: 600;">PROOF</p>
+            <p style="color: var(--color-text-secondary); font-size: var(--text-sm);">Happy customer photos</p>
+          </div>
+          <div class="card" style="padding: var(--space-4); text-align: center;">
+            <div style="font-size: var(--text-3xl); margin-bottom: var(--space-2);">👨‍🍳</div>
+            <p style="color: #A855F7; font-weight: 600;">BTS</p>
+            <p style="color: var(--color-text-secondary); font-size: var(--text-sm);">Kitchen video</p>
+          </div>
+          <div class="card" style="padding: var(--space-4); text-align: center;">
+            <div style="font-size: var(--text-3xl); margin-bottom: var(--space-2);">📋</div>
+            <p style="color: var(--color-primary); font-weight: 600;">POV</p>
+            <p style="color: var(--color-text-secondary); font-size: var(--text-sm);">"Nasi lemak should NEVER be reheated"</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 7: Examples for Coach Danny -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Example: Fitness Coaches</span>
+
+        <div style="max-width: 600px; margin-top: var(--space-6);">
+          <div class="step-card reveal stagger-1" style="margin-bottom: var(--space-3);">
+            <div class="step-number" style="background: #00D9A3;">💡</div>
+            <div class="step-content">
+              <div class="step-title">VALUE</div>
+              <div class="step-description">"3 things every fitness coach needs on their landing page (most are missing #2)"</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-2" style="margin-bottom: var(--space-3);">
+            <div class="step-number" style="background: #0099FF;">✓</div>
+            <div class="step-content">
+              <div class="step-title">PROOF</div>
+              <div class="step-description">"I rebuilt Coach Danny's landing page. Before: 3 sign-ups/week. After: 12/week."</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-3" style="margin-bottom: var(--space-3);">
+            <div class="step-number" style="background: #A855F7;">🎬</div>
+            <div class="step-content">
+              <div class="step-title">BTS</div>
+              <div class="step-description">"I just used AI to create a full social media kit for a fitness coach in 25 minutes."</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-4">
+            <div class="step-number">📣</div>
+            <div class="step-content">
+              <div class="step-title">POV</div>
+              <div class="step-description">"Fitness coaches: you don't need more followers. You need a landing page that converts."</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 8: Exercise - Pick Your Headlines -->
+    <section class="slide exercise-slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Exercise</span>
+        <h2 class="slide-title size-lg reveal stagger-1">Pick Your 3 Content Pieces</h2>
+
+        <div style="max-width: 600px; margin-top: var(--space-6);">
+          <div class="step-card reveal stagger-2" style="margin-bottom: var(--space-3);">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <div class="step-title">Choose 3 of the 4 content types</div>
+              <div class="step-description">At least 1 Value, and 1 of anything else</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-3" style="margin-bottom: var(--space-3);">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <div class="step-title">Write a one-sentence headline for each</div>
+              <div class="step-description">"3 things every [business] needs for [result]"</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-4">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <div class="step-title">Check with partner</div>
+              <div class="step-description">"Would you stop scrolling to read this?"</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="timer-box reveal stagger-5">10 minutes</div>
+      </div>
+    </section>
+
+    <!-- Slide 9: The Content Machine -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Framework</span>
+        <h2 class="slide-title size-lg reveal stagger-1">The <span class="highlight">Content Machine</span></h2>
+
+        <div class="pipeline-visual reveal stagger-2" style="margin-top: var(--space-8);">
+          <div class="pipeline-step">
+            <div class="number">1</div>
+            <div class="name">BRIEF</div>
+            <div class="time">3 min</div>
+          </div>
+          <span class="pipeline-arrow">→</span>
+          <div class="pipeline-step">
+            <div class="number">2</div>
+            <div class="name">AI DRAFT</div>
+            <div class="time">2 min</div>
+          </div>
+          <span class="pipeline-arrow">→</span>
+          <div class="pipeline-step">
+            <div class="number">3</div>
+            <div class="name">HUMAN EDIT</div>
+            <div class="time">10 min</div>
+          </div>
+          <span class="pipeline-arrow">→</span>
+          <div class="pipeline-step">
+            <div class="number">4</div>
+            <div class="name">DESIGN</div>
+            <div class="time">10 min</div>
+          </div>
+        </div>
+
+        <div class="reveal stagger-3" style="margin-top: var(--space-6); text-align: center;">
+          <span class="tag success" style="font-size: var(--text-base);">Total: ~25 minutes per piece</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 10: Step 1 - Brief -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Step 1: <span class="highlight">BRIEF</span></h2>
+        <p class="slide-subtitle reveal stagger-1">Write a 2-3 sentence description of what you want</p>
+
+        <div class="card reveal stagger-2" style="margin-top: var(--space-8); padding: var(--space-6); max-width: 600px;">
+          <p style="color: var(--color-text-muted); font-size: var(--text-sm); margin-bottom: var(--space-2);">Example:</p>
+          <p style="color: var(--color-text); font-style: italic;">
+            "I want to write a Value post about 3 things every fitness coach's landing page needs. It should be practical and end with a CTA to DM me."
+          </p>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-4);">
+          <strong style="color: var(--color-text);">Tip:</strong> Just tell AI what you'd say to a friend.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 11: Step 2 - AI Draft -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Step 2: <span class="highlight">AI DRAFT</span></h2>
+        <p class="slide-subtitle reveal stagger-1">Feed the brief to AI. Get a full draft back.</p>
+
+        <div class="card reveal stagger-2" style="margin-top: var(--space-8); padding: var(--space-6); max-width: 600px;">
+          <p style="color: var(--color-text); margin-bottom: var(--space-4);">
+            AI gives you:
+          </p>
+          <ul style="color: var(--color-text-secondary); margin-left: var(--space-4);">
+            <li style="margin-bottom: var(--space-2);">Full draft based on your brief</li>
+            <li style="margin-bottom: var(--space-2);">Structure and flow</li>
+            <li style="margin-bottom: var(--space-2);">Headlines and hooks</li>
+            <li>Call-to-action options</li>
+          </ul>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-4);">
+          AI gives you <strong style="color: var(--color-success);">80% of the work</strong>. Now make it yours.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 12: Step 3 - Human Edit -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Step 3: <span class="highlight">HUMAN EDIT</span></h2>
+        <p class="slide-subtitle reveal stagger-1">Read the draft. Cut the fluff. Make it sound natural.</p>
+
+        <div class="editing-rules reveal stagger-2" style="margin-top: var(--space-6);">
+          <div class="editing-rule">
+            <div class="problem">AI: Too formal</div>
+            <div class="fix">Shorten sentences. Use "you" and "I".</div>
+          </div>
+          <div class="editing-rule">
+            <div class="problem">AI: Too generic</div>
+            <div class="fix">Add a specific detail or number.</div>
+          </div>
+          <div class="editing-rule">
+            <div class="problem">AI: No opinion</div>
+            <div class="fix">Add your take: "Honestly? I'd start with..."</div>
+          </div>
+          <div class="editing-rule">
+            <div class="problem">AI: Too long</div>
+            <div class="fix">Cut by 30%. Ruthlessly.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 13: Before/After -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">The Edit in Action</span>
+
+        <div class="before-after-grid reveal stagger-1" style="margin-top: var(--space-8);">
+          <div class="before-card">
+            <div class="label">AI Says (Robot)</div>
+            <div class="text">"It is essential to optimize your landing page to maximize conversion rates and ensure potential clients understand the value proposition."</div>
+          </div>
+          <div class="after-card">
+            <div class="label">You Say (Human)</div>
+            <div class="text">"Here's the thing — most coaches skip this. And it's costing them 10+ clients a month."</div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-6);">
+          Same idea. Different voice. <strong style="color: var(--color-text);">One sounds like a robot. One sounds like you.</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 14: Step 4 - Design -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Step 4: <span class="highlight">DESIGN</span></h2>
+        <p class="slide-subtitle reveal stagger-1">Create the visual. Make it look good.</p>
+
+        <div class="card reveal stagger-2" style="margin-top: var(--space-8); padding: var(--space-6); max-width: 600px;">
+          <ul style="color: var(--color-text-secondary); margin-left: var(--space-4);">
+            <li style="margin-bottom: var(--space-3);">
+              <strong style="color: var(--color-text);">Social media graphic</strong> — headline + visual
+            </li>
+            <li style="margin-bottom: var(--space-3);">
+              <strong style="color: var(--color-text);">Carousel</strong> — multiple slides with key points
+            </li>
+            <li style="margin-bottom: var(--space-3);">
+              <strong style="color: var(--color-text);">Video thumbnail</strong> — eye-catching preview
+            </li>
+            <li>
+              <strong style="color: var(--color-text);">Simple text post</strong> — no graphic needed
+            </li>
+          </ul>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-4);">
+          Use Canva or AI tools. <strong style="color: var(--color-text);">Don't overthink it.</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 15: The Key Insight -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">"I can't write" is <span class="highlight">dead</span></h2>
+
+        <div class="quote-box reveal stagger-1" style="margin-top: var(--space-8); max-width: 600px;">
+          <p class="quote-text" style="font-size: var(--text-xl);">
+            You don't need to write. You need to <strong style="color: var(--color-primary);">DIRECT</strong>.
+          </p>
+          <p style="color: var(--color-text-secondary); margin-top: var(--space-4);">
+            You told the AI what you wanted, it gave you 80% of the work, and you made it yours.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 16: LIVE DEMO -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">LIVE DEMO</span>
+        <h2 class="slide-title size-lg reveal stagger-1">Watch: Content Machine <span class="highlight">in Action</span></h2>
+
+        <div class="card reveal stagger-2" style="margin-top: var(--space-8); padding: var(--space-6); max-width: 600px;">
+          <p style="color: var(--color-text); margin-bottom: var(--space-4);">
+            Instructor creates a real content piece live:
+          </p>
+          <ul style="color: var(--color-text-secondary); margin-left: var(--space-4);">
+            <li style="margin-bottom: var(--space-2);"><strong style="color: var(--color-text);">Step 1:</strong> Write the brief</li>
+            <li style="margin-bottom: var(--space-2);"><strong style="color: var(--color-text);">Step 2:</strong> Feed to AI, get draft</li>
+            <li style="margin-bottom: var(--space-2);"><strong style="color: var(--color-text);">Step 3:</strong> Edit on screen — cut, rephrase, add opinion</li>
+            <li><strong style="color: var(--color-text);">Step 4:</strong> Design the graphic in Canva</li>
+          </ul>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-4);">
+          Pay attention. You're doing this next.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 17: Platform Overview -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Platform <span class="highlight">Overview</span></h2>
+
+        <div class="card reveal stagger-1" style="margin-top: var(--space-8); padding: var(--space-6); max-width: 700px;">
+          <table style="width: 100%; border-collapse: collapse;">
+            <tbody>
+              <tr>
+                <td style="padding: var(--space-3);"><strong style="color: var(--color-primary);">Facebook</strong></td>
+                <td style="padding: var(--space-3); color: var(--color-text-secondary);">Text posts, carousels, videos. Most engagement. THE anchor.</td>
+              </tr>
+              <tr>
+                <td style="padding: var(--space-3);"><strong style="color: var(--color-text);">Instagram</strong></td>
+                <td style="padding: var(--space-3); color: var(--color-text-secondary);">Reels, carousels, stories. Visual-first.</td>
+              </tr>
+              <tr>
+                <td style="padding: var(--space-3);"><strong style="color: var(--color-text);">LinkedIn</strong></td>
+                <td style="padding: var(--space-3); color: var(--color-text-secondary);">Text posts, articles. Professional services.</td>
+              </tr>
+              <tr>
+                <td style="padding: var(--space-3);"><strong style="color: var(--color-text);">TikTok</strong></td>
+                <td style="padding: var(--space-3); color: var(--color-text-secondary);">Short video. Good for attention, harder to convert.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-4);">
+          For beginners: <strong style="color: var(--color-primary);">Start with Facebook</strong>. Get comfortable. Expand later.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 18: Exercise - Build 3 Pieces -->
+    <section class="slide exercise-slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">MAIN EXERCISE</span>
+        <h2 class="slide-title size-lg reveal stagger-1">Build Your 3 Content Pieces</h2>
+
+        <div style="max-width: 600px; margin-top: var(--space-6);">
+          <div class="step-card reveal stagger-2" style="margin-bottom: var(--space-3);">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <div class="step-title">Take your 3 headlines from earlier</div>
+              <div class="step-description">Value, Proof, BTS, or POV</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-3" style="margin-bottom: var(--space-3);">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <div class="step-title">Run each through The Content Machine</div>
+              <div class="step-description">Brief → AI Draft → Edit → Design</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-4" style="margin-bottom: var(--space-3);">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <div class="step-title">Format for Facebook</div>
+              <div class="step-description">Text + image or video concept</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-5">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <div class="step-title">Show to partner</div>
+              <div class="step-description">"Would I stop scrolling? Would I DM this person?"</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="timer-box reveal stagger-6">60 minutes</div>
+      </div>
+    </section>
+
+    <!-- Slide 19: What You Produce -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">What You <span class="highlight">Produce</span></h2>
+
+        <div class="card reveal stagger-1" style="margin-top: var(--space-8); padding: var(--space-6); max-width: 500px;">
+          <p style="color: var(--color-success); font-weight: 700; font-size: var(--text-xl); text-align: center; margin-bottom: var(--space-4);">
+            3 finished content pieces
+          </p>
+          <ul style="color: var(--color-text-secondary); margin-left: var(--space-4);">
+            <li style="margin-bottom: var(--space-2);">Written ✓</li>
+            <li style="margin-bottom: var(--space-2);">Designed ✓</li>
+            <li>Ready to post ✓</li>
+          </ul>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-6);">
+          Not homework. <strong style="color: var(--color-text);">Done in the room.</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 20: When to Post -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Framework</span>
+        <h2 class="slide-title size-lg reveal stagger-1">The <span class="highlight">Posting Playbook</span></h2>
+
+        <div class="card reveal stagger-2" style="margin-top: var(--space-6); padding: var(--space-6); max-width: 600px;">
+          <ul style="color: var(--color-text-secondary);">
+            <li style="margin-bottom: var(--space-3);">
+              <strong style="color: var(--color-text);">Post before you're ready</strong> — imperfect posted > perfect in drafts
+            </li>
+            <li style="margin-bottom: var(--space-3);">
+              <strong style="color: var(--color-text);">3x per week minimum</strong> — consistency > quality at the start
+            </li>
+            <li style="margin-bottom: var(--space-3);">
+              <strong style="color: var(--color-text);">Value-first ratio</strong> — at least half should teach something
+            </li>
+            <li style="margin-bottom: var(--space-3);">
+              <strong style="color: var(--color-text);">Engage after posting</strong> — 10 min replying to comments
+            </li>
+            <li>
+              <strong style="color: var(--color-text);">Track what works</strong> — do more of what gets engagement
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 21: Weekly Schedule -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Weekly <span class="highlight">Schedule</span></h2>
+
+        <div class="schedule-grid reveal stagger-1" style="margin-top: var(--space-8);">
+          <div class="schedule-day">
+            <div class="day">Monday</div>
+            <div class="type">Value</div>
+            <div class="example">"3 things every [X] needs"</div>
+          </div>
+          <div class="schedule-day">
+            <div class="day">Wednesday</div>
+            <div class="type">Proof or BTS</div>
+            <div class="example">Show your work</div>
+          </div>
+          <div class="schedule-day">
+            <div class="day">Friday</div>
+            <div class="type">POV or Value</div>
+            <div class="example">Opinion or teach</div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-6);">
+          3 posts/week. 12/month. In 3 months = <strong style="color: var(--color-success);">36 pieces</strong>.<br>
+          That's a portfolio. That's credibility. That's Door 3 open.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 22: The Post & Engage Routine -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Post & Engage: <span class="highlight">10 min/day</span></h2>
+
+        <div style="max-width: 500px; margin-top: var(--space-8);">
+          <div class="step-card reveal stagger-1" style="margin-bottom: var(--space-3);">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <div class="step-title">Reply to every comment</div>
+              <div class="step-description">On your own post — 2 min</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-2" style="margin-bottom: var(--space-3);">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <div class="step-title">Comment on 5 other posts</div>
+              <div class="step-description">In your industry — 5 min</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-3">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <div class="step-title">Check DMs</div>
+              <div class="step-description">Respond to anyone who reached out — 3 min</div>
+            </div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-4" style="margin-top: var(--space-6);">
+          <strong style="color: var(--color-text);">10 minutes of intentional engagement</strong> beats 2 hours of scrolling.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 23: Checkpoint -->
+    <section class="slide checkpoint-slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Module 5 Checkpoint</span>
+        <h2 class="slide-title size-lg reveal stagger-1">Can you say yes to all of these?</h2>
+
+        <div class="checklist reveal stagger-2" style="margin-top: var(--space-6);">
+          <div class="checklist-item">
+            <div class="checklist-icon">✓</div>
+            <div class="checklist-text">I can name the 4 Content Types and when to use each</div>
+          </div>
+          <div class="checklist-item">
+            <div class="checklist-icon">✓</div>
+            <div class="checklist-text">I can use The Content Machine to create content in under 30 min</div>
+          </div>
+          <div class="checklist-item">
+            <div class="checklist-icon">✓</div>
+            <div class="checklist-text">I can edit an AI draft to sound natural and human</div>
+          </div>
+          <div class="checklist-item">
+            <div class="checklist-icon">✓</div>
+            <div class="checklist-text">I have 3 finished content pieces ready to post</div>
+          </div>
+          <div class="checklist-item">
+            <div class="checklist-icon">✓</div>
+            <div class="checklist-text">I know my weekly posting schedule (3x/week minimum)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 24: Transition -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Next Up</span>
+        <h2 class="slide-title size-lg reveal stagger-1">Module 6: <span class="highlight">Lead Assets</span></h2>
+
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-6);">
+          You now have content that generates leads.<br>
+          But where do those leads GO when they click your profile?
+        </p>
+
+        <div class="card reveal stagger-3" style="margin-top: var(--space-6); padding: var(--space-6); max-width: 500px;">
+          <p style="color: var(--color-text); text-align: center;">
+            If they see an empty page with no portfolio and no way to learn more — <strong style="color: var(--color-danger);">they leave</strong>.
+          </p>
+          <p style="color: var(--color-text-secondary); text-align: center; margin-top: var(--space-4);">
+            Module 6: We build your <strong style="color: var(--color-primary);">storefront</strong>.<br>
+            Profile, portfolio, landing page.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="../../shared/js/slides.js"></script>
+</body>
+</html>

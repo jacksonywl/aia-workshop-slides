@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The 4 Content Types | AIA Workshop</title>
+  <link rel="stylesheet" href="../../shared/css/base.css">
+  <link rel="stylesheet" href="../../shared/css/slides.css">
+  <link rel="stylesheet" href="../../shared/css/animations.css">
+  <link rel="stylesheet" href="../../shared/css/components.css">
+  <style>
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-6);
+      max-width: 900px;
+    }
+
+    .content-card {
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-6);
+      transition: all 0.4s var(--ease-out-expo);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .content-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--content-color, var(--color-primary));
+    }
+
+    .content-card:hover {
+      border-color: var(--content-color, var(--color-primary));
+      transform: translateY(-4px);
+    }
+
+    .content-card.value { --content-color: #00D9A3; }
+    .content-card.proof { --content-color: #0099FF; }
+    .content-card.bts { --content-color: #A855F7; }
+    .content-card.pov { --content-color: #FF4F00; }
+
+    .content-icon {
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: color-mix(in srgb, var(--content-color, var(--color-primary)) 15%, transparent);
+      border-radius: var(--radius-xl);
+      font-size: var(--text-2xl);
+      margin-bottom: var(--space-4);
+    }
+
+    .content-title {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+    }
+
+    .content-purpose {
+      font-size: var(--text-sm);
+      color: var(--content-color, var(--color-primary));
+      font-weight: 500;
+      margin-bottom: var(--space-3);
+    }
+
+    .content-example {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      font-style: italic;
+      padding: var(--space-3);
+      background: var(--color-bg-elevated);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-3);
+    }
+
+    .content-metrics {
+      display: flex;
+      gap: var(--space-4);
+      margin-top: var(--space-3);
+    }
+
+    .metric {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+
+    .metric-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .metric-dot.high { background: var(--color-success); }
+    .metric-dot.medium { background: var(--color-warning); }
+    .metric-dot.low { background: var(--color-danger); }
+
+    .mix-container {
+      display: flex;
+      gap: var(--space-4);
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .mix-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .mix-bar {
+      width: 80px;
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column-reverse;
+    }
+
+    .mix-fill {
+      transition: height 0.6s var(--ease-out-expo);
+    }
+
+    .mix-label {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .mix-percent {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+
+    .analogy-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-4);
+      max-width: 800px;
+    }
+
+    .analogy-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-4);
+      text-align: center;
+    }
+
+    .analogy-card .emoji {
+      font-size: var(--text-3xl);
+      margin-bottom: var(--space-2);
+    }
+
+    .analogy-card .label {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: var(--space-1);
+    }
+
+    .analogy-card .desc {
+      font-size: var(--text-xs);
+      color: var(--color-text-secondary);
+    }
+
+    @media (max-width: 768px) {
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+      .analogy-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="slides-container">
+
+    <!-- Slide 1: Title -->
+    <section class="slide title-slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Module 5 Framework</span>
+        <h1 class="slide-title reveal stagger-1">The <span class="highlight">4 Content Types</span></h1>
+        <p class="slide-subtitle reveal stagger-2">Not all content is created equal. Some gets likes but no clients. Some gets clients but feels dry. Know which type to use and when.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: The 4 Types Grid -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="content-grid">
+          <div class="content-card value framework-box">
+            <div class="content-icon">💡</div>
+            <div class="content-title">VALUE</div>
+            <div class="content-purpose">Teach something useful</div>
+            <div class="content-example">"3 things every dental clinic website needs"</div>
+            <div class="content-metrics">
+              <div class="metric"><span class="metric-dot high"></span> Attention</div>
+              <div class="metric"><span class="metric-dot high"></span> Trust</div>
+            </div>
+          </div>
+
+          <div class="content-card proof framework-box">
+            <div class="content-icon">✓</div>
+            <div class="content-title">PROOF</div>
+            <div class="content-purpose">Show results</div>
+            <div class="content-example">"I rebuilt this coach's landing page. Sign-ups went from 3 to 12 per week."</div>
+            <div class="content-metrics">
+              <div class="metric"><span class="metric-dot medium"></span> Attention</div>
+              <div class="metric"><span class="metric-dot high"></span> Trust</div>
+            </div>
+          </div>
+
+          <div class="content-card bts framework-box">
+            <div class="content-icon">🎬</div>
+            <div class="content-title">BEHIND-THE-SCENES</div>
+            <div class="content-purpose">Show the process</div>
+            <div class="content-example">"Here's how I used AI to create a full brand kit in 30 minutes"</div>
+            <div class="content-metrics">
+              <div class="metric"><span class="metric-dot high"></span> Attention</div>
+              <div class="metric"><span class="metric-dot medium"></span> Trust</div>
+            </div>
+          </div>
+
+          <div class="content-card pov framework-box">
+            <div class="content-icon">📣</div>
+            <div class="content-title">POINT OF VIEW</div>
+            <div class="content-purpose">Share an opinion</div>
+            <div class="content-example">"Most businesses don't have a marketing problem. They have a 'nobody knows you exist' problem."</div>
+            <div class="content-metrics">
+              <div class="metric"><span class="metric-dot high"></span> Attention</div>
+              <div class="metric"><span class="metric-dot medium"></span> Trust</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 3: Value Content -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal"><span class="highlight" style="color: #00D9A3;">VALUE</span> Content</h2>
+        <p class="slide-subtitle reveal stagger-1">Teach something useful. Gets shared, builds authority.</p>
+
+        <div style="max-width: 600px; margin-top: var(--space-8);">
+          <div class="card reveal stagger-2" style="padding: var(--space-6); border-left: 4px solid #00D9A3;">
+            <p style="color: var(--color-text); font-size: var(--text-lg); margin-bottom: var(--space-4);">
+              Example formats:
+            </p>
+            <ul style="color: var(--color-text-secondary); margin-left: var(--space-4);">
+              <li style="margin-bottom: var(--space-2);">"3 things every [industry] needs for [result]"</li>
+              <li style="margin-bottom: var(--space-2);">"The mistake 90% of [audience] make"</li>
+              <li style="margin-bottom: var(--space-2);">"How to [achieve outcome] in [timeframe]"</li>
+              <li>"I audited 10 [businesses]. Here's what I found."</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-6);">
+          <strong style="color: #00D9A3;">40%</strong> of your content mix
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 4: Proof Content -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal"><span class="highlight" style="color: #0099FF;">PROOF</span> Content</h2>
+        <p class="slide-subtitle reveal stagger-1">Show results. Gets clients, builds trust.</p>
+
+        <div style="max-width: 600px; margin-top: var(--space-8);">
+          <div class="card reveal stagger-2" style="padding: var(--space-6); border-left: 4px solid #0099FF;">
+            <p style="color: var(--color-text); font-size: var(--text-lg); margin-bottom: var(--space-4);">
+              Example formats:
+            </p>
+            <ul style="color: var(--color-text-secondary); margin-left: var(--space-4);">
+              <li style="margin-bottom: var(--space-2);">"Before: [problem]. After: [result]. Here's what I did."</li>
+              <li style="margin-bottom: var(--space-2);">"I helped [client type] achieve [specific outcome]"</li>
+              <li style="margin-bottom: var(--space-2);">Testimonial + screenshot</li>
+              <li>Case study with numbers</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-6);">
+          <strong style="color: #0099FF;">25%</strong> of your content mix
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 5: BTS Content -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal"><span class="highlight" style="color: #A855F7;">BEHIND-THE-SCENES</span> Content</h2>
+        <p class="slide-subtitle reveal stagger-1">Show the process. Gets engagement, builds relatability.</p>
+
+        <div style="max-width: 600px; margin-top: var(--space-8);">
+          <div class="card reveal stagger-2" style="padding: var(--space-6); border-left: 4px solid #A855F7;">
+            <p style="color: var(--color-text); font-size: var(--text-lg); margin-bottom: var(--space-4);">
+              Example formats:
+            </p>
+            <ul style="color: var(--color-text-secondary); margin-left: var(--space-4);">
+              <li style="margin-bottom: var(--space-2);">"Watch me build [X] in [time] using AI"</li>
+              <li style="margin-bottom: var(--space-2);">"Here's my workflow for creating [deliverable]"</li>
+              <li style="margin-bottom: var(--space-2);">"A day in my life as an AI Marketer"</li>
+              <li>"The tools I use every day"</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-6);">
+          <strong style="color: #A855F7;">20%</strong> of your content mix
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 6: POV Content -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal"><span class="highlight">POV</span> Content</h2>
+        <p class="slide-subtitle reveal stagger-1">Share an opinion. Gets attention, builds differentiation.</p>
+
+        <div style="max-width: 600px; margin-top: var(--space-8);">
+          <div class="card reveal stagger-2" style="padding: var(--space-6); border-left: 4px solid var(--color-primary);">
+            <p style="color: var(--color-text); font-size: var(--text-lg); margin-bottom: var(--space-4);">
+              Example formats:
+            </p>
+            <ul style="color: var(--color-text-secondary); margin-left: var(--space-4);">
+              <li style="margin-bottom: var(--space-2);">"Unpopular opinion: [bold statement]"</li>
+              <li style="margin-bottom: var(--space-2);">"Why most [audience] fail at [thing]"</li>
+              <li style="margin-bottom: var(--space-2);">"Hot take: [industry insight]"</li>
+              <li>"The truth about [common belief]"</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-6);">
+          <strong style="color: var(--color-primary);">15%</strong> of your content mix
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 7: The Content Mix -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Best Mix for Beginners</span>
+        <h2 class="slide-title size-lg reveal stagger-1">The <span class="highlight">Content Mix</span></h2>
+
+        <div class="mix-container reveal stagger-2" style="margin-top: var(--space-8);">
+          <div class="mix-item">
+            <div class="mix-bar" style="height: 200px;">
+              <div class="mix-fill" style="height: 40%; background: #00D9A3;"></div>
+            </div>
+            <div class="mix-label" style="color: #00D9A3;">Value</div>
+            <div class="mix-percent">40%</div>
+          </div>
+
+          <div class="mix-item">
+            <div class="mix-bar" style="height: 200px;">
+              <div class="mix-fill" style="height: 25%; background: #0099FF;"></div>
+            </div>
+            <div class="mix-label" style="color: #0099FF;">Proof</div>
+            <div class="mix-percent">25%</div>
+          </div>
+
+          <div class="mix-item">
+            <div class="mix-bar" style="height: 200px;">
+              <div class="mix-fill" style="height: 20%; background: #A855F7;"></div>
+            </div>
+            <div class="mix-label" style="color: #A855F7;">BTS</div>
+            <div class="mix-percent">20%</div>
+          </div>
+
+          <div class="mix-item">
+            <div class="mix-bar" style="height: 200px;">
+              <div class="mix-fill" style="height: 15%; background: var(--color-primary);"></div>
+            </div>
+            <div class="mix-label">POV</div>
+            <div class="mix-percent">15%</div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-6);">
+          Lead with Value. Prove with Results. Connect with Process. Differentiate with Opinion.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 8: The Restaurant Analogy -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">The Restaurant Analogy</span>
+
+        <div class="analogy-grid reveal stagger-1" style="margin-top: var(--space-8);">
+          <div class="analogy-card" style="border-top: 3px solid #00D9A3;">
+            <div class="emoji">🍽️</div>
+            <div class="label" style="color: #00D9A3;">VALUE</div>
+            <div class="desc">Free samples — people taste it, come back for more</div>
+          </div>
+
+          <div class="analogy-card" style="border-top: 3px solid #0099FF;">
+            <div class="emoji">📸</div>
+            <div class="label" style="color: #0099FF;">PROOF</div>
+            <div class="desc">Photos of happy customers eating (social proof)</div>
+          </div>
+
+          <div class="analogy-card" style="border-top: 3px solid #A855F7;">
+            <div class="emoji">👨‍🍳</div>
+            <div class="label" style="color: #A855F7;">BTS</div>
+            <div class="desc">Video of the chef cooking (people love the process)</div>
+          </div>
+
+          <div class="analogy-card" style="border-top: 3px solid var(--color-primary);">
+            <div class="emoji">📋</div>
+            <div class="label">POV</div>
+            <div class="desc">"Nasi lemak should NEVER be reheated" (bold, memorable)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 9: Summary -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">4 Types. <span class="highlight">Know the mix.</span></h2>
+
+        <div class="flow-horizontal reveal stagger-1" style="margin-top: var(--space-8); gap: var(--space-6);">
+          <div style="text-align: center;">
+            <div style="font-size: var(--text-3xl);">💡</div>
+            <div style="font-size: var(--text-sm); font-weight: 600; color: #00D9A3;">Value</div>
+            <div style="font-size: var(--text-xs); color: var(--color-text-muted);">40%</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: var(--text-3xl);">✓</div>
+            <div style="font-size: var(--text-sm); font-weight: 600; color: #0099FF;">Proof</div>
+            <div style="font-size: var(--text-xs); color: var(--color-text-muted);">25%</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: var(--text-3xl);">🎬</div>
+            <div style="font-size: var(--text-sm); font-weight: 600; color: #A855F7;">BTS</div>
+            <div style="font-size: var(--text-xs); color: var(--color-text-muted);">20%</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: var(--text-3xl);">📣</div>
+            <div style="font-size: var(--text-sm); font-weight: 600; color: var(--color-primary);">POV</div>
+            <div style="font-size: var(--text-xs); color: var(--color-text-muted);">15%</div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-8);">
+          Not sure what to post? <strong style="color: var(--color-text);">Default to Value.</strong><br>
+          It builds authority AND gets shared.
+        </p>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="../../shared/js/slides.js"></script>
+</body>
+</html>

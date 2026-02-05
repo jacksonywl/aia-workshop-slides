@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Lead Equation | AIA Workshop</title>
+  <link rel="stylesheet" href="../../shared/css/base.css">
+  <link rel="stylesheet" href="../../shared/css/slides.css">
+  <link rel="stylesheet" href="../../shared/css/animations.css">
+  <link rel="stylesheet" href="../../shared/css/components.css">
+  <style>
+    .equation-display {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-6);
+      flex-wrap: wrap;
+    }
+
+    .equation-term {
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-6) var(--space-8);
+      text-align: center;
+      transition: all 0.4s var(--ease-out-expo);
+    }
+
+    .equation-term:hover {
+      border-color: var(--color-primary);
+      transform: scale(1.05);
+    }
+
+    .equation-term.result {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      box-shadow: 0 0 40px var(--color-primary-glow);
+    }
+
+    .equation-term .term-title {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      font-weight: 700;
+      color: var(--color-text);
+    }
+
+    .equation-term.result .term-title {
+      color: var(--color-bg);
+    }
+
+    .equation-term .term-subtitle {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      margin-top: var(--space-2);
+    }
+
+    .equation-term.result .term-subtitle {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .equation-operator {
+      font-family: var(--font-display);
+      font-size: var(--text-4xl);
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+
+    .two-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-8);
+      max-width: 900px;
+    }
+
+    .column-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+    }
+
+    .column-card.reach {
+      border-top: 4px solid #0099FF;
+    }
+
+    .column-card.relevance {
+      border-top: 4px solid #A855F7;
+    }
+
+    .column-title {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 700;
+      margin-bottom: var(--space-2);
+    }
+
+    .column-card.reach .column-title { color: #0099FF; }
+    .column-card.relevance .column-title { color: #A855F7; }
+
+    .column-question {
+      font-size: var(--text-base);
+      color: var(--color-text-secondary);
+      font-style: italic;
+      margin-bottom: var(--space-4);
+    }
+
+    .column-list {
+      list-style: none;
+    }
+
+    .column-list li {
+      padding: var(--space-2) 0;
+      padding-left: var(--space-4);
+      position: relative;
+      color: var(--color-text-secondary);
+    }
+
+    .column-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--color-primary);
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+      max-width: 800px;
+    }
+
+    .problem-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      text-align: center;
+    }
+
+    .problem-card .icon {
+      font-size: var(--text-4xl);
+      margin-bottom: var(--space-4);
+    }
+
+    .problem-card .label {
+      font-weight: 600;
+      color: var(--color-danger);
+      margin-bottom: var(--space-2);
+    }
+
+    .problem-card .description {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .analogy-box {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      max-width: 700px;
+    }
+
+    .analogy-title {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: var(--space-4);
+      text-align: center;
+    }
+
+    .analogy-items {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .analogy-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-4);
+    }
+
+    .analogy-item .term {
+      font-weight: 600;
+      color: var(--color-text);
+      min-width: 100px;
+    }
+
+    .analogy-item .equals {
+      color: var(--color-primary);
+      font-weight: 700;
+    }
+
+    .analogy-item .meaning {
+      color: var(--color-text-secondary);
+    }
+
+    .result-box {
+      margin-top: var(--space-4);
+      padding: var(--space-4);
+      background: rgba(0, 217, 163, 0.1);
+      border-radius: var(--radius-lg);
+      text-align: center;
+    }
+
+    .result-box p {
+      color: var(--color-success);
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .two-columns,
+      .problem-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="slides-container">
+
+    <!-- Slide 1: Title -->
+    <section class="slide title-slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Module 4 Framework</span>
+        <h1 class="slide-title reveal stagger-1">The <span class="highlight">Lead Equation</span></h1>
+        <p class="slide-subtitle reveal stagger-2">Getting leads is simpler than most people think. It comes down to just two ingredients.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: The Equation -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">The Formula</span>
+
+        <div class="equation-display" style="margin-top: var(--space-10);">
+          <div class="equation-term result framework-box">
+            <div class="term-title">LEADS</div>
+            <div class="term-subtitle">DMs, Inquiries, Optins</div>
+          </div>
+          <span class="equation-operator reveal stagger-1">=</span>
+          <div class="equation-term framework-box">
+            <div class="term-title">REACH</div>
+            <div class="term-subtitle">How many people see you</div>
+          </div>
+          <span class="equation-operator reveal stagger-2">x</span>
+          <div class="equation-term framework-box">
+            <div class="term-title">RELEVANCE</div>
+            <div class="term-subtitle">Does it matter to them</div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-8);">
+          That's it. Two ingredients.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 3: In Plain English -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">In <span class="highlight">Plain English</span></h2>
+
+        <div class="quote-box reveal stagger-1" style="margin-top: var(--space-8); max-width: 700px;">
+          <p class="quote-text" style="font-size: var(--text-2xl);">
+            "How many people <span style="color: #0099FF;">see me</span>?"<br>
+            <span style="font-size: var(--text-3xl); color: var(--color-primary);">x</span><br>
+            "Does what I say <span style="color: #A855F7;">matter to them</span>?"
+          </p>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-6);">
+          You need <strong>BOTH</strong>. One without the other = no leads.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 4: Reach vs Relevance Deep Dive -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="two-columns reveal stagger-1">
+          <div class="column-card reach">
+            <div class="column-title">REACH</div>
+            <div class="column-question">"How many of the right people see my message?"</div>
+            <ul class="column-list">
+              <li>Posting content gets reach</li>
+              <li>Outreach gets reach</li>
+              <li>Commenting gets reach</li>
+              <li>Ads get reach (paid)</li>
+            </ul>
+          </div>
+
+          <div class="column-card relevance">
+            <div class="column-title">RELEVANCE</div>
+            <div class="column-question">"How much does my message match their actual problem?"</div>
+            <ul class="column-list">
+              <li>Generic: "I do marketing" = low</li>
+              <li>Specific: "I help dentists get more patients" = high</li>
+              <li>Personalized outreach = very high</li>
+              <li>Content that solves their problem = high</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 5: The Two Problems -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">When the equation is <span class="highlight">broken</span></h2>
+
+        <div class="problem-grid reveal stagger-1" style="margin-top: var(--space-8);">
+          <div class="problem-card">
+            <div class="icon">📢</div>
+            <div class="label">High Reach, Low Relevance</div>
+            <div class="description">
+              People see you but scroll past.<br>
+              <em>"All impressions, no responses"</em>
+            </div>
+          </div>
+
+          <div class="problem-card">
+            <div class="icon">💎</div>
+            <div class="label">High Relevance, Low Reach</div>
+            <div class="description">
+              Your message is perfect but nobody sees it.<br>
+              <em>"The hidden gem problem"</em>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal stagger-2" style="margin-top: var(--space-6); padding: var(--space-4) var(--space-6); background: rgba(0, 217, 163, 0.1); border-radius: var(--radius-lg); max-width: 500px;">
+          <p style="text-align: center; color: var(--color-success); font-weight: 600;">
+            The solution: You need BOTH.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 6: The Nasi Lemak Analogy -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="analogy-box reveal stagger-1">
+          <div class="analogy-title">The Nasi Lemak Stall Analogy</div>
+
+          <div class="analogy-items">
+            <div class="analogy-item">
+              <span class="term" style="color: #0099FF;">REACH</span>
+              <span class="equals">=</span>
+              <span class="meaning">The stall is on a busy corner with a big sign (people walk by and see it)</span>
+            </div>
+            <div class="analogy-item">
+              <span class="term" style="color: #A855F7;">RELEVANCE</span>
+              <span class="equals">=</span>
+              <span class="meaning">The sign says "Hungry? Best nasi lemak in PJ — ready in 5 minutes" not just "Food sold here"</span>
+            </div>
+          </div>
+
+          <div class="result-box">
+            <p>Busy corner + the right message = the stall sells out by 10am</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 7: Power Moves -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">The Two <span class="highlight">Power Moves</span></h2>
+
+        <div class="two-columns reveal stagger-1" style="margin-top: var(--space-8);">
+          <div class="column-card" style="border-top: 4px solid var(--color-primary);">
+            <div class="column-title" style="color: var(--color-primary);">CONTENT</div>
+            <div class="column-question">Reach at scale</div>
+            <p style="color: var(--color-text-secondary); margin-top: var(--space-4);">
+              One post can be seen by thousands. Content compounds over time. This is Day 2's focus.
+            </p>
+          </div>
+
+          <div class="column-card" style="border-top: 4px solid var(--color-success);">
+            <div class="column-title" style="color: var(--color-success);">OUTREACH</div>
+            <div class="column-question">Relevance at depth</div>
+            <p style="color: var(--color-text-secondary); margin-top: var(--space-4);">
+              Personalized messages have higher conversion. Direct conversations build relationships. This is Day 3's focus.
+            </p>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-6);">
+          Content gives you reach. Outreach gives you relevance.<br>
+          <strong style="color: var(--color-text);">Use both.</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 8: Important Note About Trust -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Important Insight</span>
+        <h2 class="slide-title size-lg reveal stagger-1">Trust is <span class="highlight">NOT</span> a lead variable</h2>
+
+        <div class="card reveal stagger-2" style="margin-top: var(--space-8); padding: var(--space-6); max-width: 600px;">
+          <p style="color: var(--color-text); font-size: var(--text-lg); margin-bottom: var(--space-4);">
+            You don't need someone to trust you for them to <strong>raise their hand</strong>.
+          </p>
+          <p style="color: var(--color-text-secondary);">
+            They just need to see something relevant to their problem.
+          </p>
+          <p style="color: var(--color-text-secondary); margin-top: var(--space-4);">
+            Trust comes <strong style="color: var(--color-text);">later</strong> — in the funnel, when they decide whether to PAY you. That's Day 3.
+          </p>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-6);">
+          <span style="color: #0099FF;">Reach</span> + <span style="color: #A855F7;">Relevance</span> = Leads.<br>
+          Trust = Customers. Different equation.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 9: Summary -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">The <span class="highlight">Lead Equation</span></h2>
+
+        <div class="equation-display reveal stagger-1" style="margin-top: var(--space-8);">
+          <div class="equation-term result" style="padding: var(--space-4) var(--space-6);">
+            <div class="term-title" style="font-size: var(--text-2xl);">LEADS</div>
+          </div>
+          <span class="equation-operator" style="font-size: var(--text-3xl);">=</span>
+          <div class="equation-term" style="padding: var(--space-4) var(--space-6); border-color: #0099FF;">
+            <div class="term-title" style="font-size: var(--text-2xl); color: #0099FF;">REACH</div>
+          </div>
+          <span class="equation-operator" style="font-size: var(--text-3xl);">x</span>
+          <div class="equation-term" style="padding: var(--space-4) var(--space-6); border-color: #A855F7;">
+            <div class="term-title" style="font-size: var(--text-2xl); color: #A855F7;">RELEVANCE</div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-8);">
+          If your outreach isn't working, check which one is missing.<br>
+          <strong style="color: var(--color-text);">The equation tells you why.</strong>
+        </p>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="../../shared/js/slides.js"></script>
+</body>
+</html>

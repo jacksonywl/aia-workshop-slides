@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Content Machine | AIA Workshop</title>
+  <link rel="stylesheet" href="../../shared/css/base.css">
+  <link rel="stylesheet" href="../../shared/css/slides.css">
+  <link rel="stylesheet" href="../../shared/css/animations.css">
+  <link rel="stylesheet" href="../../shared/css/components.css">
+  <style>
+    .pipeline {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .pipeline-step {
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      text-align: center;
+      min-width: 180px;
+      transition: all 0.4s var(--ease-out-expo);
+    }
+
+    .pipeline-step:hover {
+      border-color: var(--color-primary);
+      transform: translateY(-4px);
+    }
+
+    .pipeline-step .step-number {
+      width: 40px;
+      height: 40px;
+      background: var(--color-primary);
+      color: var(--color-bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: var(--text-lg);
+      margin: 0 auto var(--space-3);
+    }
+
+    .pipeline-step .step-title {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+    }
+
+    .pipeline-step .step-desc {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-2);
+    }
+
+    .pipeline-step .step-time {
+      font-size: var(--text-xs);
+      color: var(--color-primary);
+      font-weight: 600;
+    }
+
+    .pipeline-step .step-who {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      margin-top: var(--space-1);
+    }
+
+    .pipeline-arrow {
+      font-size: var(--text-2xl);
+      color: var(--color-primary);
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: all 0.4s var(--ease-out-expo);
+    }
+
+    .slide.visible .pipeline-arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .editing-table {
+      width: 100%;
+      max-width: 800px;
+      border-collapse: collapse;
+    }
+
+    .editing-table th,
+    .editing-table td {
+      padding: var(--space-4);
+      text-align: left;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .editing-table th {
+      font-weight: 600;
+      color: var(--color-text);
+      background: var(--color-bg-card);
+    }
+
+    .editing-table td {
+      color: var(--color-text-secondary);
+    }
+
+    .editing-table .problem {
+      color: var(--color-danger);
+    }
+
+    .editing-table .fix {
+      color: var(--color-success);
+    }
+
+    .before-after {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+      max-width: 800px;
+    }
+
+    .before-card,
+    .after-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+    }
+
+    .before-card {
+      border-top: 4px solid var(--color-danger);
+    }
+
+    .after-card {
+      border-top: 4px solid var(--color-success);
+    }
+
+    .before-card .label,
+    .after-card .label {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      margin-bottom: var(--space-3);
+    }
+
+    .before-card .label { color: var(--color-danger); }
+    .after-card .label { color: var(--color-success); }
+
+    .before-card .text,
+    .after-card .text {
+      font-size: var(--text-base);
+      color: var(--color-text-secondary);
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    .total-time {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-6);
+      background: rgba(0, 217, 163, 0.1);
+      border: 1px solid var(--color-success);
+      border-radius: var(--radius-full);
+      color: var(--color-success);
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .pipeline {
+        flex-direction: column;
+      }
+      .pipeline-arrow {
+        transform: rotate(90deg);
+      }
+      .before-after {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="slides-container">
+
+    <!-- Slide 1: Title -->
+    <section class="slide title-slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Module 5 Framework</span>
+        <h1 class="slide-title reveal stagger-1">The <span class="highlight">Content Machine</span></h1>
+        <p class="slide-subtitle reveal stagger-2">Turn any idea into finished content in 25 minutes. AI does the heavy lifting. You direct.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: The 4-Step Pipeline -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="pipeline">
+          <div class="pipeline-step framework-box">
+            <div class="step-number">1</div>
+            <div class="step-title">BRIEF</div>
+            <div class="step-desc">"What do I want to say?"</div>
+            <div class="step-time">3 min</div>
+            <div class="step-who">You</div>
+          </div>
+
+          <span class="pipeline-arrow stagger-1">→</span>
+
+          <div class="pipeline-step framework-box">
+            <div class="step-number">2</div>
+            <div class="step-title">AI DRAFT</div>
+            <div class="step-desc">"AI, write this for me"</div>
+            <div class="step-time">2 min</div>
+            <div class="step-who">AI</div>
+          </div>
+
+          <span class="pipeline-arrow stagger-2">→</span>
+
+          <div class="pipeline-step framework-box">
+            <div class="step-number">3</div>
+            <div class="step-title">HUMAN EDIT</div>
+            <div class="step-desc">"Make it sound like ME"</div>
+            <div class="step-time">10 min</div>
+            <div class="step-who">You</div>
+          </div>
+
+          <span class="pipeline-arrow stagger-3">→</span>
+
+          <div class="pipeline-step framework-box">
+            <div class="step-number">4</div>
+            <div class="step-title">DESIGN</div>
+            <div class="step-desc">"Make it look good"</div>
+            <div class="step-time">10 min</div>
+            <div class="step-who">AI + You</div>
+          </div>
+        </div>
+
+        <div class="reveal stagger-4" style="margin-top: var(--space-8); text-align: center;">
+          <span class="total-time">Total per content piece: ~25 minutes</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 3: Step 1 - Brief -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Step 1: <span class="highlight">BRIEF</span></h2>
+        <p class="slide-subtitle reveal stagger-1">Write a 2-3 sentence description of what you want</p>
+
+        <div style="max-width: 600px; margin-top: var(--space-8);">
+          <div class="card reveal stagger-2" style="padding: var(--space-6);">
+            <p style="color: var(--color-text-muted); font-size: var(--text-sm); margin-bottom: var(--space-2);">Example brief:</p>
+            <p style="color: var(--color-text); font-size: var(--text-lg); font-style: italic;">
+              "I want to write a Value post about 3 things every fitness coach's landing page needs. It should be practical and end with a CTA to DM me."
+            </p>
+          </div>
+
+          <p class="reveal stagger-3" style="margin-top: var(--space-4); color: var(--color-text-secondary); text-align: center;">
+            <strong style="color: var(--color-text);">Tip:</strong> Just tell the AI what you'd say to a friend. That's your brief.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 4: Step 2 - AI Draft -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Step 2: <span class="highlight">AI DRAFT</span></h2>
+        <p class="slide-subtitle reveal stagger-1">Feed the brief to AI. Get a full draft back.</p>
+
+        <div style="max-width: 600px; margin-top: var(--space-8);">
+          <div class="card reveal stagger-2" style="padding: var(--space-6); background: var(--color-bg-elevated);">
+            <p style="color: var(--color-text-muted); font-size: var(--text-sm); margin-bottom: var(--space-3);">AI generates:</p>
+            <ul style="color: var(--color-text-secondary); margin-left: var(--space-4);">
+              <li style="margin-bottom: var(--space-2);">Full draft based on your brief</li>
+              <li style="margin-bottom: var(--space-2);">Structure and flow</li>
+              <li style="margin-bottom: var(--space-2);">Headlines and hooks</li>
+              <li>Call-to-action options</li>
+            </ul>
+          </div>
+
+          <p class="reveal stagger-3" style="margin-top: var(--space-4); color: var(--color-text-secondary); text-align: center;">
+            AI gives you <strong style="color: var(--color-success);">80% of the work</strong>. Now make it yours.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 5: Step 3 - Human Edit -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Step 3: <span class="highlight">HUMAN EDIT</span></h2>
+        <p class="slide-subtitle reveal stagger-1">Read the draft. Cut the fluff. Make it sound natural.</p>
+
+        <table class="editing-table reveal stagger-2" style="margin-top: var(--space-6);">
+          <thead>
+            <tr>
+              <th>AI Problem</th>
+              <th>How to Fix</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="problem">Too formal</td>
+              <td class="fix">Shorten sentences. Use "you" and "I".</td>
+            </tr>
+            <tr>
+              <td class="problem">Too generic</td>
+              <td class="fix">Add a specific detail or number</td>
+            </tr>
+            <tr>
+              <td class="problem">No opinion</td>
+              <td class="fix">Add your take: "Honestly? I'd start with..."</td>
+            </tr>
+            <tr>
+              <td class="problem">Too long</td>
+              <td class="fix">Cut by 30%. Ruthlessly.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Slide 6: Before/After Example -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">The Edit in Action</span>
+
+        <div class="before-after reveal stagger-1" style="margin-top: var(--space-8);">
+          <div class="before-card">
+            <div class="label">AI Says (Robot)</div>
+            <div class="text">"It is essential to optimize your landing page to maximize conversion rates and ensure potential clients understand the value proposition."</div>
+          </div>
+
+          <div class="after-card">
+            <div class="label">You Say (Human)</div>
+            <div class="text">"Here's the thing — most coaches skip this. And it's costing them 10+ clients a month."</div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-6);">
+          Same idea. Different voice. <strong style="color: var(--color-text);">One sounds like a robot. One sounds like you.</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 7: Step 4 - Design -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Step 4: <span class="highlight">DESIGN</span></h2>
+        <p class="slide-subtitle reveal stagger-1">Create the visual. Make it look good.</p>
+
+        <div style="max-width: 600px; margin-top: var(--space-8);">
+          <div class="card reveal stagger-2" style="padding: var(--space-6);">
+            <ul style="color: var(--color-text-secondary); margin-left: var(--space-4);">
+              <li style="margin-bottom: var(--space-3);">
+                <strong style="color: var(--color-text);">Social media graphic</strong> — headline + visual
+              </li>
+              <li style="margin-bottom: var(--space-3);">
+                <strong style="color: var(--color-text);">Carousel</strong> — multiple slides with key points
+              </li>
+              <li style="margin-bottom: var(--space-3);">
+                <strong style="color: var(--color-text);">Video thumbnail</strong> — eye-catching preview
+              </li>
+              <li>
+                <strong style="color: var(--color-text);">Simple text post</strong> — no graphic needed
+              </li>
+            </ul>
+          </div>
+
+          <p class="reveal stagger-3" style="margin-top: var(--space-4); color: var(--color-text-secondary); text-align: center;">
+            Use Canva, AI design tools, or templates. <strong style="color: var(--color-text);">Don't overthink it.</strong>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 8: The Key Insight -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">The Key Insight</span>
+        <h2 class="slide-title size-lg reveal stagger-1">"I can't write" is <span class="highlight">dead</span></h2>
+
+        <div class="quote-box reveal stagger-2" style="margin-top: var(--space-8); max-width: 700px;">
+          <p class="quote-text" style="font-size: var(--text-xl);">
+            You don't need to write. You need to <strong style="color: var(--color-primary);">DIRECT</strong>.
+          </p>
+          <p style="color: var(--color-text-secondary); margin-top: var(--space-4);">
+            You didn't stare at a blank page. You told the AI what you wanted, it gave you 80% of the work, and you made it yours.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 9: Summary -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">The <span class="highlight">Content Machine</span></h2>
+
+        <div class="pipeline reveal stagger-1" style="margin-top: var(--space-8);">
+          <div class="pipeline-step" style="padding: var(--space-4); min-width: 140px;">
+            <div class="step-number" style="width: 32px; height: 32px; font-size: var(--text-base);">1</div>
+            <div class="step-title" style="font-size: var(--text-base);">BRIEF</div>
+            <div class="step-time">3 min</div>
+          </div>
+          <span class="pipeline-arrow">→</span>
+          <div class="pipeline-step" style="padding: var(--space-4); min-width: 140px;">
+            <div class="step-number" style="width: 32px; height: 32px; font-size: var(--text-base);">2</div>
+            <div class="step-title" style="font-size: var(--text-base);">AI DRAFT</div>
+            <div class="step-time">2 min</div>
+          </div>
+          <span class="pipeline-arrow">→</span>
+          <div class="pipeline-step" style="padding: var(--space-4); min-width: 140px;">
+            <div class="step-number" style="width: 32px; height: 32px; font-size: var(--text-base);">3</div>
+            <div class="step-title" style="font-size: var(--text-base);">EDIT</div>
+            <div class="step-time">10 min</div>
+          </div>
+          <span class="pipeline-arrow">→</span>
+          <div class="pipeline-step" style="padding: var(--space-4); min-width: 140px;">
+            <div class="step-number" style="width: 32px; height: 32px; font-size: var(--text-base);">4</div>
+            <div class="step-title" style="font-size: var(--text-base);">DESIGN</div>
+            <div class="step-time">10 min</div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-8);">
+          <strong style="color: var(--color-success);">25 minutes</strong> from idea to finished content.<br>
+          3 pieces = 75 minutes. That's your Day 2 goal.
+        </p>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="../../shared/js/slides.js"></script>
+</body>
+</html>

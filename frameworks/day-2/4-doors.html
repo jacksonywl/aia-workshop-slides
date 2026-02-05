@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The 4 Doors to Leads | AIA Workshop</title>
+  <link rel="stylesheet" href="../../shared/css/base.css">
+  <link rel="stylesheet" href="../../shared/css/slides.css">
+  <link rel="stylesheet" href="../../shared/css/animations.css">
+  <link rel="stylesheet" href="../../shared/css/components.css">
+  <style>
+    .doors-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-6);
+      max-width: 1100px;
+    }
+
+    .door-card {
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-6);
+      text-align: center;
+      transition: all 0.4s var(--ease-out-expo);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .door-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--door-color, var(--color-primary));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s var(--ease-out-expo);
+    }
+
+    .door-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .door-card:hover {
+      border-color: var(--door-color, var(--color-primary));
+      transform: translateY(-4px);
+    }
+
+    .door-card.warm { --door-color: #00D9A3; }
+    .door-card.cold { --door-color: #0099FF; }
+    .door-card.content { --door-color: #A855F7; }
+    .door-card.paid { --door-color: #FFB800; }
+
+    .door-number {
+      font-family: var(--font-display);
+      font-size: var(--text-6xl);
+      font-weight: 800;
+      color: var(--door-color, var(--color-primary));
+      opacity: 0.2;
+      line-height: 1;
+      margin-bottom: var(--space-2);
+    }
+
+    .door-icon {
+      font-size: var(--text-4xl);
+      margin-bottom: var(--space-3);
+    }
+
+    .door-title {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+    }
+
+    .door-subtitle {
+      font-size: var(--text-sm);
+      color: var(--door-color, var(--color-primary));
+      font-weight: 500;
+      margin-bottom: var(--space-4);
+    }
+
+    .door-description {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      margin-bottom: var(--space-4);
+    }
+
+    .door-speed {
+      display: inline-block;
+      padding: var(--space-1) var(--space-3);
+      background: color-mix(in srgb, var(--door-color, var(--color-primary)) 15%, transparent);
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      color: var(--door-color, var(--color-primary));
+    }
+
+    .door-locked {
+      opacity: 0.5;
+      position: relative;
+    }
+
+    .door-locked::after {
+      content: '';
+      position: absolute;
+      font-size: var(--text-2xl);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .locked-badge {
+      position: absolute;
+      top: var(--space-4);
+      right: var(--space-4);
+      background: var(--color-warning);
+      color: var(--color-bg);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-sm);
+    }
+
+    .situation-table {
+      width: 100%;
+      max-width: 800px;
+      border-collapse: collapse;
+    }
+
+    .situation-table th,
+    .situation-table td {
+      padding: var(--space-4);
+      text-align: left;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .situation-table th {
+      font-weight: 600;
+      color: var(--color-text);
+      background: var(--color-bg-card);
+    }
+
+    .situation-table td {
+      color: var(--color-text-secondary);
+    }
+
+    .situation-table .door-tag {
+      display: inline-block;
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-sm);
+      font-size: var(--text-sm);
+      font-weight: 600;
+    }
+
+    .door-tag.warm { background: rgba(0, 217, 163, 0.15); color: #00D9A3; }
+    .door-tag.cold { background: rgba(0, 153, 255, 0.15); color: #0099FF; }
+    .door-tag.content { background: rgba(168, 85, 247, 0.15); color: #A855F7; }
+    .door-tag.paid { background: rgba(255, 184, 0, 0.15); color: #FFB800; }
+
+    .doors-compact {
+      display: flex;
+      gap: var(--space-4);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .door-mini {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+    }
+
+    .door-mini .icon {
+      font-size: var(--text-xl);
+    }
+
+    .door-mini .label {
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    @media (max-width: 900px) {
+      .doors-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .doors-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="slides-container">
+
+    <!-- Slide 1: Title -->
+    <section class="slide title-slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Module 4 Framework</span>
+        <h1 class="slide-title reveal stagger-1">The <span class="highlight">4 Doors</span> to Leads</h1>
+        <p class="slide-subtitle reveal stagger-2">There are only 4 ways to get leads. Everything else is a variation of these. Know which door to open first.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2: The 4 Doors Overview -->
+    <section class="slide">
+      <div class="slide-content">
+        <div class="doors-grid">
+          <div class="door-card warm framework-box">
+            <div class="door-number">1</div>
+            <div class="door-icon">🚪</div>
+            <div class="door-title">Warm Outreach</div>
+            <div class="door-subtitle">You → Them (they know you)</div>
+            <div class="door-description">Reaching out to people who already know you exist</div>
+            <div class="door-speed">FAST (days)</div>
+          </div>
+
+          <div class="door-card cold framework-box">
+            <div class="door-number">2</div>
+            <div class="door-icon">🚪</div>
+            <div class="door-title">Cold Outreach</div>
+            <div class="door-subtitle">You → Them (strangers)</div>
+            <div class="door-description">Reaching out to strangers who don't know you</div>
+            <div class="door-speed">MEDIUM (weeks)</div>
+          </div>
+
+          <div class="door-card content framework-box">
+            <div class="door-number">3</div>
+            <div class="door-icon">🚪</div>
+            <div class="door-title">Free Content</div>
+            <div class="door-subtitle">They → You</div>
+            <div class="door-description">Posting content that attracts people to you</div>
+            <div class="door-speed">SLOW (weeks-months)</div>
+          </div>
+
+          <div class="door-card paid framework-box door-locked">
+            <div class="locked-badge">ADVANCED</div>
+            <div class="door-number">4</div>
+            <div class="door-icon">🚪</div>
+            <div class="door-title">Paid Ads</div>
+            <div class="door-subtitle">Money → Them</div>
+            <div class="door-description">Paying to put your offer in front of targeted strangers</div>
+            <div class="door-speed">FAST ($$)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 3: Door 1 - Warm Outreach -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Door 1: <span class="highlight" style="color: #00D9A3;">Warm</span> Outreach</h2>
+
+        <div style="max-width: 600px; margin-top: var(--space-8);">
+          <div class="card reveal stagger-1" style="padding: var(--space-6); border-left: 4px solid #00D9A3;">
+            <p style="color: var(--color-text); font-size: var(--text-lg); margin-bottom: var(--space-4);">
+              Reaching out to people who <strong>already know you exist</strong>
+            </p>
+            <ul style="color: var(--color-text-secondary); margin-left: var(--space-4);">
+              <li style="margin-bottom: var(--space-2);">Friends and connections</li>
+              <li style="margin-bottom: var(--space-2);">Facebook groups you're active in</li>
+              <li style="margin-bottom: var(--space-2);">People who've interacted with your content</li>
+              <li>Anyone who knows your name</li>
+            </ul>
+          </div>
+
+          <div class="reveal stagger-2" style="margin-top: var(--space-6); text-align: center;">
+            <span class="tag success" style="font-size: var(--text-base);">Speed: Days</span>
+            <span class="tag" style="font-size: var(--text-base); margin-left: var(--space-2);">Difficulty: Easy</span>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-6);">
+          This is where your <strong style="color: #00D9A3;">first client</strong> is hiding.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 4: Door 2 - Cold Outreach -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Door 2: <span class="highlight" style="color: #0099FF;">Cold</span> Outreach</h2>
+
+        <div style="max-width: 600px; margin-top: var(--space-8);">
+          <div class="card reveal stagger-1" style="padding: var(--space-6); border-left: 4px solid #0099FF;">
+            <p style="color: var(--color-text); font-size: var(--text-lg); margin-bottom: var(--space-4);">
+              Reaching out to strangers who <strong>don't know you</strong>
+            </p>
+            <ul style="color: var(--color-text-secondary); margin-left: var(--space-4);">
+              <li style="margin-bottom: var(--space-2);">Cold DMs and cold emails</li>
+              <li style="margin-bottom: var(--space-2);">Job applications</li>
+              <li style="margin-bottom: var(--space-2);">Businesses found on Google Maps</li>
+              <li>LinkedIn outreach to decision-makers</li>
+            </ul>
+          </div>
+
+          <div class="reveal stagger-2" style="margin-top: var(--space-6); text-align: center;">
+            <span class="tag" style="font-size: var(--text-base); background: rgba(0, 153, 255, 0.15); color: #0099FF;">Speed: Weeks</span>
+            <span class="tag" style="font-size: var(--text-base); margin-left: var(--space-2);">Difficulty: Medium</span>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-6);">
+          Wider reach. More volume. <strong style="color: #0099FF;">Personalization is key.</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 5: Door 3 - Free Content -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Door 3: <span class="highlight" style="color: #A855F7;">Free</span> Content</h2>
+
+        <div style="max-width: 600px; margin-top: var(--space-8);">
+          <div class="card reveal stagger-1" style="padding: var(--space-6); border-left: 4px solid #A855F7;">
+            <p style="color: var(--color-text); font-size: var(--text-lg); margin-bottom: var(--space-4);">
+              Posting content that <strong>attracts people to you</strong>
+            </p>
+            <ul style="color: var(--color-text-secondary); margin-left: var(--space-4);">
+              <li style="margin-bottom: var(--space-2);">Value posts that teach something</li>
+              <li style="margin-bottom: var(--space-2);">Proof posts showing results</li>
+              <li style="margin-bottom: var(--space-2);">Behind-the-scenes content</li>
+              <li>Bold opinions that differentiate you</li>
+            </ul>
+          </div>
+
+          <div class="reveal stagger-2" style="margin-top: var(--space-6); text-align: center;">
+            <span class="tag" style="font-size: var(--text-base); background: rgba(168, 85, 247, 0.15); color: #A855F7;">Speed: Weeks-Months</span>
+            <span class="tag" style="font-size: var(--text-base); margin-left: var(--space-2);">Difficulty: Hard at first, easiest long-term</span>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-3" style="margin-top: var(--space-6);">
+          <strong style="color: #A855F7;">Compounds over time.</strong> Leads come to YOU.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 6: Door 4 - Why We Skip It -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Door 4: <span class="highlight" style="color: #FFB800;">Paid Ads</span></h2>
+        <p class="slide-subtitle reveal stagger-1">We don't teach this. Here's why:</p>
+
+        <div style="max-width: 600px; margin-top: var(--space-6);">
+          <div class="card reveal stagger-2" style="padding: var(--space-6); background: rgba(255, 184, 0, 0.05); border: 1px solid rgba(255, 184, 0, 0.2);">
+            <ul style="color: var(--color-text-secondary);">
+              <li style="margin-bottom: var(--space-3);">
+                <strong style="color: var(--color-text);">Requires budget</strong> — money to lose while learning
+              </li>
+              <li style="margin-bottom: var(--space-3);">
+                <strong style="color: var(--color-text);">Requires a proven offer</strong> — validate with Doors 1-3 first
+              </li>
+              <li style="margin-bottom: var(--space-3);">
+                <strong style="color: var(--color-text);">Technical learning curve</strong> — ad platforms are complex
+              </li>
+              <li>
+                <strong style="color: var(--color-text);">High risk for beginners</strong> — can burn $500/week with zero results
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="reveal stagger-3" style="margin-top: var(--space-6); padding: var(--space-4); background: var(--color-bg-card); border-radius: var(--radius-lg); max-width: 500px;">
+          <p style="color: var(--color-text-secondary); text-align: center;">
+            <strong style="color: #FFB800;">The right time for Door 4:</strong><br>
+            After 5-10 clients through Doors 1-3 and cash flow to experiment
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 7: Which Door First -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">Which <span class="highlight">Door</span> First?</h2>
+
+        <table class="situation-table reveal stagger-1" style="margin-top: var(--space-8);">
+          <thead>
+            <tr>
+              <th>Your Situation</th>
+              <th>Best First Door</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>"I need money THIS WEEK"</td>
+              <td><span class="door-tag warm">Door 1: Warm</span></td>
+            </tr>
+            <tr>
+              <td>"I need money THIS MONTH"</td>
+              <td><span class="door-tag cold">Door 2: Cold</span></td>
+            </tr>
+            <tr>
+              <td>"I want leads EVERY month without hustling"</td>
+              <td><span class="door-tag content">Door 3: Content</span></td>
+            </tr>
+            <tr>
+              <td>"I want a remote job"</td>
+              <td><span class="door-tag cold">Door 2: Cold (Job Applications)</span></td>
+            </tr>
+            <tr>
+              <td>"I have $1,000+ and a proven offer"</td>
+              <td><span class="door-tag paid">Door 4: Paid Ads</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Slide 8: Best Strategy -->
+    <section class="slide">
+      <div class="slide-content">
+        <span class="eyebrow reveal">Best Strategy for Beginners</span>
+        <h2 class="slide-title size-lg reveal stagger-1">Open <span class="highlight">Doors 1, 2, and 3</span> Simultaneously</h2>
+
+        <div class="doors-compact reveal stagger-2" style="margin-top: var(--space-8);">
+          <div class="door-mini" style="border-color: #00D9A3;">
+            <span class="icon">🚪</span>
+            <span class="label" style="color: #00D9A3;">Warm</span>
+          </div>
+          <span style="font-size: var(--text-2xl); color: var(--color-text-muted);">+</span>
+          <div class="door-mini" style="border-color: #0099FF;">
+            <span class="icon">🚪</span>
+            <span class="label" style="color: #0099FF;">Cold</span>
+          </div>
+          <span style="font-size: var(--text-2xl); color: var(--color-text-muted);">+</span>
+          <div class="door-mini" style="border-color: #A855F7;">
+            <span class="icon">🚪</span>
+            <span class="label" style="color: #A855F7;">Content</span>
+          </div>
+        </div>
+
+        <div style="max-width: 600px; margin-top: var(--space-8);">
+          <div class="step-card reveal stagger-3" style="margin-bottom: var(--space-3);">
+            <div class="step-number" style="background: #A855F7;">Day 2</div>
+            <div class="step-content">
+              <div class="step-title">Build Content & Assets</div>
+              <div class="step-description">Create content for Door 3 (reach at scale)</div>
+            </div>
+          </div>
+          <div class="step-card reveal stagger-4">
+            <div class="step-number" style="background: #00D9A3;">Day 3</div>
+            <div class="step-content">
+              <div class="step-title">Execute Outreach</div>
+              <div class="step-description">Open Doors 1 + 2 (relevance at depth)</div>
+            </div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-5" style="margin-top: var(--space-6);">
+          Leave Door 4 for later. These cost <strong style="color: var(--color-success);">$0</strong>.
+        </p>
+      </div>
+    </section>
+
+    <!-- Slide 9: Summary -->
+    <section class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title size-lg reveal">4 Doors. <span class="highlight">3 for Now.</span></h2>
+
+        <div class="doors-grid reveal stagger-1" style="margin-top: var(--space-8);">
+          <div class="door-card warm" style="padding: var(--space-4);">
+            <div class="door-icon" style="font-size: var(--text-2xl);">🚪</div>
+            <div class="door-title" style="font-size: var(--text-lg);">Warm</div>
+            <div class="door-speed">Days</div>
+          </div>
+          <div class="door-card cold" style="padding: var(--space-4);">
+            <div class="door-icon" style="font-size: var(--text-2xl);">🚪</div>
+            <div class="door-title" style="font-size: var(--text-lg);">Cold</div>
+            <div class="door-speed">Weeks</div>
+          </div>
+          <div class="door-card content" style="padding: var(--space-4);">
+            <div class="door-icon" style="font-size: var(--text-2xl);">🚪</div>
+            <div class="door-title" style="font-size: var(--text-lg);">Content</div>
+            <div class="door-speed">Months</div>
+          </div>
+          <div class="door-card paid door-locked" style="padding: var(--space-4);">
+            <div class="door-icon" style="font-size: var(--text-2xl);">🔒</div>
+            <div class="door-title" style="font-size: var(--text-lg);">Paid</div>
+            <div class="door-speed">Later</div>
+          </div>
+        </div>
+
+        <p class="slide-subtitle reveal stagger-2" style="margin-top: var(--space-8);">
+          Your first client is behind one of these doors.<br>
+          <strong style="color: var(--color-text);">Start knocking.</strong>
+        </p>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="../../shared/js/slides.js"></script>
+</body>
+</html>
